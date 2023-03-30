@@ -1,0 +1,41 @@
+[Starting Game]
+As a player I want to be able to start a game of 9MM so that I may play it.
+
+[Current Player Turn]
+As I player I want to know which player's turn it is so that I know when I am able to make a move.
+
+[Pieces to Place]
+As a player I want to know how many pieces both I and other players have left to place during the first phase of the game so that I can make informed strategic decisions which bring me closer to winning the game.
+
+[Board Positions]
+As a player I want to distinguish which positions on the board a piece may exist at so that I can make choices as to where to position my pieces.
+
+[Position Connections]
+As a player I want to distinguish which positions are connected so that I may effectively play the game.
+
+[Placing Pieces]
+As a player I want to place a piece in an unoccupied position given I have an unplaced piece.
+
+[Player Pieces]
+As a player I want to distinguish which pieces belong to which player so that I know which pieces I am able to move.
+
+[Moving Pieces]
+As a player I want to move a piece given I have placed all my pieces and I own it so that I can work towards creating a mil and winning the game.
+
+[Taking Pieces/Mils]
+As a player I want to take an opponents piece given I have created a mil so that I can work towards winning the game.
+
+[Pieces Taken]
+As a player I want to know which pieces a player has taken so that I can make strategic decisions which bring me closer to winning the game.
+
+[Jumping Pieces]
+As a player I want to jump a piece given that I only have three pieces remaining so that I can better work towards creating mils.
+
+[Prevent Illegal Move]
+As a player I want illegal moves to not be possible so that rules cannot be broken resulting in a fair game. (Potential ambiguity)
+
+[Alert Illegal Move] 
+As a player I want to know when a move I attempt to make is illegal so that I may decide on a different move.
+
+[Undo Move]
+As a player I want to undo to a previous point in the game so that I can continue playing from that point.
