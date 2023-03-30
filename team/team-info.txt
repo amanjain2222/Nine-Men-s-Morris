@@ -1,17 +1,33 @@
-- Team Name:
+> Team Name:
 
-- Team Photo:
+> Team Memberships:
 
-- Team membership:
      - Name:
      - Contact Details:
      - Soft Strength:
      - Tech Strength:
      - Fun Fact:
-     - Schedule:
-     - Allocation
-     - Tech Stack:
-     - Tech Stack Justification:
+
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+
+> Schedule:
+     - 
+> Allocation
+     - 
+> Tech Stack:
+     - 
+> Tech Stack Justification:
+     - 
 
     
 
