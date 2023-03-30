@@ -1,1 +1,17 @@
+- Team Name:
+
+- Team Photo:
+
+- Team membership:
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+     - Schedule:
+     - Allocation
+     - Tech Stack:
+     - Tech Stack Justification:
+
+    
 
