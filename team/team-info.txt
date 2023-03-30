@@ -2,19 +2,19 @@
 
 > Team Memberships:
 
-     - Name:
+     - Name: Tharith Yeak
      - Contact Details:
      - Soft Strength:
      - Tech Strength:
      - Fun Fact:
 
-     - Name:
+     - Name: Aman
      - Contact Details:
      - Soft Strength:
      - Tech Strength:
      - Fun Fact:
 
-     - Name:
+     - Name: Luke
      - Contact Details:
      - Soft Strength:
      - Tech Strength:
@@ -40,5 +40,5 @@
      - All team member are familiar with Java
 
 
-    
+
 
