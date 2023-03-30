@@ -4,9 +4,19 @@
 
      - Name: Tharith Yeak
      - Contact Details:
+        - 0478 587 481
+        - tyea0002@student.monash.edu
      - Soft Strength:
+        - Good communication
+        - Good team player
+        - Good time management
      - Tech Strength:
+        - Decent at Java
+        - Decent at OOP
+        - Decent at UML
      - Fun Fact:
+        - I am a big fan of Game of Thrones and A Song of Ice and Fire
+
 
      - Name: Aman
      - Contact Details:
