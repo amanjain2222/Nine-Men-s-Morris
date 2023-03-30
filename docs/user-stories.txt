@@ -39,3 +39,25 @@ As a player I want to know when a move I attempt to make is illegal so that I ma
 
 [Undo Move]
 As a player I want to undo to a previous point in the game so that I can continue playing from that point.
+
+As a user I want to see the visualisation of the move I made so that I can build up a strategy for my next move.
+
+As a user I want to know what moves the opposite player is making so that I can plan my game accordingly.
+
+As a user i want to know where all my token are places in the board do that I know where the game is heading.
+
+As a user I want to undo previous moves that have been made before so that I can replay some of them.
+
+As a user I want to know which player’s turn is it currently so that I know when I am playing.
+
+As a board I want to make sure no illegal moves are made so that a fair game can be played
+
+As a player I want to be able to take out opponent’s token as soon as I make a mill.
+
+As a player I want every mill to be identified as soon as It is made so that I can pull out an opponents token.
+
+As a player I want to know how many tokens have I left with so that I can place them accordingly on the board
+
+As a player I want the game UI/UX to be easily understandable so that I have a good experience playing it.
+
+As a user I want to be able to move my pieces to adjacent places so I can make a move
