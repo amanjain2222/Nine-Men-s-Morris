@@ -1,0 +1,44 @@
+> Team Name: Team Ice and Fire
+
+> Team Memberships:
+
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+
+     - Name:
+     - Contact Details:
+     - Soft Strength:
+     - Tech Strength:
+     - Fun Fact:
+
+> Schedule:
+     - Sat 26/03/2023 3pm-4pm
+     - Tue 28/03/2023 3pm-4pm
+     - Thu 30/03/2023 6pm-8pm
+
+> Allocation
+     - Prototype state are shared evenly
+     - 8-10 user stories per team member
+
+> Tech Stack:
+     - Java
+     - Git as version control
+
+> Tech Stack Justification:
+     - Java is used in workshop
+     - Java is suitable for OOP
+     - No need to get too many support from Teaching team.
+     - All team member are familiar with Java
+
+
+    
+
