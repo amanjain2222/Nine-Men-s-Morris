@@ -34,8 +34,65 @@ As a player I want to jump a piece given that I only have three pieces remaining
 [Prevent Illegal Move]
 As a player I want illegal moves to not be possible so that rules cannot be broken resulting in a fair game. (Potential ambiguity)
 
-[Alert Illegal Move] 
+[Alert Illegal Move]
 As a player I want to know when a move I attempt to make is illegal so that I may decide on a different move.
 
 [Undo Move]
 As a player I want to undo to a previous point in the game so that I can continue playing from that point.
+
+Tharith:
+
+Must have:
+As a player, I want to create a new game so that I can start playing 9MM with a friend.
+This story is critical for the basic functionality of the game.
+
+As a player, I want to see a game board so that I can understand the current state of the game.
+The game board is essential for players to make informed decisions.
+
+As a player, I want to take turns making moves so that the game proceeds according to standard 9MM rules.
+Taking turns is a fundamental aspect of 9MM gameplay.
+
+As a player, I want to see whose turn it is so that I know when it's my turn to make a move.
+This ensures that players are aware of the game's progress.
+
+As a player, I want the game to end when the victory condition is met according to the standard rules.
+Proper endgame conditions are crucial for a satisfying gameplay experience.
+
+As a player, I want to see a message when the game is over, indicating the winner so that I know the outcome of the game.
+A clear indication of the game's outcome is important for player satisfaction.
+
+As a player, I want to have an in-game tutorial to help me learn the basics of 9MM.
+An in-game tutorial is a nice-to-have feature that can be added later to assist new players.
+
+Should have:
+As a player, I want to undo my last move so that I can correct a mistake or rethink my strategy.
+The undo feature is an advanced requirement that adds flexibility and depth to the gameplay.
+
+As a player, I want to save the current game state so that I can resume playing later.
+Saving the game state is an advanced requirement that allows players to continue their game later.
+
+As a player, I want to load a previously saved game so that I can continue playing from where I left off.
+Loading a saved game is essential to make the save functionality useful.
+
+As a developer, I want to store the game state in a simple text file so that it is easy to manage and update.
+This is important for the advanced requirement of saving and loading game states.
+
+As a developer, I want to design the game state storage with the possibility of different file formats in mind so that I can easily adapt to future changes.
+This ensures that the game's design is future-proof and scalable.
+
+Could have:
+As a player, I want to have a timer for each turn so that the game moves at a faster pace.
+This adds an element of challenge and urgency to the gameplay.
+
+As a player, I want to have a hint system to suggest possible moves when I am stuck.
+A hint system can help new players learn the game and assist when players are unsure of their next move.
+
+As a player, I want to have an option to toggle the display of legal moves so that I can better understand my choices.
+This feature helps players learn the game and improves overall gameplay experience.
+
+As a player, I want to have an option to play against an AI opponent so that I can practise and improve my skills.
+An AI opponent provides a single-player option and a way for players to improve their skills.
+
+As a player, I want to customise the appearance of the game board and pieces so that I can personalise my experience.
+Customization options enhance player engagement and enjoyment.
+
