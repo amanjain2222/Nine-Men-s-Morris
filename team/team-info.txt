@@ -18,10 +18,12 @@
         - I am a big fan of Game of Thrones and A Song of Ice and Fire
 
 
-     - Name: Aman
+     - Name: Aman jain
      - Contact Details:
-     - Soft Strength:
-     - Tech Strength:
+        - ajai0035@student.monash.edu
+        - 0414610050
+     - Soft Strength: Binding the team together
+     - Tech Strength: good at making different algorithms, Programming in different languages
      - Fun Fact:
 
      - Name: Luke

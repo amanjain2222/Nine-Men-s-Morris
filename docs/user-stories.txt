@@ -1,93 +1,45 @@
-[Starting Game]
-As a player I want to be able to start a game of 9MM so that I may play it.
-[Create a new game]
-As a player, I want to create a new game so that I can start playing 9MM with a friend.
-This story is critical for the basic functionality of the game.
+As a player, I want to create a new game, so that I can start playing 9MM with a friend.
 
-[Current Player Turn]
-As I player I want to know which player's turn it is so that I know when I am able to make a move.
-[player turn]
-As a user I want to know which player’s turn is it currently so that I know when I am playing.
-[Current Player Turn]
-As a player, I want to see whose turn it is so that I know when it's my turn to make a move.
-This ensures that players are aware of the game's progress.
+As I player, I want to know which player's turn it is, so that I know when it is my turn to make a move.
 
-[Pieces to Place]
 As a player I want to know how many pieces both I and other players have left to place during the first phase of the game so that I can make informed strategic decisions which bring me closer to winning the game.
-[tokens left]
-As a player I want to know how many tokens have I left with so that I can place them accordingly on the board
 
-[Board Positions]
-As a player I want to distinguish which positions on the board a piece may exist at so that I can make choices as to where to position my pieces.
+As a player, I want to distinguish which positions on the board, a piece may exist at so that I can make choices as to where to position my pieces.
 
-[Position Connections]
-As a player I want to distinguish which positions are connected so that I may effectively play the game.
+As a player I want to distinguish which positions are adjacent and their direction so that I may effectively play the game.
 
-[Placing Pieces]
-As a player I want to place a piece in an unoccupied position given I have an unplaced piece.
+As a player I want to place a piece in an unoccupied position given I have an unplaced piece so that I can advance that game.
 
-[Player Pieces]
 As a player I want to distinguish which pieces belong to which player so that I know which pieces I am able to move.
 
-[Moving Pieces]
-As a player I want to move a piece given I have placed all my pieces and I own it so that I can work towards creating a mil and winning the game.
-[game feature]
-As a user I want to be able to move my pieces to adjacent places so I can make a move
+As a player I want to move one of my pieces to an adjacent position, given I have placed all my pieces, so that I can work towards creating a mill.
 
-[Taking Pieces/Mils]
-As a player I want to take an opponents piece given I have created a mil so that I can work towards winning the game.
-[take out pieces]
-As a player I want to be able to take out opponent’s token as soon as I make a mill.
-[mill identification]
+As a player I want to take out an opponents piece given I have created a mil so that I can work towards winning the game.
+
 As a player I want every mill to be identified as soon as It is made so that I can pull out an opponents token.
 
-[Pieces Taken]
-As a player I want to know which pieces a player has taken so that I can make strategic decisions which bring me closer to winning the game.
+As a player I want to know which pieces a player has taken out so that I can make strategic decisions which bring me closer to winning the game.
 
-[Jumping Pieces]
-As a player I want to jump a piece given that I only have three pieces remaining so that I can better work towards creating mils.
+As a player I want to jump a piece anywhere on the board given that I only have three pieces remaining so that I can better work towards creating mils.
 
-[Prevent Illegal Move]
-As a player I want illegal moves to not be possible so that rules cannot be broken resulting in a fair game. (Potential ambiguity)
-[Illegal moves]
-As a board I want to make sure no illegal moves are made so that a fair game can be played
+As a player I dont want any illegal moves to be made so that we enjoy a fair game.
 
-[Alert Illegal Move]
-As a player I want to know when a move I attempt to make is illegal so that I may decide on a different move.
+As a board I want to make sure no illegal moves are made so that a fair game can be played.
 
-[Undo Move]
-As a player I want to undo to a previous point in the game so that I can continue playing from that point.
-[Undo]
-As a game i would want to store all the moves that have been made so i can undo those if requested
-[undo]
-As a user I want to undo previous moves that have been made before so that I can replay some of them.
-[Undo move]
-As a player, I want to undo my last move so that I can correct a mistake or rethink my strategy.
-The undo feature is an advanced requirement that adds flexibility and depth to the gameplay.
+As a player I want to know when a move I attempt to make is illegal, so that I may decide on a different move.
 
-[token positions]
-As a user i want to know where all my token are placed in the board so that I know where the game is heading.
+As a Game I would want to store all the moves that have been made so i can undo those if requested.
 
-[Game Win]
-As a player, I want the game to end when the victory condition is met according to the standard rules.
-Proper endgame conditions are crucial for a satisfying gameplay experience.
-[Display winner]
-As a player, I want to see a message when the game is over, indicating the winner so that I know the outcome of the game.
-A clear indication of the game's outcome is important for player satisfaction.
+As a player, I want to undo previous move/s that have been made before so that I can replay some of them.
 
-[visualisation]
+As a user I want to know where all the tokens are placed in the board so that I know where the game is heading.
+
+[come back to it]
+As a player, I want to end by displaying the winner so that the result of the game is clear.
+
 As a user I want to see the visualisation of the move I made so that I can build up a strategy for my next move.
 
-[player piece visualisation]
-As a user I want to know what moves the opposite player is making so that I can plan my game accordingly.
+As a player I want the game interface to be easily understandable so that I have a good experience playing it.
 
-[accessibility]
-As a player I want the game UI/UX to be easily understandable so that I have a good experience playing it.
+As a player, I want to take turns making moves so that we get equal chance of winning the game.
 
-[Display the board]
-As a player, I want to see a game board so that I can understand the current state of the game.
-The game board is essential for players to make informed decisions.
-
-[Player's Turn]
-As a player, I want to take turns making moves so that the game proceeds according to standard 9MM rules.
-Taking turns is a fundamental aspect of 9MM gameplay.
