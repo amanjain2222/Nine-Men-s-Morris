@@ -23,8 +23,8 @@
         - ajai0035@student.monash.edu
         - 0414610050
      - Soft Strength: Binding the team together
-     - Tech Strength: good at making different algorithms, Programming in different languages
-     - Fun Fact:
+     - Tech Strength: good at making different algorithms, Programming in different languages, good with oop principles
+     - Fun Fact: I can play 4 different instruments.
 
      - Name: Luke
      - Contact Details:
@@ -48,7 +48,7 @@
 > Tech Stack Justification:
      - Java is used in workshop
      - Java is suitable for OOP
-     - No need to get too many support from Teaching team.
+     - No need to get too much support from Teaching team.
      - All team member are familiar with Java
 
 
