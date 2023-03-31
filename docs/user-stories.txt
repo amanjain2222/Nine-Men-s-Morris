@@ -34,8 +34,7 @@ As a player, I want to undo previous move/s that have been made before so that I
 
 As a user I want to know where all the tokens are placed in the board so that I know where the game is heading.
 
-[come back to it]
-As a player, I want to end by displaying the winner so that the result of the game is clear.
+As a player, I would like the game to be ended by displaying who won the game, so the winner is appreciated.
 
 As a user I want to see the visualisation of the move I made so that I can build up a strategy for my next move.
 
