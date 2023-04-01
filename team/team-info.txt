@@ -6,30 +6,34 @@
      - Contact Details:
         - 0478 587 481
         - tyea0002@student.monash.edu
-     - Soft Strength:
+     - Soft Strengths:
         - Good communication
         - Good team player
         - Good time management
-     - Tech Strength:
+     - Tech Strengths:
         - Decent at Java
         - Decent at OOP
         - Decent at UML
      - Fun Fact:
         - I am a big fan of Game of Thrones and A Song of Ice and Fire
 
-
      - Name: Aman jain
      - Contact Details:
         - ajai0035@student.monash.edu
-        - 0414610050
-     - Soft Strength: Binding the team together
-     - Tech Strength: good at making different algorithms, Programming in different languages, good with oop principles
-     - Fun Fact: I can play 4 different instruments.
+        - 0414 610 050
+     - Soft Strengths: 
+        - Binding the team together
+     - Tech Strengths: 
+        - good at making different algorithms
+        - Programming in different languages
+        - good with oop principles
+     - Fun Fact:
+        - I can play 4 different instruments.
 
-     - Name: Luke
+     - Name: Luke Verhagen
      - Contact Details:
-     - Soft Strength:
-     - Tech Strength:
+     - Soft Strengths:
+     - Tech Strengths:
      - Fun Fact:
 
 > Schedule:
@@ -46,10 +50,10 @@
      - Git as version control
 
 > Tech Stack Justification:
-     - Java is used in workshop
-     - Java is suitable for OOP
-     - No need to get too much support from Teaching team.
-     - All team member are familiar with Java
+     - Java is used in the workshop examples.
+     - Java is designed with OOP in mind.
+     - No need to get too much support from Teaching Team since all team members are familiar with Java.
+     - Git is well supported by Gitlab which is required to be used by the project specifications.
 
 
 
