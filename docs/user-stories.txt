@@ -2,43 +2,44 @@ As a player, I want to create a new game, so that I can start playing 9MM with a
 
 As I player, I want to know which player's turn it is, so that I know when it is my turn to make a move.
 
-As a player I want to know how many pieces both I and other players have left to place during the first phase of the game so that I can make informed strategic decisions which bring me closer to winning the game.
+As a player, I want to know how many pieces both I and other players have left to place during the first phase of the game, so that I can make informed strategic decisions which bring me closer to winning the game.
 
-As a player, I want to distinguish which positions on the board, a piece may exist at so that I can make choices as to where to position my pieces.
+As a player, I want to distinguish which positions on the board a piece may exist at, so that I can make choices as to where to position my pieces.
 
-As a player I want to distinguish which positions are adjacent and their direction so that I may effectively play the game.
+As a player, I want to distinguish which positions are adjacent and their direction, so that I may effectively play the game.
 
-As a player I want to place a piece in an unoccupied position given I have an unplaced piece so that I can advance that game.
+As a player, I want to place a piece in an unoccupied position given I have an unplaced piece, so that I can advance that game.
 
-As a player I want to distinguish which pieces belong to which player so that I know which pieces I am able to move.
+As a player, I want to distinguish which pieces belong to which player, so that I know which pieces I am able to move.
 
-As a player I want to move one of my pieces to an adjacent position, given I have placed all my pieces, so that I can work towards creating a mill.
+As a player, I want to move one of my pieces to an adjacent position given I have placed all my pieces, so that I can work towards creating a mill.
 
-As a player I want to take out an opponents piece given I have created a mil so that I can work towards winning the game.
+As a player, I want to take out an opponents piece given I have created a mil, so that I can work towards winning the game.
 
-As a player I want every mill to be identified as soon as It is made so that I can pull out an opponents token.
+As a player, I want every mill to be identified as soon as it is made, so that I can pull out an opponents token.
 
-As a player I want to know which pieces a player has taken out so that I can make strategic decisions which bring me closer to winning the game.
+As a player, I want to know which pieces a player has taken out, so that I can make strategic decisions which bring me closer to winning the game.
 
-As a player I want to jump a piece anywhere on the board given that I only have three pieces remaining so that I can better work towards creating mils.
+As a player, I want to jump a piece anywhere on the board given that I only have three pieces remaining, so that I can better work towards creating mils.
 
-As a player I dont want any illegal moves to be made so that we enjoy a fair game.
+As a player, I dont want any illegal moves to be made, so that we enjoy a fair game.
 
-As a board I want to make sure no illegal moves are made so that a fair game can be played.
+As a player, I want to know when a move I attempt to make is illegal, so that I may decide on a different move.
 
-As a player I want to know when a move I attempt to make is illegal, so that I may decide on a different move.
+As a player, I want to undo previous move/s that have been made before, so that I can replay some of them.
 
-As a Game I would want to store all the moves that have been made so i can undo those if requested.
+As a player, I want to know where all the tokens are placed in the board, so that I know where the game is heading.
 
-As a player, I want to undo previous move/s that have been made before so that I can replay some of them.
-
-As a user I want to know where all the tokens are placed in the board so that I know where the game is heading.
+As a player, I would like the game to end when any player is unable to move, or only has two pieces, so that the game doesn't continue forever.
 
 As a player, I would like the game to be ended by displaying who won the game, so the winner is appreciated.
 
-As a user I want to see the visualisation of the move I made so that I can build up a strategy for my next move.
+As a player, I want to see the visualisation of the move I made, so that I can build up a strategy for my next move.
 
-As a player I want the game interface to be easily understandable so that I have a good experience playing it.
+As a player, I want the game interface to be easily understandable, so that I have a good experience playing it.
 
-As a player, I want to take turns making moves so that we get equal chance of winning the game.
+As a player, I want to take turns making moves, so that we get equal chance of winning the game.
 
+As a game, I would want to store all the moves that have been made, so i can undo those if requested.
+
+As a board, I want to make sure no illegal moves are made, so that a fair game can be played.
