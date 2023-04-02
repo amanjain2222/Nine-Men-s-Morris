@@ -35,11 +35,15 @@
         - lver0008@student.monash.edu
         - 0450 698 955
      - Soft Strengths:
-        - 
+        - Project Management
+        - Organisation
+        - Brainstorming
      - Tech Strengths:
-        - 
+        - Code Optimization
+        - Low-Level Languages and Graphics APIs
+        - CPP, CSharp, Java, Type/JavaScript, Python, Go, Rust, Shell, PHP, Kotlin, SQL, HTMLCSS.
      - Fun Fact:
-        - 
+        - Professional Concept Artist
 
 > Schedule:
      - Sat 26/03/2023 3pm-4pm
