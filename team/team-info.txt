@@ -32,9 +32,14 @@
 
      - Name: Luke Verhagen
      - Contact Details:
+        - lver0008@student.monash.edu
+        - 0450 698 955
      - Soft Strengths:
+        - 
      - Tech Strengths:
+        - 
      - Fun Fact:
+        - 
 
 > Schedule:
      - Sat 26/03/2023 3pm-4pm
