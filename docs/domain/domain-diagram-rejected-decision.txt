@@ -1,1 +1,1 @@
-
+This diagram was a very simple outline of the main parts of a generic board game structure and lacked a lot of the specific features of 9 Men's Morris when taking into account how they relate to each other. This diagram also fails to account for additional functionality added by the additional feature correctly alongside many other scoping issues. For more details in the decision to reject this diagram the rationale's within each document should be compared as this can shed much light on the nuances of the decision.
