@@ -33,13 +33,13 @@ public class Player {
         return piecesOnBoard;
     }
 
-    public void addPieceOnBoard() {
-        // add a piece on the board
+    public void increasePiecesOnBoard() {
+        // increase the number of pieces on the board
         piecesOnBoard++;
     }
 
-    public void removePieceOnBoard() {
-        // remove a piece on the board
+    public void decreasePiecesOnBoard() {
+        // decrease the number of pieces on the board
         piecesOnBoard--;
     }
 
