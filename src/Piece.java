@@ -32,15 +32,15 @@ public class Piece {
         return placedOnBoard;
     }
 
-    public void setPlacedOnBoard(boolean placedOnBoard) {
-        this.placedOnBoard = placedOnBoard;
+    public void setPlacedOnBoard() {
+        this.placedOnBoard = true;
     }
 
     public boolean isRemovedFromBoard() {
         return removedFromBoard;
     }
 
-    public void setRemovedFromBoard(boolean removedFromBoard) {
-        this.removedFromBoard = removedFromBoard;
+    public void setRemovedFromBoard() {
+        this.removedFromBoard = true;
     }
 }
