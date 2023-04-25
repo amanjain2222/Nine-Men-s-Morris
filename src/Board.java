@@ -59,9 +59,9 @@ public class Board {
         // initialise the board position indexes for each mill combination
         // millIndex stores all the possible index of the positions in a mill combination
         int[][] millIndex = new int[][]{{0, 1, 2}, {0, 9, 21}, {0, 3, 6}, {1, 4, 7},
-                {2, 5, 7}, {2, 14, 23}, {3, 4, 5}, {3, 10, 18},
-                {5, 13, 20}, {6, 7, 8}, {6, 11, 15}, {8, 12, 17},
-                {9, 10, 11}, {12, 13, 14}, {15, 16, 17}, {18, 19, 20}};
+                                        {2, 5, 7}, {2, 14, 23}, {3, 4, 5}, {3, 10, 18},
+                                        {5, 13, 20}, {6, 7, 8}, {6, 11, 15}, {8, 12, 17},
+                                        {9, 10, 11}, {12, 13, 14}, {15, 16, 17}, {18, 19, 20}};
         for (int i = 0; i < TOTAL_MILLS_COMBINATION; i++) {
             for (int j = 0; j < TOTAL_POSITION_IN_A_MILL; j++) {
                 // millCombinations stores the positions in a mill combination
@@ -70,13 +70,25 @@ public class Board {
         }
     }
 
-    public int[] getAdjacentPositions(int index) {
-        return boardPosition[index].getAdjacentIndexes();
-    }
     public Position[] getMillCombination(int index) {
         // return the mill combination at the index
         return millCombinations[index];
     }
+
+    public int[] getAdjacentPositions(int index) {
+        return boardPosition[index].getAdjacentIndexes();
+    }
+
+    public boolean isAdjacent(int index1, int index2) {
+        // return true if the positions at the indexes are adjacent
+        for (int adjIndex : boardPosition[index1].getAdjacentIndexes()) {
+            if (adjIndex == index2) {
+                return true;
+            }
+            }
+        return false;
+    }
+
     public int showThisPositionIndex(int index) {
         return boardPosition[index].getIndex();
     }
@@ -86,49 +98,75 @@ public class Board {
         return boardPosition[index];
     }
 
-    public boolean thisPositionIsAvailable(int index) {
+    public boolean isPositionEmpty(int index) {
+        // return true if the position at the index is empty
         return boardPosition[index].isEmpty();
     }
 
-    public void setPositionToPlayer(int index, Piece piece) {
-        boardPosition[index].setPieceOccupying(piece);
-    }
-
     public void setPositionToEmpty(int index) {
+        // set the position at the index to empty
         boardPosition[index].setEmpty();
     }
 
+    public void setPositionToPlayer(int index, Piece piece) {
+        // set the position at the index to the player
+        boardPosition[index].setPieceOccupying(piece);
+    }
+
+    public Piece getPlayerAtPosition(int index) {
+        // return the player occupying the position at the index
+        return boardPosition[index].getPieceOccupying();
+    }
+
     public int getTotalPiecesPlaced() {
+        // return the total number of pieces placed on the board
         return totalPiecesPlaced;
     }
 
     public void increaseTotalPiecesPlaced() {
+        // increase the total number of pieces placed on the board
         totalPiecesPlaced++;
     }
 
-    public int getTotalPlayerPieces(Player player) {
+    public int getThisPlayerNumOfPiecesOnBoard(Player player) {
         if (player == player1) {
-            return player1.getPiecesOnBoard();
+            return player1.getNumOfPiecesOnBoard();
         } else {
-            return player2.getPiecesOnBoard();
+            return player2.getNumOfPiecesOnBoard();
         }
     }
 
     public void increaseTotalPlayerPieces(Player player) {
         if (player == player1) {
-            player1.increasePiecesOnBoard();
+            player1.increaseNumOfPiecesOnBoard();
         } else {
-            player2.increasePiecesOnBoard();
+            player2.increaseNumOfPiecesOnBoard();
         }
     }
 
     public void decreaseTotalPlayerPieces(Player player) {
         if (player == player1) {
-            player1.decreasePiecesOnBoard();
+            player1.decreaseNumOfPiecesOnBoard();
         } else {
-            player2.decreasePiecesOnBoard();
+            player2.decreaseNumOfPiecesOnBoard();
         }
     }
+
+    public AdjacentMove AdjacentMoveThisPieceFromTo(int fromIndex, int toIndex) {
+        // return the move of the piece at the fromIndex to the toIndex
+        return new AdjacentMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
+    }
+
+    public PlaceMove PlaceThisPieceAt(int index) {
+        // return the move of the piece at the index
+        return new PlaceMove(boardPosition[index].getPieceOccupying(), index);
+    }
+
+    public JumpMove JumpThisPieceFromTo(int fromIndex, int toIndex) {
+        // return the move of the piece at the fromIndex to the toIndex
+        return new JumpMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
+    }
+
 
 }
 
