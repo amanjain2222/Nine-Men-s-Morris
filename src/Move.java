@@ -11,7 +11,7 @@ public abstract class Move extends Action {
 
     protected boolean isValidOriginPosition(Board board, Player player1, Player player2) {
         //TODO: Check if the from position is valid
-        return true;
+        return !board.getposition(startPosition).isEmpty() ;
 
     }
 
@@ -30,3 +30,4 @@ public abstract class Move extends Action {
         return true;
     }
 }
+
