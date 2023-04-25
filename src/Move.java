@@ -9,11 +9,27 @@ public abstract class Move extends Action {
         this.endPosition = endPosition;
     }
 
-    protected boolean isValidOriginPosition(Board board, Player player1, Player player2) {
+    protected boolean isValidOriginPosition(Board board, Player player) {
         //TODO: Check if the from position is valid
-        return !board.getposition(startPosition).isEmpty() ;
+        if !board.getPosition(endPosition).isEmpty(){
+            if board.getPosition(endPosition).getPieceOccupying() == player.getDisplayChar(){
+                return true
+            }
+        }
 
+        return false
     }
+
+//    protected boolean isValidOriginPosition(Board board, Player player1, Player player2) {
+//        //TODO?: Check if the from position is valid
+//
+//
+//    }
+
+
+    // Do we need Player1 and Player2 as parameters here??
+    // Do we need both players as inputs in all of these functions??
+
 
     protected boolean isEmptyDestinationPosition(Board board, Player player1, Player player2) {
         // Check if the to position is empty
