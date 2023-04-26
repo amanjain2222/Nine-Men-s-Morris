@@ -42,36 +42,36 @@ public class Position {
 
     public void addAdjacentIndexes(int adjIndex1, int adjIndex2) {
         // add the adjacent indexes to the list for position with two adjacent positions
-        adjacentIndexes.add(adjIndex1);
-        adjacentIndexes.add(adjIndex2);
+        this.adjacentIndexes.add(adjIndex1);
+        this.adjacentIndexes.add(adjIndex2);
     }
 
     public void addAdjacentIndexes(int adjIndex1, int adjIndex2, int adjIndex3) {
         // add the adjacent indexes to the list for position with three adjacent positions
-        adjacentIndexes.add(adjIndex1);
-        adjacentIndexes.add(adjIndex2);
-        adjacentIndexes.add(adjIndex3);
+        this.adjacentIndexes.add(adjIndex1);
+        this.adjacentIndexes.add(adjIndex2);
+        this.adjacentIndexes.add(adjIndex3);
     }
 
     public void addAdjacentIndexes(int adjIndex1, int adjIndex2, int adjIndex3, int adjIndex4) {
         // add the adjacent indexes to the list for position with four adjacent positions
-        adjacentIndexes.add(adjIndex1);
-        adjacentIndexes.add(adjIndex2);
-        adjacentIndexes.add(adjIndex3);
-        adjacentIndexes.add(adjIndex4);
+        this.adjacentIndexes.add(adjIndex1);
+        this.adjacentIndexes.add(adjIndex2);
+        this.adjacentIndexes.add(adjIndex3);
+        this.adjacentIndexes.add(adjIndex4);
     }
 
     public int[] getAdjacentIndexes() {
         // return the adjacent indexes as an array
-        int[] adjIndexes = new int[adjacentIndexes.size()];
-        for (int i = 0; i < adjacentIndexes.size(); i++) {
-            adjIndexes[i] = adjacentIndexes.get(i);
+        int[] adjIndexes = new int[this.adjacentIndexes.size()];
+        for (int i = 0; i < this.adjacentIndexes.size(); i++) {
+            adjIndexes[i] = this.adjacentIndexes.get(i);
         }
         return adjIndexes;
     }
 
     public boolean isAdjacentToThisIndex(int index) {
         // Check if the given index is adjacent to this position
-        return adjacentIndexes.contains(index);
+        return this.adjacentIndexes.contains(index);
     }
 }
