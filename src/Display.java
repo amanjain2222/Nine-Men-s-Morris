@@ -51,7 +51,7 @@ public class Display {
 
     public static Display main(String[] args) {
         Game newGame = new Game();
-        return new Display(newGame.getGameBoard());
-
+        Display consoleDisplay = new Display(newGame.getGameBoard());
+        return consoleDisplay;
     }
 }
