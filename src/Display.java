@@ -1,32 +1,34 @@
 public class Display {
 
+    private Board board;
+
     public Display(Board board) {
         this.board = board;
         printBoard();
 
     }
 
-    public void printBoard() {
+    private void printBoard() {
         String[][] gameBoard = {
-                {board.getPosition(0) + "---------------" + board.getPosition(1) +  "----------------" + board.getPosition(2)},
+                {showPosition(0) + "---------------" + showPosition(1) +  "----------------" + showPosition(2)},
                 {" |                 |                  | "},
                 {" |                 |                  | "},
-                {" |   " + board.getPosition(3)+ "----------" + board.getPosition(4) + "----------_" + board.getPosition(5) + "   | "},
+                {" |   " + showPosition(3)+ "----------" + showPosition(4) + "----------_" + showPosition(5) + "   | "},
                 {" |    |            |             |    | "},
                 {" |    |            |             |    | "},
-                {" |    |   " + board.getPosition(6) + "-----" board.getPosition(7) + "------" board.getPosition(8) + "   |    | "},
+                {" |    |   " + showPosition(6) + "-----" + showPosition(7) + "------" + showPosition(8) + "   |    | "},
                 {" |    |    |                |    |    | "},
                 {" |    |    |                |    |    | "},
-                {board.getPosition(9) + "--" + board.getPosition(10) + "--" + board.getPosition(11) + "              " + board.getPosition(12) + "--" + board.getPosition(13) + "--" board.getPosition(14},
+                {showPosition(9) + "--" + showPosition(10) + "--" + showPosition(11) + "              " + showPosition(12) + "--" + showPosition(13) + "--" + showPosition(14)},
                 {" |    |    |                |    |    | "},
                 {" |    |    |                |    |    | "},
-                {" |    |   " + board.getPosition(15) + "-----" + board.getPosition(16) + "----_-" + board.getPosition(17) + "   |    |"},
+                {" |    |   " + showPosition(15) + "-----" + showPosition(16) + "----_-" + showPosition(17) + "   |    |"},
                 {" |    |            |             |    | "},
                 {" |    |            |             |    | "},
-                {" |   " + board.getPosition(18)+ "----------" + board.getPosition(19) + "----------_" + board.getPosition(20) + "   | "},
+                {" |   " + showPosition(18)+ "----------" + showPosition(19) + "----------_" + showPosition(20) + "   | "},
                 {" |                 |                  | "},
                 {" |                 |                  | "},
-                {board.getPosition(21) + "---------------" + board.getPosition(22) +  "----------------" + board.getPosition(23)}};
+                {showPosition(21) + "---------------" + showPosition(22) +  "----------------" + showPosition(23)}};
 
 
         System.out.println();
@@ -38,65 +40,18 @@ public class Display {
         }
     }
 
-    public int showPositon (int position) {
-        return position.getPieceOccupying().getPieceType();
-    }
-
-    public static void main(String[] args) {
-        Board board = new Board();
-        new Display(board);
-
-    }
-}
-
-/*
-ppublic class Display {
-
-    public Display() {
-        printBoard();
-    }
-
-    public void printBoard() {
-        String[][] gameBoard = {
-                {"{ }---------------{ }----------------{ }"},
-                {" |                 |                  | "},
-                {" |                 |                  | "},
-                {" |   { }----------{ }----------_{ }   | "},
-                {" |    |            |             |    | "},
-                {" |    |            |             |    | "},
-                {" |    |   { }-----{ }------{ }   |    | "},
-                {" |    |    |                |    |    | "},
-                {" |    |    |                |    |    | "},
-                {"{ }--{ }--{ }              { }--{ }--{ }"},
-                {" |    |    |                |    |    | "},
-                {" |    |    |                |    |    | "},
-                {" |    |   { }-----{ }----_-{ }   |    |"},
-                {" |    |            |             |    | "},
-                {" |    |            |             |    | "},
-                {" |   { }----------{ }----------_{ }   | "},
-                {" |                 |                  | "},
-                {" |                 |                  | "},
-                {"{ }---------------{ }----------------{ }"}};
-
-
-        System.out.println();
-        for (String[] row : gameBoard) {
-            for (String col : row) {
-                System.out.print(col);
-            }
-            System.out.println();
+    private char showPosition (int positionIndex) {
+        if (this.board.getPosition(positionIndex).isEmpty()) {
+            return ' ';
+        }
+        else {
+            return this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar();
         }
     }
 
-    public int showPositon (int position) {
-        return position.getPieceOccupying().getPieceType();
-    }
-
-    public static void main(String[] args) {
-        new Display();
+    public static Display main(String[] args) {
+        Game newGame = new Game();
+        return new Display(newGame.getGameBoard());
 
     }
 }
-
-
- */
