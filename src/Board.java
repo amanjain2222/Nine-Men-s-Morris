@@ -85,7 +85,7 @@ public class Board {
             if (adjIndex == index2) {
                 return true;
             }
-            }
+        }
         return false;
     }
 
