@@ -1,7 +1,7 @@
 public class Piece {
     private final char displayChar;
     private final Player owner;
-    private Position position;
+    private int position;
     private boolean placedOnBoard;
     private boolean removedFromBoard;
 
@@ -10,6 +10,7 @@ public class Piece {
         this.owner = owner;
         this.placedOnBoard = false;
         this.removedFromBoard = false;
+        this.position = -1;
     }
 
     public Player getOwner() {
@@ -22,12 +23,12 @@ public class Piece {
         return displayChar;
     }
 
-    public Position getPosition() {
+    public int getPosition() {
         // return the position of the piece
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(int position) {
         // set the position of the piece
         this.position = position;
     }
@@ -37,8 +38,9 @@ public class Piece {
         return placedOnBoard;
     }
 
-    public void setPlacedOnBoard() {
-        // set the piece to be placed on the board
+    public void setPlacedOnBoard(int position) {
+        // set the piece to be placed on the board and update the position
+        this.position = position;
         this.placedOnBoard = true;
     }
 
@@ -48,7 +50,8 @@ public class Piece {
     }
 
     public void setRemovedFromBoard() {
-        // set the piece to be removed from the board
+        // set the piece to be removed from the board and change the position
+        this.position = -1;
         this.removedFromBoard = true;
     }
 }
