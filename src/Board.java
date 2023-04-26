@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
     public static final int TOTAL_POSITION = 24;
     public static final int TOTAL_MILLS_COMBINATION = 16;
@@ -5,9 +7,11 @@ public class Board {
 
     private final Position[] boardPosition;
     private final Position[][] millCombinations;
-    private int totalPiecesPlaced;
+    private int totalPiecesPlaced; // keep track of the total number of pieces placed on the board
     private final Player player1;
     private final Player player2;
+    private ArrayList<Integer> player1PiecesOnBoardPositions; // keep track of the Pieces positions on the board for player 1
+    private ArrayList<Integer>  player2PiecesOnBoardPositions; // keep track of the Pieces positions on the board for player 2
 
     public Board(Player player1, Player player2) {
         this.boardPosition = new Position[TOTAL_POSITION];
@@ -123,33 +127,39 @@ public class Board {
         return totalPiecesPlaced;
     }
 
-    public void increaseTotalPiecesPlaced() {
-        // increase the total number of pieces placed on the board
+    public ArrayList<Integer> getPlayerPiecesOnBoardPositions(Player player) {
+        // return the player's pieces on board positions
+        if (player == player1) {
+            return player1PiecesOnBoardPositions;
+        } else {
+            return player2PiecesOnBoardPositions;
+        }
+    }
+    
+    private void addToPlayerPiecesOnBoardPositions(int index, Piece piece) {
+        // add the index to the player's pieces on board positions
         totalPiecesPlaced++;
-    }
-
-    public int getThisPlayerNumOfPiecesOnBoard(Player player) {
-        if (player == player1) {
-            return player1.getNumOfPiecesOnBoard();
+        if (piece.getOwner() == player1) {
+            player1PiecesOnBoardPositions.add(index);
         } else {
-            return player2.getNumOfPiecesOnBoard();
+            player2PiecesOnBoardPositions.add(index);
         }
     }
 
-    public void increaseTotalPlayerPieces(Player player) {
-        if (player == player1) {
-            player1.increaseNumOfPiecesOnBoard();
+    private void removeFromPlayerPiecesOnBoardPositions(int index, Piece piece) {
+        // remove the index to the player's pieces on board positions
+        totalPiecesPlaced--;
+        if (piece.getOwner() == player1) {
+            player1PiecesOnBoardPositions.remove((Integer) index);
         } else {
-            player2.increaseNumOfPiecesOnBoard();
+            player2PiecesOnBoardPositions.remove((Integer) index);
         }
     }
 
-    public void decreaseTotalPlayerPieces(Player player) {
-        if (player == player1) {
-            player1.decreaseNumOfPiecesOnBoard();
-        } else {
-            player2.decreaseNumOfPiecesOnBoard();
-        }
+    private void changePlayerPiecesOnBoardPosition(int fromIndex, int toIndex, Piece piece) {
+        // change the player's pieces on board positions from the fromIndex to the toIndex
+        removeFromPlayerPiecesOnBoardPositions(fromIndex, piece);
+        addToPlayerPiecesOnBoardPositions(toIndex, piece);
     }
 
     public AdjacentMove AdjacentMoveThisPieceFromTo(int fromIndex, int toIndex) {
@@ -166,7 +176,6 @@ public class Board {
         // return the move of the piece at the fromIndex to the toIndex
         return new JumpMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
     }
-
 
 }
 
