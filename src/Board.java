@@ -177,5 +177,10 @@ public class Board {
         return new JumpMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
     }
 
+    public int getPositionIndex(int position){
+        return this.getPosition(position).getIndex()
+
+    }
+
 }
 
