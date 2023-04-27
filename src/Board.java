@@ -23,6 +23,10 @@ public class Board {
         initMillCombinations();
     }
 
+    public Position[] getBoardPositions() {
+        return boardPosition;
+    }
+
     private void initBoard() {
         // initialise the board positions
         for (int i = 0; i < TOTAL_POSITION; i++) {
