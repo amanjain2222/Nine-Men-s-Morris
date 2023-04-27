@@ -21,9 +21,11 @@ public class AdjacentMove extends Move {
             board.setPositionToEmpty(startPosition);
             board.setPositionToPlayer(endPosition, piece);
             board.changePlayerPiecesOnBoardPosition(startPosition, endPosition, piece);
-
-            // TODO: add codes to check if a mill is formed
-
+            // Check if a mill is formed
+            if (isMillFormed()) {
+                // Remove a piece from the opponent
+                removePieceAfterMillIsFormed(); // TODO: go back and implement this method
+            }
             // Print console description
             getConsoleDescription(startPosition, endPosition);
 
