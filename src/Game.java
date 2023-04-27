@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game {
     private final Board gameBoard;
@@ -16,50 +17,62 @@ public class Game {
     }
 
     public void play() {
-        //ToDo: Implement Code
+        while(!isGameOver()) {
+            if (Objects.equals(getCurrentGamePhase(), "PLACEMENT")) {
+                this.performPlacementPhase();
+                this.setCurrentGamePhase();
+            } else if (Objects.equals(getCurrentGamePhase(), "MOVEMENT")) {
+                this.performMovementPhase();
+            }
+        }
     }
 
     public Player getPlayer1() {
         // Return player 1
-        return player1;
+        return this.player1;
     }
 
     public Player getPlayer2() {
         // Return player 2
-        return player2;
+        return this.player2;
     }
 
     public Board getGameBoard() {
         // Return the game board
-        return gameBoard;
+        return this.gameBoard;
     }
 
-    public String getCurrentGamePhase() {
+    private String getCurrentGamePhase() {
         // Return the current game phase
-        return currentGamePhase;
+        return this.currentGamePhase;
     }
 
-    public void setCurrentGamePhase(String gamePhase) {
+    private void setCurrentGamePhase() {
         // Set the current game phase
-        currentGamePhase = gamePhase;
+        if (this.player1.getNumOfPiecesRemaining() > 0 || this.player2.getNumOfPiecesRemaining() > 0) {
+            this.currentGamePhase = "PLACEMENT";
+        }
+        else {
+            this.currentGamePhase = "MOVEMENT";
+        }
     }
 
     public Player getThisPlayerTurn() {
         // Return the player whose turn it is
-        return thisPlayerTurn;
+        return this.thisPlayerTurn;
     }
 
     public void setThisPlayerTurn(Player player) {
         // Set the player whose turn it is
-        thisPlayerTurn = player;
+        this.thisPlayerTurn = player;
     }
 
     public void switchTurn() {
         // Switch the player whose turn it is
-        if (thisPlayerTurn == player1) {
-            thisPlayerTurn = player2;
+        if (this.thisPlayerTurn == this.player1) {
+            this.thisPlayerTurn = this.player2;
         } else {
-            thisPlayerTurn = player1;
+            this.thisPlayerTurn = this.player1;
         }
     }
 
@@ -68,21 +81,11 @@ public class Game {
     }
 
     private void performMovementPhase() {
-        //TODO: Implement Logic Code for moving pieces after pieces is placed
-    }
-
-    private void performMovement() {
-        //TODO: Implement Code for moving pieces
-    }
-
-    private int moveThisPieceFromTo(int fromIndex, int toIndex) {
-        //TODO: Implement Code for moving a piece from one position to another
-        return 0;
-    }
-
-    public int getNumOfPlayerPiecesLeftToMove(Player player) {
-        //TODO: Implement Code for getting the number of pieces left to move for a player
-        return 0;
+        while (Objects.equals(this.getCurrentGamePhase(), "MOVEMENT") && !this.isGameOver()) {
+            this.thisPlayerTurn.getAdjacentMove(this.gameBoard);
+            this.switchTurn();
+            // ToDo: Implement Code for checking whether it is a adjacent move or a flying move
+        }
     }
 
     private boolean isGameOver() {
