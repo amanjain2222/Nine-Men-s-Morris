@@ -88,7 +88,7 @@ public class Player {
             // make the move
             adjacentMove.execute(Integer.parseInt(startPieceInput), Integer.parseInt(endPieceInput));
         } else {
-            // fail to make the move and ask user to try again
+            // fail to make the move and ask user to try again.
             System.out.println("Please try again!");
             getAdjacentMove(board, piece);
         }
