@@ -102,6 +102,10 @@ public class Board {
         return boardPosition[index];
     }
 
+    public int getPositionIndex(int position){
+        return this.getPosition(position).getIndex();
+    }
+
     public boolean isPositionEmpty(int index) {
         // return true if the position at the index is empty
         return boardPosition[index].isEmpty();
@@ -161,10 +165,5 @@ public class Board {
             player2PiecesOnBoardPositions.remove((Integer) index);
         }
     }
-
-    public int getPositionIndex(int position){
-        return this.getPosition(position).getIndex()
-    }
-
 }
 
