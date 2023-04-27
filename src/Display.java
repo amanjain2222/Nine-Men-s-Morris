@@ -38,13 +38,14 @@ public class Display {
         }
     }
 
-    private char showPosition (int positionIndex) {
+
+    private String showPosition (int positionIndex) {
         // Return the character that represents the piece occupying the position
         if (this.board.getPosition(positionIndex).isEmpty()) {
-            return ' '; // Return a space if the position is empty
+            return Integer.toString(this.board.getPositionIndex(positionIndex));  //returns the positon number of the position
         }
         else {
-            return this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar();
+            return Character.toString(this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar());
         }
     }
 
