@@ -68,7 +68,7 @@ public class Player {
         this.piecesRemaining.add(piece);
     }
 
-    public Move getAdjacentMove(Board board, Piece piece) {
+    public void getAdjacentMove(Board board, Piece piece) {
         //TODO: write code for getting move from player, this is where the game input is taken
 
         // create new move objects for each type of move
@@ -92,7 +92,6 @@ public class Player {
             System.out.println("Please try again!");
             getAdjacentMove(board, piece);
         }
-        return null;
     }
 
     public int getRemovePosition() {
