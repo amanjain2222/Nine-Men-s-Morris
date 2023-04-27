@@ -135,6 +135,12 @@ public class Board {
             return player2PiecesOnBoardPositions;
         }
     }
+
+    public void changePlayerPiecesOnBoardPosition(int fromIndex, int toIndex, Piece piece) {
+        // change the player's pieces on board positions from the fromIndex to the toIndex
+        removeFromPlayerPiecesOnBoardPositions(fromIndex, piece);
+        addToPlayerPiecesOnBoardPositions(toIndex, piece);
+    }
     
     private void addToPlayerPiecesOnBoardPositions(int index, Piece piece) {
         // add the index to the player's pieces on board positions
@@ -156,15 +162,9 @@ public class Board {
         }
     }
 
-    private void changePlayerPiecesOnBoardPosition(int fromIndex, int toIndex, Piece piece) {
-        // change the player's pieces on board positions from the fromIndex to the toIndex
-        removeFromPlayerPiecesOnBoardPositions(fromIndex, piece);
-        addToPlayerPiecesOnBoardPositions(toIndex, piece);
-    }
-
     public AdjacentMove AdjacentMoveThisPieceFromTo(int fromIndex, int toIndex) {
         // return the move of the piece at the fromIndex to the toIndex
-        return new AdjacentMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
+        return new AdjacentMove();
     }
 
     public PlaceMove PlaceThisPieceAt(int index) {
