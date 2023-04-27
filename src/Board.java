@@ -162,25 +162,8 @@ public class Board {
         }
     }
 
-    public AdjacentMove AdjacentMoveThisPieceFromTo(int fromIndex, int toIndex) {
-        // return the move of the piece at the fromIndex to the toIndex
-        return new AdjacentMove();
-    }
-
-    public PlaceMove PlaceThisPieceAt(int index) {
-        // return the move of the piece at the index
-        return new PlaceMove(boardPosition[index].getPieceOccupying(), index);
-    }
-
-    public JumpMove JumpThisPieceFromTo(int fromIndex, int toIndex) {
-        // return the move of the piece at the fromIndex to the toIndex
-        return new JumpMove(boardPosition[fromIndex].getPieceOccupying(), fromIndex, toIndex);
-    }
-
     public int getPositionIndex(int position){
-
         return this.getPosition(position).getIndex()
-
     }
 
 }
