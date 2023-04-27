@@ -17,16 +17,16 @@ public class Display {
                 {" |    |   {" + showPosition(6) + "}-----{" + showPosition(7) + "}------{" + showPosition(8) + "}   |    | "},
                 {" |    |    |                |    |    | "},
                 {" |    |    |                |    |    | "},
-                {"{" + showPosition(9) + "}--{" + showPosition(10) + "}--{" + showPosition(11) + "}              {" + showPosition(12) + "}--{" + showPosition(13) + "}--{" + showPosition(14) + "}"},
+                {"{" + showPosition(9) + "}--{" + showPosition(10) + "}--{" + showPosition(11) + "}           {" + showPosition(12) + "}--{" + showPosition(13) + "}-{" + showPosition(14) + "}"},
                 {" |    |    |                |    |    | "},
                 {" |    |    |                |    |    | "},
-                {" |    |   {" + showPosition(15) + "}-----{" + showPosition(16) + "}------{" + showPosition(17) + "}   |    |"},
+                {" |    |   {" + showPosition(15) + "}----{" + showPosition(16) + "}----{" + showPosition(17) + "}   |    |"},
                 {" |    |            |             |    | "},
                 {" |    |            |             |    | "},
-                {" |   {" + showPosition(18)+ "}----------{" + showPosition(19) + "}-----------{" + showPosition(20) + "}   | "},
+                {" |   {" + showPosition(18)+ "}---------{" + showPosition(19) + "}---------{" + showPosition(20) + "}   | "},
                 {" |                 |                  | "},
                 {" |                 |                  | "},
-                {"{" + showPosition(21) + "}---------------{" + showPosition(22) +  "}----------------{" + showPosition(23) + "}"}};
+                {"{" + showPosition(21) + "}--------------{" + showPosition(22) +  "}---------------{" + showPosition(23) + "}"}};
 
 
 
