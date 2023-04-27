@@ -29,6 +29,7 @@ public class Display {
                 {"{" + showPosition(21) + "}---------------{" + showPosition(22) +  "}----------------{" + showPosition(23) + "}"}};
 
 
+
         System.out.println();
         for (String[] row : gameBoard) {
             for (String col : row) {

@@ -93,6 +93,29 @@ public class Player {
             getAdjacentMove(board, piece);
         }
     }
+    public void getPlaceMove(Board board, Piece piece) {
+        //TODO: write code for getting move from player, this is where the game input is taken
+        Scanner scanner = new Scanner(System.in);
+        PlaceMove placemove = new PlaceMove(this, board, piece);
+
+        System.out.print("What position do you want to place your piece?: ");
+        int endPos= scanner.nextInt();
+        int piecePosition = piece.getPosition();
+
+
+        if (placemove.isValidEndPosition(endPos) && placemove.isValidStartPosition(piecePosition)) {
+
+            placemove.execute(piecePosition, endPos);
+
+        }
+
+        else {
+            System.out.print("Please try again!");
+            getPlaceMove(board, piece);
+        }
+
+
+    }
 
     public int getRemovePosition() {
         // TODO: write code for prompts the player to select a position to remove a piece from the board after
