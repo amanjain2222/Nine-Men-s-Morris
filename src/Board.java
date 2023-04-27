@@ -178,6 +178,7 @@ public class Board {
     }
 
     public int getPositionIndex(int position){
+
         return this.getPosition(position).getIndex()
 
     }
