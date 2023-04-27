@@ -78,6 +78,13 @@ public class Game {
 
     private void performPlacementPhase() {
         //TODO: Implement Logic Code for placing pieces at the start of the game
+
+        if (this.thisPlayerTurn.getNumOfPiecesRemaining() > 0){
+            this.thisPlayerTurn.getPlaceMove(this.gameBoard);
+            this.switchTurn();
+
+        }
+
     }
 
     private void performMovementPhase() {

@@ -89,14 +89,15 @@ public class Player {
         }
     }
 
-    public void getPlaceMove(Board board, Piece piece) {
+    public void getPlaceMove(Board board) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            Piece piece = this.getPiecesRemaining().get(0);
             // ask for the position to place the piece
             System.out.print("Please enter the position on board you want to place the piece to: ");
             int endPosition = scanner.nextInt();
 
-            Move placeMove = new PlaceMove(this, board, this.getPiecesRemaining().get(0));
+            Move placeMove = new PlaceMove(this, board, piece);
 
             // execute the move
             if (placeMove.execute(piece.getPosition(), endPosition)) {
