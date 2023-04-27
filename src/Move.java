@@ -1,49 +1,80 @@
 public abstract class Move extends Action {
     protected final Piece piece;
-    protected final int startPosition;
-    protected final int endPosition;
+    protected final Player player;
+    protected final Board board;
 
-    public Move(Piece piece, int startPosition, int endPosition) {
+    public Move(Player player, Board board, Piece piece) {
         this.piece = piece;
-        this.startPosition = startPosition;
-        this.endPosition = endPosition;
+        this.player = player;
+        this.board = board;
     }
 
-    protected boolean isValidOriginPosition(Board board, Player player) {
-        //TODO: Check if the from position is valid
-        if !board.getPosition(endPosition).isEmpty(){
-            if board.getPosition(endPosition).getPieceOccupying() == player.getDisplayChar(){
-                return true
-            }
+    protected boolean isValidStartPosition(int startPosition) {
+        // check if the Start position exist on the board
+        if (startPosition <0 || startPosition > 23) {
+            System.out.println("The start position you entered is not a valid position on the board!");
+            return false;
         }
-
-        return false
+        // Check if the Start position is empty
+        else if (board.getPosition(startPosition).isEmpty()){
+            System.out.println("There is no piece there!");
+            return false;
+        }
+        // Check if the piece belongs to the player
+        else if (board.getPosition(startPosition).getPieceOccupying().getOwner() != player){
+            System.out.println("That piece does not belong to you!");
+            return false;
+        }
+        else {
+            return false;
+        }
     }
 
-//    protected boolean isValidOriginPosition(Board board, Player player1, Player player2) {
-//        //TODO?: Check if the from position is valid
-//
-//
-//    }
-
-
-    // Do we need Player1 and Player2 as parameters here??
-    // Do we need both players as inputs in all of these functions??
-
-
-    protected boolean isEmptyDestinationPosition(Board board, Player player1, Player player2) {
-        // Check if the to position is empty
-        return board.getPosition(endPosition).isEmpty();
+    protected boolean isValidEndPosition(int endPosition) {
+        // check if the End position exist on the board
+        if (endPosition <0 || endPosition > 23) {
+            System.out.println("The end position you entered is not a valid position on the board!");
+            return false;
+        }
+        // Check if the End position is empty
+        else if (!board.getPosition(endPosition).isEmpty()){
+            System.out.println("There is already a piece there!");
+            return false;
+        }
+        else {
+            return false;
+        }
     }
 
-    protected boolean isMillFormed(Board board, Player player1, Player player2) {
+    protected boolean isMillFormed() {
         // TODO: Check if a mill is formed
         return false;
     }
 
-    protected boolean removePiece(Board board, Player player1, Player player2) {
+    protected boolean removePieceAfterMillIsFormed() {
         // TODO: Remove a piece from the opponent if a mill is formed
         return true;
+    }
+
+    @Override
+    public boolean execute(int startPosition, int endPosition) {
+        // validate the start position and end position
+        if (isValidStartPosition(startPosition) && isValidEndPosition(endPosition)) {
+            // move the piece
+            board.setPositionToEmpty(startPosition); // set the start position to empty
+            board.setPositionToPlayer(endPosition, piece); // set the end position to the player
+            board.changePlayerPiecesOnBoardPosition(startPosition, endPosition, piece); // change the player's pieces on board positions
+            getConsoleDescription(startPosition, endPosition); // print the console description
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public String getConsoleDescription(int startPosition, int endPosition) {
+        return player.getName() + " moved a piece from " + startPosition + " to " + endPosition + ".";
     }
 }
 
