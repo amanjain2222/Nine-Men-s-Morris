@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Player {
     private final String name;
@@ -15,6 +13,31 @@ public class Player {
         this.piecesRemaining = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             this.piecesRemaining.add(new Piece(displayChar, this));
+        }
+    }
+
+    public boolean makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
+        Move adjacentMove = new AdjacentMove(this, board, board.getPlayerAtPosition(startPosition.getIndex()));
+
+        if (adjacentMove.execute(startPosition.getIndex(), targetPosition.getIndex())) {
+            //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean makePlaceMove(Board board, Position targetPosition) {
+        Piece piece = getPiecesRemaining().get(0);
+
+        Move placeMove = new PlaceMove(this, board, piece);
+
+        // execute the move
+        if (placeMove.execute(piece.getPosition(), targetPosition.getIndex())) {
+            //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -66,47 +89,6 @@ public class Player {
     public void addPiecesRemaining(Piece piece) {
         // add a piece to the pieces remaining
         this.piecesRemaining.add(piece);
-    }
-
-    public void getAdjacentMove(Board board) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Please enter the position of the piece that you want to move: ");
-            int startPosition = scanner.nextInt();
-
-            System.out.print("Please enter the position you want to move the piece to: ");
-            int endPosition = scanner.nextInt();
-
-            Move adjacentMove = new AdjacentMove(this, board, board.getPlayerAtPosition(startPosition));
-
-            if (adjacentMove.execute(startPosition, endPosition)) {
-                //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
-                break;
-            } else {
-                System.out.println("Invalid move. Please try again.");
-            }
-        }
-    }
-
-    public void getPlaceMove(Board board) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            Piece piece = this.getPiecesRemaining().get(0);
-            // ask for the position to place the piece
-            System.out.print("Please enter the position on board you want to place the piece to: ");
-            int endPosition = scanner.nextInt();
-
-            Move placeMove = new PlaceMove(this, board, piece);
-
-            // execute the move
-            if (placeMove.execute(piece.getPosition(), endPosition)) {
-                //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
-                break;
-            } else {
-                System.out.println("Invalid move. Please try again.");
-            }
-        }
     }
 
     public int getRemovePosition() {

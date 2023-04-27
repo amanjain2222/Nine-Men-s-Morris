@@ -1,30 +1,49 @@
-import java.util.ArrayList;
-import java.util.Objects;
-
 public class Game {
     private final Board gameBoard;
     private final Player player1;
     private final Player player2;
     private String currentGamePhase;
     private Player thisPlayerTurn;
+    // Keeps Track of whether Previous Game Move was Valid
+    private boolean previousMoveInvalid = false;
 
     public Game() {
         player1 = new Player("Ice", 'I');
         player2 = new Player("Fire", 'F');
-        gameBoard = new Board(player1,player2);
+        gameBoard = new Board(player1, player2);
         currentGamePhase = "PLACEMENT";
         thisPlayerTurn = player1;
     }
 
-    public void play() {
-        while(!isGameOver()) {
-            if (Objects.equals(getCurrentGamePhase(), "PLACEMENT")) {
-                this.performPlacementPhase();
-                this.setCurrentGamePhase();
-            } else if (Objects.equals(getCurrentGamePhase(), "MOVEMENT")) {
-                this.performMovementPhase();
+    public void updateGame(Input input) {
+        // Process input by using it to interpret the current player's next move.
+        if (!isGameOver()) {
+            // Take Player Turn or Determine if Player Move was Invalid
+            boolean moveWasInvalid = true;
+            if (getCurrentGamePhase().equals("PLACEMENT")) {
+                Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
+                moveWasInvalid = thisPlayerTurn.makePlaceMove(gameBoard, targetPosition);
+            } else if (getCurrentGamePhase().equals("MOVEMENT")) {
+                Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
+                Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
+                moveWasInvalid = thisPlayerTurn.makeAdjacentMove(gameBoard, startingPosition, targetPosition); 
             }
+            setPreviousMoveInvalid(moveWasInvalid);
+            if (moveWasInvalid) return;
+
+            // Only if Move Was Valid Update Game Globals 
+            switchTurn();
+            updateCurrentGamePhase();
         }
+    }
+
+    public boolean wasPreviousMoveInvalid() {
+        // Returns whether or not the Previous Game Move was Valid
+        return previousMoveInvalid;
+    }
+
+    private void setPreviousMoveInvalid(boolean moveStatus) {
+        this.previousMoveInvalid = moveStatus;
     }
 
     public Player getPlayer1() {
@@ -42,12 +61,12 @@ public class Game {
         return this.gameBoard;
     }
 
-    private String getCurrentGamePhase() {
+    public String getCurrentGamePhase() {
         // Return the current game phase
         return this.currentGamePhase;
     }
 
-    private void setCurrentGamePhase() {
+    private void updateCurrentGamePhase() {
         // Set the current game phase
         if (this.player1.getNumOfPiecesRemaining() > 0 || this.player2.getNumOfPiecesRemaining() > 0) {
             this.currentGamePhase = "PLACEMENT";
@@ -73,25 +92,6 @@ public class Game {
             this.thisPlayerTurn = this.player2;
         } else {
             this.thisPlayerTurn = this.player1;
-        }
-    }
-
-    private void performPlacementPhase() {
-        //TODO: Implement Logic Code for placing pieces at the start of the game
-
-        if (this.thisPlayerTurn.getNumOfPiecesRemaining() > 0){
-            this.thisPlayerTurn.getPlaceMove(this.gameBoard);
-            this.switchTurn();
-
-        }
-
-    }
-
-    private void performMovementPhase() {
-        while (Objects.equals(this.getCurrentGamePhase(), "MOVEMENT") && !this.isGameOver()) {
-            this.thisPlayerTurn.getAdjacentMove(this.gameBoard);
-            this.switchTurn();
-            // ToDo: Implement Code for checking whether it is a adjacent move or a flying move
         }
     }
 

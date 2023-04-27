@@ -34,7 +34,7 @@ public abstract class Move extends Action {
  
     protected boolean isValidEndPosition(int endPosition) {
         // check if the End position exist on the board
-        if (endPosition <0 || endPosition > 23) {
+        if (endPosition < 0 || endPosition > 23) {
             System.out.println("The end position you entered is not a valid position on the board!");
             return false;
         }
