@@ -8,13 +8,11 @@ public class PlaceMove extends Move{
         // Check if the move is valid
         if (isValidStartPosition(startPosition) && isValidEndPosition(endPosition)) {
             // Place the piece on the board
-            board.getPosition(endPosition).setPieceOccupying(piece);
-            // Remove the piece from the player's remaining pieces
-            player.decreaseNumOfPiecesOnBoard();
+            this.board.getPosition(endPosition).setPieceOccupying(this.player.popPiecesRemaining());
             // Check if a mill is formed
             if (isMillFormed()) {
                 // Remove a piece from the opponent
-                removePieceAfterMillIsFormed();
+                removePieceAfterMillIsFormed(); // TODO: go back and implement this method
             }
             return true;
         }
@@ -28,7 +26,7 @@ public class PlaceMove extends Move{
     @Override
     public String getConsoleDescription(int startPosition, int endPosition) {
         // Get the description of the move
-        return player.getName() + " placed a piece at " + endPosition + ".";
+        return this.player.getName() + " placed a piece at " + endPosition + ".";
     }
 
     @Override
@@ -38,12 +36,12 @@ public class PlaceMove extends Move{
             return true;
         }
         // Check if the player has any pieces remaining
-        else if (player.getNumOfPiecesRemaining() <0) {
+        else if (this.player.getNumOfPiecesRemaining() <0) {
             System.out.println("You have no more pieces to place!");
             return false;
         }
         // Check if the piece belongs to the player
-        else if (board.getPlayerAtPosition(startPosition).getOwner() != player){
+        else if (this.board.getPlayerAtPosition(startPosition).getOwner() != this.player){
             System.out.println("That piece does not belong to you!");
             return false;
         }
