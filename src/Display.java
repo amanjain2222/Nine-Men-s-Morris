@@ -42,10 +42,10 @@ public class Display {
     private String showPosition (int positionIndex) {
         // Return the character that represents the piece occupying the position
         if (this.board.getPosition(positionIndex).isEmpty()) {
-            return Integer.toString(this.board.getPositionIndex(positionIndex))  //returns the positon number of the position
+            return Integer.toString(this.board.getPositionIndex(positionIndex));  //returns the positon number of the position
         }
         else {
-            return this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar();
+            return Character.toString(this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar());
         }
     }
 
