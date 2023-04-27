@@ -38,10 +38,11 @@ public class Display {
         }
     }
 
+
     private char showPosition (int positionIndex) {
         // Return the character that represents the piece occupying the position
         if (this.board.getPosition(positionIndex).isEmpty()) {
-            return ' '; // Return a space if the position is empty
+            return this.board.getPosition(positionIndex).getIndex(); // Return a space if the position is empty
         }
         else {
             return this.board.getPosition(positionIndex).getPieceOccupying().getDisplayChar();

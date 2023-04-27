@@ -3,6 +3,8 @@ public abstract class Move extends Action {
     protected final Player player;
     protected final Board board;
 
+
+
     public Move(Player player, Board board, Piece piece) {
         this.piece = piece;
         this.player = player;
@@ -29,7 +31,7 @@ public abstract class Move extends Action {
             return true;
         }
     }
-
+ 
     protected boolean isValidEndPosition(int endPosition) {
         // check if the End position exist on the board
         if (endPosition <0 || endPosition > 23) {
