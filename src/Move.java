@@ -26,7 +26,7 @@ public abstract class Move extends Action {
             return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
@@ -42,19 +42,21 @@ public abstract class Move extends Action {
             return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
-    protected boolean isMillFormed() {
-        // TODO: Check if a mill is formed
+    protected boolean isMillFormed(){
+        // Check if a mill is formed
+        //TODO: implement code for checking if a mill is formed after moving the piece
         return false;
-    }
+    };
 
-    protected boolean removePieceAfterMillIsFormed() {
-        // TODO: Remove a piece from the opponent if a mill is formed
-        return true;
-    }
+    protected boolean removePieceAfterMillIsFormed(){
+        // Remove a piece from the opponent
+        // TODO: implement code for removing a piece after a mill is formed
+        return false;
+    };
 
     @Override
     public boolean execute(int startPosition, int endPosition) {
@@ -77,4 +79,3 @@ public abstract class Move extends Action {
         return player.getName() + " moved a piece from " + startPosition + " to " + endPosition + ".";
     }
 }
-

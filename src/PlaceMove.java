@@ -21,6 +21,8 @@ public class PlaceMove extends Move{
         else {
             return false;
         }
+
+        // TODO: implement code for checking if a mill is formed after moving the piece
     }
 
     @Override
@@ -32,9 +34,8 @@ public class PlaceMove extends Move{
     @Override
     protected boolean isValidStartPosition(int startPosition) {
         // check if the Start position exist on the board
-        if (startPosition != -1) {
-            System.out.println("The position of the piece is not from remaining pieces!");
-            return false;
+        if (startPosition == -1) {
+            return true;
         }
         // Check if the player has any pieces remaining
         else if (player.getNumOfPiecesRemaining() <0) {
@@ -47,6 +48,7 @@ public class PlaceMove extends Move{
             return false;
         }
         else {
+            System.out.println("The position of the piece is not from remaining pieces!");
             return false;
         }
     }
