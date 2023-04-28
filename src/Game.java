@@ -1,4 +1,4 @@
-public class Game { 
+public class Game {
     private final int PLAYER_STARTING_PIECES = 9;
 
     private final String FIRST_PLAYER_NAME = "Ice";
