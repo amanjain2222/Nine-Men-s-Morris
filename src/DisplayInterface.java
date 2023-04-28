@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Display {
+public class DisplayInterface {
 
     final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
     final String INVALID_MOVE_MESSAGE = "Invalid move. Please try again.";
@@ -13,10 +13,11 @@ public class Display {
 
     Scanner consoleInput = new Scanner(System.in);
 
-    public Input updateDisplay(Game game) {
-        // Returns integer position input.
+    public void updateDisplay(Game game) {
         this.printBoard(game.getGameBoard());
+    }
 
+    public InputState queryInputState(Game game) {
         // Print Previous Input Result
         if (game.wasPreviousMoveInvalid()) {
             System.out.println(INVALID_MOVE_MESSAGE);
@@ -46,7 +47,7 @@ public class Display {
         }
 
         // Return Input
-        return new Input(inputValues);
+        return new InputState(inputValues);
     }
 
     private void printBoard(Board board) {

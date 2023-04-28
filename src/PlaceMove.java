@@ -21,7 +21,6 @@ public class PlaceMove extends Move{
         else {
             return false;
         }
-
         // TODO: implement code for checking if a mill is formed after moving the piece
     }
 

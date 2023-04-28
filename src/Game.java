@@ -15,7 +15,7 @@ public class Game {
         thisPlayerTurn = player1;
     }
 
-    public void updateGame(Input input) {
+    public void updateGame(InputState input) {
         // Process input by using it to interpret the current player's next move.
         if (!isGameOver()) {
             // Take Player Turn or Determine if Player Move was Invalid

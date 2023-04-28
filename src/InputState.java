@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class Input {
+public class InputState {
     public ArrayList<Integer> inputValues;
 
-    public Input(ArrayList<Integer> inputValues) {
+    public InputState(ArrayList<Integer> inputValues) {
         this.inputValues = inputValues;
     }
 }
