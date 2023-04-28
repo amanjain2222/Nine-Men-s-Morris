@@ -22,7 +22,7 @@ public class DisplayInterface {
         if (game.wasPreviousMoveInvalid()) {
             System.out.println(INVALID_MOVE_MESSAGE);
         } else {
-            System.out.println(game.getThisPlayerTurn().getName() + PLAYER_TURN_INFO_MESSAGE + "(you currently have " + game.getThisPlayerTurn().getNumOfPiecesRemaining() + " pieces remaining)");
+            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE + "( you currently have " + game.getCurrentPlayer().getNumOfPiecesRemaining() + " pieces remaining to place)");
         }
 
         // Get Input Based On Current Game Phase
