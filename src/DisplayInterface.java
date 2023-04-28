@@ -26,11 +26,11 @@ public class DisplayInterface {
         System.out.println("              " + GAME_PHASE_MESSAGE + game.getCurrentGamePhase()); // display current game phase
         // Print Player Pieces Remaining if in Placement Phase
         if (game.getCurrentGamePhase().equals("PLACEMENT")) {
-            System.out.println("              " + game.getThisPlayerTurn().getName() + PIECES_REMAINING_ON_HAND_MESSAGE + game.getThisPlayerTurn().getNumOfPiecesRemaining()+ "\n");
+            System.out.println("              " + game.getCurrentPlayer().getName() + PIECES_REMAINING_ON_HAND_MESSAGE + game.getCurrentPlayer().getNumOfPiecesRemaining()+ "\n");
         }
         // Print Player Pieces Remaining if in Movement Phase
         else{
-            System.out.println("              " + game.getThisPlayerTurn().getName() + PIECES_REMAINING_ON_BOARD_MESSAGE + game.getThisPlayerTurn().getNumOfPiecesOnBoard()+ "\n");
+            System.out.println("              " + game.getCurrentPlayer().getName() + PIECES_REMAINING_ON_BOARD_MESSAGE + game.getCurrentPlayer().getNumOfPiecesOnBoard()+ "\n");
         }
 
         // Print Previous Input Result
