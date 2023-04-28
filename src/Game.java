@@ -19,21 +19,40 @@ public class Game {
         // Process input by using it to interpret the current player's next move.
         if (!isGameOver()) {
             // Take Player Turn or Determine if Player Move was Invalid
-            boolean moveWasInvalid = true;
+            boolean moveStatus = false;
             if (getCurrentGamePhase().equals("PLACEMENT")) {
                 Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-                moveWasInvalid = thisPlayerTurn.makePlaceMove(gameBoard, targetPosition);
+                moveStatus = thisPlayerTurn.makePlaceMove(gameBoard, targetPosition);
             } else if (getCurrentGamePhase().equals("MOVEMENT")) {
                 Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
                 Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
-                moveWasInvalid = thisPlayerTurn.makeAdjacentMove(gameBoard, startingPosition, targetPosition); 
+                moveStatus = thisPlayerTurn.makeAdjacentMove(gameBoard, startingPosition, targetPosition); 
             }
-            setPreviousMoveInvalid(moveWasInvalid);
-            if (moveWasInvalid) return;
+            setPreviousMoveInvalid(!moveStatus);
+            if (!moveStatus) return;
 
             // Only if Move Was Valid Update Game Globals 
             switchTurn();
             updateCurrentGamePhase();
+        }
+    }
+
+    public void switchTurn() {
+        // Switch the player whose turn it is
+        if (this.thisPlayerTurn == this.player1) {
+            this.thisPlayerTurn = this.player2;
+        } else {
+            this.thisPlayerTurn = this.player1;
+        }
+    }
+
+    private void updateCurrentGamePhase() {
+        // Set the current game phase
+        if (this.player1.getNumOfPiecesRemaining() > 0 || this.player2.getNumOfPiecesRemaining() > 0) {
+            this.currentGamePhase = "PLACEMENT";
+        }
+        else {
+            this.currentGamePhase = "MOVEMENT";
         }
     }
 
@@ -42,8 +61,8 @@ public class Game {
         return previousMoveInvalid;
     }
 
-    private void setPreviousMoveInvalid(boolean moveStatus) {
-        this.previousMoveInvalid = moveStatus;
+    private void setPreviousMoveInvalid(boolean wasInvalid) {
+        this.previousMoveInvalid = wasInvalid;
     }
 
     public Player getPlayer1() {
@@ -66,16 +85,6 @@ public class Game {
         return this.currentGamePhase;
     }
 
-    private void updateCurrentGamePhase() {
-        // Set the current game phase
-        if (this.player1.getNumOfPiecesRemaining() > 0 || this.player2.getNumOfPiecesRemaining() > 0) {
-            this.currentGamePhase = "PLACEMENT";
-        }
-        else {
-            this.currentGamePhase = "MOVEMENT";
-        }
-    }
-
     public Player getThisPlayerTurn() {
         // Return the player whose turn it is
         return this.thisPlayerTurn;
@@ -84,15 +93,6 @@ public class Game {
     public void setThisPlayerTurn(Player player) {
         // Set the player whose turn it is
         this.thisPlayerTurn = player;
-    }
-
-    public void switchTurn() {
-        // Switch the player whose turn it is
-        if (this.thisPlayerTurn == this.player1) {
-            this.thisPlayerTurn = this.player2;
-        } else {
-            this.thisPlayerTurn = this.player1;
-        }
     }
 
     private boolean isGameOver() {

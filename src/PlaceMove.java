@@ -8,7 +8,9 @@ public class PlaceMove extends Move{
         // Check if the move is valid
         if (isValidStartPosition(startPosition) && isValidEndPosition(endPosition)) {
             // Place the piece on the board
-            this.board.getPosition(endPosition).setPieceOccupying(this.player.popPiecesRemaining());
+            Piece piece = this.player.popPiecesRemaining();
+            this.board.getPosition(endPosition).setPieceOccupying(piece);
+            board.addPlayerPieceToBoard(piece, startPosition);
             // Check if a mill is formed
             if (isMillFormed()) {
                 // Remove a piece from the opponent

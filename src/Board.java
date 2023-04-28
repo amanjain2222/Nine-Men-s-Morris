@@ -21,6 +21,9 @@ public class Board {
         this.player2 = player2;
         initBoard();
         initMillCombinations();
+
+        player1PiecesOnBoardPositions = new ArrayList<>();
+        player2PiecesOnBoardPositions = new ArrayList<>();
     }
 
     public Position[] getBoardPositions() {
@@ -142,6 +145,10 @@ public class Board {
         } else {
             return player2PiecesOnBoardPositions;
         }
+    }
+
+    public void addPlayerPieceToBoard(Piece piece, int targetPosition) {
+        addToPlayerPiecesOnBoardPositions(targetPosition, piece);
     }
 
     public void changePlayerPiecesOnBoardPosition(int fromIndex, int toIndex, Piece piece) {

@@ -19,26 +19,14 @@ public class Player {
     public boolean makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
         Move adjacentMove = new AdjacentMove(this, board, board.getPlayerAtPosition(startPosition.getIndex()));
 
-        if (adjacentMove.execute(startPosition.getIndex(), targetPosition.getIndex())) {
-            //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
-            return false;
-        } else {
-            return true;
-        }
+        return adjacentMove.execute(startPosition.getIndex(), targetPosition.getIndex());
     }
 
     public boolean makePlaceMove(Board board, Position targetPosition) {
         Piece piece = getPiecesRemaining().get(0);
-
         Move placeMove = new PlaceMove(this, board, piece);
 
-        // execute the move
-        if (placeMove.execute(piece.getPosition(), targetPosition.getIndex())) {
-            //TODO: write code for checking if a mill is formed after moving the piece and ask to remove a piece
-            return false;
-        } else {
-            return true;
-        }
+        return placeMove.execute(piece.getPosition(), targetPosition.getIndex());
     }
 
     public String getName() {
