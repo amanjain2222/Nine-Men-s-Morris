@@ -22,25 +22,22 @@ public class Game {
     }
 
     public void updateGame(InputState input) {
-        // Process input by using it to interpret the current player's next move.
-        if (!isGameOver()) {
-            // Take Player Turn or Determine if Player Move was Invalid
-            boolean moveStatus = false;
-            if (getCurrentGamePhase().equals("PLACEMENT")) {
-                Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-                moveStatus = players[gameTurn % players.length].makePlaceMove(gameBoard, targetPosition);
-            } else if (getCurrentGamePhase().equals("MOVEMENT")) {
-                Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
-                Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
-                moveStatus = players[gameTurn % players.length].makeAdjacentMove(gameBoard, startingPosition, targetPosition); 
-            }
-            setPreviousMoveInvalid(!moveStatus);
-            if (!moveStatus) return;
-
-            // Only if Move Was Valid Update Game Globals
-            gameTurn++;
-            updateCurrentGamePhase();
+        // Take Player Turn or Determine if Player Move was Invalid
+        boolean moveStatus = false;
+        if (getCurrentGamePhase().equals("PLACEMENT")) {
+            Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
+            moveStatus = players[gameTurn % players.length].makePlaceMove(targetPosition);
+        } else if (getCurrentGamePhase().equals("MOVEMENT")) {
+            Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
+            Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
+            moveStatus = players[gameTurn % players.length].makeAdjacentMove(startingPosition, targetPosition); 
         }
+        setPreviousMoveInvalid(!moveStatus);
+        if (!moveStatus) return;
+
+        // Only if Move Was Valid Update Game Globals
+        gameTurn++;
+        updateCurrentGamePhase();
     }
 
     private void updateCurrentGamePhase() {
@@ -59,22 +56,15 @@ public class Game {
     }
 
     private void setPreviousMoveInvalid(boolean wasInvalid) {
-        this.previousMoveInvalid = wasInvalid;
+        previousMoveInvalid = wasInvalid;
     }
 
     public Board getGameBoard() {
-        // Return the game board
-        return this.gameBoard;
+        return gameBoard;
     }
 
     public String getCurrentGamePhase() {
-        // Return the current game phase
-        return this.currentGamePhase;
-    }
-
-    private boolean isGameOver() {
-        //TODO: Implement Code for checking if the game is over
-        return false;
+        return currentGamePhase;
     }
 
     public int getGameTurn() {

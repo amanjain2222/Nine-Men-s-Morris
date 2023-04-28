@@ -16,17 +16,13 @@ public class Player {
         }
     }
 
-    public boolean makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
-        Move adjacentMove = new AdjacentMove(this, board, board.getPlayerAtPosition(startPosition.getIndex()));
-
-        return adjacentMove.execute(startPosition.getIndex(), targetPosition.getIndex());
+    public boolean makeAdjacentMove(Position startPosition, Position targetPosition) {
+        return new MoveAdjacent(this, startPosition, targetPosition).execute();
     }
 
-    public boolean makePlaceMove(Board board, Position targetPosition) {
-        Piece piece = getPiecesRemaining().get(0);
-        Move placeMove = new PlaceMove(this, board, piece);
-
-        return placeMove.execute(piece.getPosition(), targetPosition.getIndex());
+    public boolean makePlaceMove(Position targetPosition) {
+        // Return any potential invalid status from the move so it can be used to update the GameState.
+        return new MovePlace(this, targetPosition).execute();
     }
 
     public String getName() {
@@ -46,7 +42,7 @@ public class Player {
 
     public int getNumOfPiecesRemaining() {
         //  return the number of pieces remaining
-        return this.piecesRemaining.size();
+        return piecesRemaining.size();
     }
 
     public int getNumOfPiecesOnBoard() {

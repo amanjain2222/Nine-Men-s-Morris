@@ -38,32 +38,32 @@ public class Board {
 
         // add the adjacent indexes for each position
         // outer square
-        boardPosition[0].addAdjacentIndexes(1,9);
-        boardPosition[1].addAdjacentIndexes(0,2,4);
-        boardPosition[2].addAdjacentIndexes(1,14);
-        boardPosition[9].addAdjacentIndexes(0,10,21);
-        boardPosition[14].addAdjacentIndexes(2,13,23);
-        boardPosition[21].addAdjacentIndexes(9,22);
-        boardPosition[22].addAdjacentIndexes(19,21,23);
-        boardPosition[23].addAdjacentIndexes(14,22);
+        boardPosition[0].addAdjacentPositions(boardPosition[1], boardPosition[9]);
+        boardPosition[1].addAdjacentPositions(boardPosition[0], boardPosition[2], boardPosition[4]);
+        boardPosition[2].addAdjacentPositions(boardPosition[1], boardPosition[14]);
+        boardPosition[9].addAdjacentPositions(boardPosition[0], boardPosition[10], boardPosition[21]);
+        boardPosition[14].addAdjacentPositions(boardPosition[2], boardPosition[13], boardPosition[23]);
+        boardPosition[21].addAdjacentPositions(boardPosition[9], boardPosition[22]);
+        boardPosition[22].addAdjacentPositions(boardPosition[19], boardPosition[21], boardPosition[23]);
+        boardPosition[23].addAdjacentPositions(boardPosition[14], boardPosition[22]);
         // middle square
-        boardPosition[3].addAdjacentIndexes(4,10);
-        boardPosition[4].addAdjacentIndexes(1,3,5,7);
-        boardPosition[5].addAdjacentIndexes(4,13);
-        boardPosition[10].addAdjacentIndexes(3,9,11,18);
-        boardPosition[13].addAdjacentIndexes(5,12,14,20);
-        boardPosition[18].addAdjacentIndexes(10,19);
-        boardPosition[19].addAdjacentIndexes(16,18,20,22);
-        boardPosition[20].addAdjacentIndexes(13,19);
+        boardPosition[3].addAdjacentPositions(boardPosition[4], boardPosition[10]);
+        boardPosition[4].addAdjacentPositions(boardPosition[1], boardPosition[3], boardPosition[5], boardPosition[7]);
+        boardPosition[5].addAdjacentPositions(boardPosition[4], boardPosition[13]);
+        boardPosition[10].addAdjacentPositions(boardPosition[3], boardPosition[9], boardPosition[11], boardPosition[18]);
+        boardPosition[13].addAdjacentPositions(boardPosition[5], boardPosition[12], boardPosition[14], boardPosition[20]);
+        boardPosition[18].addAdjacentPositions(boardPosition[10], boardPosition[19]);
+        boardPosition[19].addAdjacentPositions(boardPosition[16], boardPosition[18], boardPosition[20], boardPosition[22]);
+        boardPosition[20].addAdjacentPositions(boardPosition[13],boardPosition[19]);
         // inner square
-        boardPosition[6].addAdjacentIndexes(7,11);
-        boardPosition[7].addAdjacentIndexes(4,6,8);
-        boardPosition[8].addAdjacentIndexes(7,12);
-        boardPosition[11].addAdjacentIndexes(6,10,15);
-        boardPosition[12].addAdjacentIndexes(8,13,17);
-        boardPosition[15].addAdjacentIndexes(11,16);
-        boardPosition[16].addAdjacentIndexes(15,17,19);
-        boardPosition[17].addAdjacentIndexes(12,16);
+        boardPosition[6].addAdjacentPositions(boardPosition[7], boardPosition[11]);
+        boardPosition[7].addAdjacentPositions(boardPosition[4], boardPosition[6], boardPosition[8]);
+        boardPosition[8].addAdjacentPositions(boardPosition[7], boardPosition[12]);
+        boardPosition[11].addAdjacentPositions(boardPosition[6], boardPosition[10], boardPosition[15]);
+        boardPosition[12].addAdjacentPositions(boardPosition[8], boardPosition[13], boardPosition[17]);
+        boardPosition[15].addAdjacentPositions(boardPosition[11], boardPosition[16]);
+        boardPosition[16].addAdjacentPositions(boardPosition[15], boardPosition[17], boardPosition[19]);
+        boardPosition[17].addAdjacentPositions(boardPosition[12], boardPosition[16]);
     }
 
     private void initMillCombinations() {
@@ -86,27 +86,13 @@ public class Board {
         return millCombinations[index];
     }
 
-    public int[] getAdjacentPositions(int index) {
-        return boardPosition[index].getAdjacentIndexes();
-    }
-
-    public boolean isAdjacent(int index1, int index2) {
-        // return true if the positions at the indexes are adjacent
-        for (int adjIndex : boardPosition[index1].getAdjacentIndexes()) {
-            if (adjIndex == index2) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public int showThisPositionIndex(int index) {
         return boardPosition[index].getIndex();
     }
 
-    public Position getPosition(int index) {
-        // return the position at the index
-        return boardPosition[index];
+    public Position getPosition(int positionIndex) {
+        if (positionIndex < 0 || positionIndex > boardPosition.length) return null;
+        return boardPosition[positionIndex];
     }
 
     public int getPositionIndex(int position){
