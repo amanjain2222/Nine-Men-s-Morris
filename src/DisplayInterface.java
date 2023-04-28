@@ -63,16 +63,16 @@ public class DisplayInterface {
             + " |    |   {" + positionToChar(boardPositions[6]) + "}-----{" + positionToChar(boardPositions[7]) + "}------{" + positionToChar(boardPositions[8]) + "}   |    | \n"
             + " |    |    |                |    |    | \n"
             + " |    |    |                |    |    | \n"
-            + "{" + positionToChar(boardPositions[9]) + "}--{" + positionToChar(boardPositions[10]) + "}--{" + positionToChar(boardPositions[11]) + "}              {" + positionToChar(boardPositions[12]) + "}--{" + positionToChar(boardPositions[13]) + "}--{" + positionToChar(boardPositions[14]) + "}\n"
+            + "{" + positionToChar(boardPositions[9]) + "}--{" + positionToChar(boardPositions[10]) + "}--{" + positionToChar(boardPositions[11]) + "}           {" + positionToChar(boardPositions[12]) + "}--{" + positionToChar(boardPositions[13]) + "}-{" + positionToChar(boardPositions[14]) + "}\n"
             + " |    |    |                |    |    | \n"
             + " |    |    |                |    |    | \n"
-            + " |    |   {" + positionToChar(boardPositions[15]) + "}-----{" + positionToChar(boardPositions[16]) + "}------{" + positionToChar(boardPositions[17]) + "}   |    |\n"
+            + " |    |   {" + positionToChar(boardPositions[15]) + "}-----{" + positionToChar(boardPositions[16]) + "}----{" + positionToChar(boardPositions[17]) + "}  |    |\n"
             + " |    |            |             |    | \n"
             + " |    |            |             |    | \n"
-            + " |   {" + positionToChar(boardPositions[18]) + "}----------{" + positionToChar(boardPositions[19]) + "}-----------{" + positionToChar(boardPositions[20]) + "}   | \n"
+            + " |   {" + positionToChar(boardPositions[18]) + "}----------{" + positionToChar(boardPositions[19]) + "}---------{" + positionToChar(boardPositions[20]) + "}  | \n"
             + " |                 |                  | \n"
             + " |                 |                  | \n"
-            + "{" + positionToChar(boardPositions[21]) + "}---------------{" + positionToChar(boardPositions[22]) +  "}----------------{" + positionToChar(boardPositions[23]) + "}\n");
+            + "{" + positionToChar(boardPositions[21]) + "}---------------{" + positionToChar(boardPositions[22]) +  "}--------------{" + positionToChar(boardPositions[23]) + "}\n");
     }
 
     private String positionToChar (Position position) {
