@@ -8,6 +8,7 @@ public class MovePlace extends Move{
         if (!super.execute()) return false;
         
         targetPosition.setPieceOccupying(player.popPiecesRemaining());
+        player.increaseNumOfPiecesOnBoard();
         return true;
     }
 }
