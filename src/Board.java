@@ -19,7 +19,7 @@ public class Board {
     private void initBoard() {
         // initialise the board positions
         for (int i = 0; i < TOTAL_POSITION; i++) {
-            boardPosition[i] = new Position(i);
+            boardPosition[i] = new Position();
         }
 
         // add the adjacent indexes for each position
