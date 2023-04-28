@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Display {
+public class DisplayInterface {
 
     final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
     final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
@@ -17,10 +17,11 @@ public class Display {
 
     Scanner consoleInput = new Scanner(System.in);
 
-    public Input updateDisplay(Game game) {
-        // Returns integer position input.
+    public void updateDisplay(Game game) {
         this.printBoard(game.getGameBoard());
+    }
 
+    public InputState queryInputState(Game game) {
         // Print game phase and player turn info
         System.out.println("              " + GAME_PHASE_MESSAGE + game.getCurrentGamePhase()); // display current game phase
         // Print Player Pieces Remaining if in Placement Phase
@@ -36,7 +37,7 @@ public class Display {
         if (game.wasPreviousMoveInvalid()) {
             System.out.println(INVALID_MOVE_MESSAGE);
         } else {
-            System.out.println(game.getThisPlayerTurn().getName() + PLAYER_TURN_INFO_MESSAGE);
+            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE + "( You currently have " + game.getCurrentPlayer().getNumOfPiecesRemaining() + " pieces remaining to place. )");
         }
 
         // Get Input Based On Current Game Phase
@@ -61,7 +62,7 @@ public class Display {
         }
 
         // Return Input
-        return new Input(inputValues);
+        return new InputState(inputValues);
     }
 
     private void printBoard(Board board) {

@@ -5,12 +5,28 @@ public class Program {
     }
 
     private static void runGame() {
-        Display currentDisplay = new Display();
-        Game currentGame = new Game();
+        DisplayInterface displayInterface = new DisplayInterface();
+        Game game = new Game();
 
         while(true) {
-            Input currentInput = currentDisplay.updateDisplay(currentGame);
-            currentGame.updateGame(currentInput);
+            // Game Updates By Processing Any Pending Input and Resolving Any Game Constraints
+            // game.updateGame();
+            // Query GameState and use it to update the display.
+            //GameState currentGameState = game.queryGameState(); 
+            displayInterface.updateDisplay(game);
+            // Query InputState and queue it to be processed in Game object.
+            InputState currentInputState = displayInterface.queryInputState(game);
+            //game.queueInputProcess(currentInputState);
+            game.updateGame(currentInputState);
         }
     }
 }
+
+
+
+
+
+
+
+
+
