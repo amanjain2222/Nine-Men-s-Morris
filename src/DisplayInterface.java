@@ -5,10 +5,11 @@ public class DisplayInterface {
 
     final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
     final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
+    final String PLAYER_TURN_INFO_Again_MESSAGE = " Player, make another move that is valid.";
     final String PIECES_REMAINING_ON_HAND_MESSAGE = " Player Pieces Remaining On Hand: ";
     final String PIECES_REMAINING_ON_BOARD_MESSAGE = " Player Pieces Remaining On Board: ";
     final String GAME_PHASE_MESSAGE = "Current Game Phase: ";
-    final String INVALID_MOVE_MESSAGE = "Invalid move. Please try again.";
+    final String INVALID_MOVE_MESSAGE = "Invalid move!!!";
     final String PLACEMENT_QUERY_MESSAGE = "Please enter the position on board you want to place the piece to: ";
     final String MOVEMENT_FIRST_QUERY_MESSAGE = "Please enter the position of the piece that you want to move: ";
     final String MOVEMENT_SECOND_QUERY_MESSAGE = "Please enter the position you want to move the piece to: ";
@@ -35,9 +36,10 @@ public class DisplayInterface {
 
         // Print Previous Input Result
         if (game.wasPreviousMoveInvalid()) {
-            System.out.println(INVALID_MOVE_MESSAGE);
+            System.out.println(INVALID_MOVE_MESSAGE + "\n");
+            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_Again_MESSAGE);
         } else {
-            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE + "( You currently have " + game.getCurrentPlayer().getNumOfPiecesRemaining() + " pieces remaining to place. )");
+            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE);
         }
 
         // Get Input Based On Current Game Phase
