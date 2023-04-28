@@ -2,13 +2,13 @@ import java.util.ArrayList;
 
 public class Position {
     private final int index;
-    private Piece pieceOccupying;
     private final ArrayList<Position> adjacentPositions; // adjacent positions stored as ArrayList because of variable number of adjacent positions
+    private Piece pieceOccupying;
 
     public Position(int index) {
         this.index = index;
-        this.pieceOccupying = null;
-        this.adjacentPositions = new ArrayList<>();
+        adjacentPositions = new ArrayList<>();
+        pieceOccupying = null;
     }
 
     public int getIndex() {
