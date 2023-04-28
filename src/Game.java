@@ -23,15 +23,16 @@ public class Game {
             if (getCurrentGamePhase().equals("PLACEMENT")) {
                 Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
                 moveStatus = thisPlayerTurn.makePlaceMove(gameBoard, targetPosition);
+                updateCurrentGamePhase();
             } else if (getCurrentGamePhase().equals("MOVEMENT")) {
                 Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
                 Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
-                moveStatus = thisPlayerTurn.makeAdjacentMove(gameBoard, startingPosition, targetPosition); 
+                moveStatus = thisPlayerTurn.makeAdjacentMove(gameBoard, startingPosition, targetPosition);
             }
             setPreviousMoveInvalid(!moveStatus);
             if (!moveStatus) return;
 
-            // Only if Move Was Valid Update Game Globals 
+            // Only if Move Was Valid Update Game Globals
             switchTurn();
             updateCurrentGamePhase();
         }
