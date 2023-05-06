@@ -32,6 +32,7 @@ public class Game {
             Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
             moveStatus = players[gameTurn % players.length].makeAdjacentMove(startingPosition, targetPosition); 
         }
+
         setPreviousMoveInvalid(!moveStatus);
         if (!moveStatus) return;
 

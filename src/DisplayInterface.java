@@ -9,7 +9,7 @@ public class DisplayInterface {
     final String PIECES_REMAINING_ON_HAND_MESSAGE = " Player Pieces Remaining On Hand: ";
     final String PIECES_REMAINING_ON_BOARD_MESSAGE = " Player Pieces Remaining On Board: ";
     final String GAME_PHASE_MESSAGE = "Current Game Phase: ";
-    final String INVALID_MOVE_MESSAGE = "Invalid move!!!";
+    final String INVALID_MOVE_MESSAGE = "Invalid move. Please try again.";
     final String PLACEMENT_QUERY_MESSAGE = "Please enter the position on board you want to place a piece: ";
     final String MOVEMENT_FIRST_QUERY_MESSAGE = "Please enter the position of the piece that you want to move: ";
     final String MOVEMENT_SECOND_QUERY_MESSAGE = "Please enter the position you want to move the piece to: ";
@@ -39,7 +39,7 @@ public class DisplayInterface {
             System.out.println(INVALID_MOVE_MESSAGE + "\n");
             System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_Again_MESSAGE);
         } else {
-            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE);
+            System.out.println(game.getCurrentPlayer().getName() + PLAYER_TURN_INFO_MESSAGE + "( You currently have " + game.getCurrentPlayer().getNumOfPiecesRemaining() + " pieces remaining to place. )");
         }
 
         // Get Input Based On Current Game Phase

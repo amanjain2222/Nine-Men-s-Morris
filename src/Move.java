@@ -14,4 +14,6 @@ public abstract class Move extends Action {
         if (!targetPosition.isEmpty()) return false;
         return true;
     }
+
+
 }
