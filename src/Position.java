@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class Position {
     private final ArrayList<Position> adjacentPositions; // adjacent positions stored as ArrayList because of variable number of adjacent positions
     private Piece pieceOccupying;
+    private int positionNumber;
 
-    public Position() {
+    public Position(int positionNumber) {
         adjacentPositions = new ArrayList<>();
         pieceOccupying = null;
+        this.positionNumber = positionNumber;
     }
 
     public Piece getPieceOccupying() {
@@ -15,43 +17,40 @@ public class Position {
     }
 
     public void setPieceOccupying(Piece piece) {
-        // set the piece occupying the position
-        this.pieceOccupying = piece;
+        pieceOccupying = piece;
     }
 
     public boolean isEmpty() {
-        // check if position is empty
         return (pieceOccupying == null);
     }
 
     public void setEmpty() {
-        // set the position to empty
-        this.pieceOccupying = null;
+        pieceOccupying = null;
     }
 
     public void addAdjacentPositions(Position adjacentPostion1, Position adjacentPostion2) {
-        // add the adjacent indexes to the list for position with two adjacent positions
-        this.adjacentPositions.add(adjacentPostion1);
-        this.adjacentPositions.add(adjacentPostion2);
+        adjacentPositions.add(adjacentPostion1);
+        adjacentPositions.add(adjacentPostion2);
     }
 
     public void addAdjacentPositions(Position adjacentPostion1, Position adjacentPostion2, Position adjacentPostion3) {
-        // add the adjacent indexes to the list for position with three adjacent positions
-        this.adjacentPositions.add(adjacentPostion1);
-        this.adjacentPositions.add(adjacentPostion2);
-        this.adjacentPositions.add(adjacentPostion3);
+        adjacentPositions.add(adjacentPostion1);
+        adjacentPositions.add(adjacentPostion2);
+        adjacentPositions.add(adjacentPostion3);
     }
 
     public void addAdjacentPositions(Position adjacentPostion1, Position adjacentPostion2, Position adjacentPostion3, Position adjacentPostion4) {
-        // add the adjacent indexes to the list for position with four adjacent positions
-        this.adjacentPositions.add(adjacentPostion1);
-        this.adjacentPositions.add(adjacentPostion2);
-        this.adjacentPositions.add(adjacentPostion3);
-        this.adjacentPositions.add(adjacentPostion4);
+        adjacentPositions.add(adjacentPostion1);
+        adjacentPositions.add(adjacentPostion2);
+        adjacentPositions.add(adjacentPostion3);
+        adjacentPositions.add(adjacentPostion4);
     }
 
     public boolean isAdjacentToThisPosition(Position queryPosition) {
-        // Check if the given index is adjacent to this position
-        return this.adjacentPositions.contains(queryPosition);
+        return adjacentPositions.contains(queryPosition);
+    }
+
+    public int getPositionNumber() {
+        return positionNumber;
     }
 }
