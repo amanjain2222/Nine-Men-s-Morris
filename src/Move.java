@@ -8,10 +8,10 @@ public abstract class Move extends Action {
     }
 
     @Override
-    public ErrorCode execute() {
+    public ExecutionCode execute() {
         // validate target position
-        if (targetPosition == null) return ErrorCode.NULL;
-        if (!targetPosition.isEmpty()) return ErrorCode.NOT_EMPTY;
-        return ErrorCode.SUCCESS;
+        if (targetPosition == null) return ExecutionCode.NULL;
+        if (!targetPosition.isEmpty()) return ExecutionCode.NOT_EMPTY;
+        return ExecutionCode.SUCCESS;
     }
 }

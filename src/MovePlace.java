@@ -6,9 +6,10 @@ public class MovePlace extends Move{
     }
 
     @Override
-    public ErrorCode execute() {
-        if (super.execute() != ErrorCode.SUCCESS) return super.execute();
+    public ExecutionCode execute() {
+        ExecutionCode superExecutionCode = super.execute();
+        if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
         targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
-        return ErrorCode.SUCCESS;
+        return ExecutionCode.SUCCESS;
     }
 }

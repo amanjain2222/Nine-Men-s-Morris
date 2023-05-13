@@ -64,11 +64,14 @@ public class DisplayInterface {
         Position[] startPositionsP1 = board.getStartPositionP1();
         Position[] startPositionsP2 = board.getStartPositionP2();
 
+        // Print Title
         System.out.println("\n                              " + GAME_TITLE_MESSAGE + "\n");
 
+        // Print Player 2 Start Positions
         System.out.println("                       Ice :  " + startPositionToChar(startPositionsP1[0]) + "  " + startPositionToChar(startPositionsP1[1]) + "  " + startPositionToChar(startPositionsP1[2]) + "  " + startPositionToChar(startPositionsP1[3]) + "  "
                 + startPositionToChar(startPositionsP1[4]) + "  " + startPositionToChar(startPositionsP1[5]) + "  " + startPositionToChar(startPositionsP1[6]) + "  " + startPositionToChar(startPositionsP1[7]) + "  " + startPositionToChar(startPositionsP1[8]) +"\n");
 
+        // Print Board
         System.out.print(
             "  0{ " + positionToChar(boardPositions[0]) + " }---------------------------- 1{ " + positionToChar(boardPositions[1]) +  " }----------------------------- 2{ " + positionToChar(boardPositions[2]) + " }\n"
             + "     |                                  |                                   | \n"
@@ -90,11 +93,9 @@ public class DisplayInterface {
             + "     |                                  |                                   | \n"
             + " 21{ " + positionToChar(boardPositions[21]) + " }--------------------------- 22{ " + positionToChar(boardPositions[22]) +  " }---------------------------- 23{ " + positionToChar(boardPositions[23]) + " }\n\n");
 
+        // Print Player 1 Start Positions
         System.out.println("                       Fire :  " + startPositionToChar(startPositionsP2[0]) + "  " + startPositionToChar(startPositionsP2[1]) + "  " + startPositionToChar(startPositionsP2[2]) + "  " + startPositionToChar(startPositionsP2[3]) + "  "
                 + startPositionToChar(startPositionsP2[4]) + "  " + startPositionToChar(startPositionsP2[5]) + "  " + startPositionToChar(startPositionsP2[6]) + "  " + startPositionToChar(startPositionsP2[7]) + "  " + startPositionToChar(startPositionsP2[8]) +"\n");
-
-
-
     }
 
     private char positionToChar (Position position) {
@@ -115,14 +116,14 @@ public class DisplayInterface {
         }
     }
 
-    private String getErrorMessage(ErrorCode errorCode) {
-        return switch (errorCode) {
+    private String getErrorMessage(ExecutionCode executionCode) {
+        return switch (executionCode) {
             case NULL -> "Error : The position you have entered does not exist.";
             case NOT_EMPTY -> "Error : The position you have entered is not empty.";
             case NOT_OWNER -> "Error : The piece you have selected is not yours.";
             case NOT_ADJACENT ->
                     "Error : The position you have entered is not adjacent to the piece you have selected.";
-            default -> "Error : An unknown error has occurred. Error Code: " + errorCode;
+            default -> "Error : An unknown error has occurred. Error Code: " + executionCode;
         };
     }
 }

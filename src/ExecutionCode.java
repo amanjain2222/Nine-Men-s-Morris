@@ -1,4 +1,4 @@
-public enum ErrorCode {
+public enum ExecutionCode {
     SUCCESS,
     NULL,
     NOT_EMPTY,

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Player {
     private final String name;
     private final char displayChar;
@@ -13,11 +11,11 @@ public class Player {
         numOfPiecesRemaining = 9;
     }
 
-    public ErrorCode makeAdjacentMove(Position startPosition, Position targetPosition) {
+    public ExecutionCode makeAdjacentMove(Position startPosition, Position targetPosition) {
         return new MoveAdjacent(this, startPosition, targetPosition).execute();
     }
 
-    public ErrorCode makePlaceMove(Board board, Position targetPosition) {
+    public ExecutionCode makePlaceMove(Board board, Position targetPosition) {
         // Return any potential invalid status from the move so it can be used to update the GameState.
         return new MovePlace(board,this, targetPosition).execute();
     }
