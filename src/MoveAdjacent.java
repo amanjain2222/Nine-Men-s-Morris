@@ -7,19 +7,20 @@ public class MoveAdjacent extends Move {
     }
 
     @Override
-    public boolean execute() {
-        if (!super.execute()) return false;
-        if (startPosition == null) return false;
-        if (!startPosition.isAdjacentToThisPosition(targetPosition)) return false;
-        if (startPosition.isEmpty()) return false;
+    public ErrorCode execute() {
+        if (super.execute() != ErrorCode.SUCCESS) return super.execute();
+
+        if (!startPosition.isAdjacentToThisPosition(targetPosition)) {
+            return ErrorCode.NOT_ADJACENT;
+        }
 
         // Move the piece if it belongs to the player whose trying to move it.
         Piece selectedPiece = startPosition.getPieceOccupying();
-        if (selectedPiece.getOwner() != player) return false;
+        if (selectedPiece.getOwner() != player) {return ErrorCode.NOT_OWNER;}
 
         // Perform piece move.
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(selectedPiece);
-        return true;
+        return ErrorCode.SUCCESS;
     }
 }
