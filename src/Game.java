@@ -67,10 +67,13 @@ public class Game {
 
         if (PreviousMovePositions.size() > 0 && gameBoard.isMill(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
             this.currentGamePhase = "Remove";
+            gameTurn--;
 
         }else if (gameTurn >= players.length * PLAYER_STARTING_PIECES) {
             this.currentGamePhase = "MOVEMENT";
 
+        }else{
+            this.currentGamePhase = "PLACEMENT";
         }
 
     }
