@@ -11,6 +11,7 @@ public class DisplayInterface {
     final String GAME_PHASE_MESSAGE = "Current Game Phase: ";
     final String INVALID_MOVE_MESSAGE = "Invalid move. Please try again.";
     final String PLACEMENT_QUERY_MESSAGE = "Please enter the position on board you want to place a piece: ";
+    final String Remove_QUERY_MESSAGE = "Please enter the position of opponent's piece you want to remove: ";
     final String MOVEMENT_FIRST_QUERY_MESSAGE = "Please enter the position of the piece that you want to move: ";
     final String MOVEMENT_SECOND_QUERY_MESSAGE = "Please enter the position you want to move the piece to: ";
 
@@ -56,6 +57,11 @@ public class DisplayInterface {
                 System.out.print(MOVEMENT_FIRST_QUERY_MESSAGE);
                 inputValues.add(consoleInput.nextInt());
                 System.out.print(MOVEMENT_SECOND_QUERY_MESSAGE);
+                inputValues.add(consoleInput.nextInt());
+                break;
+            case "Remove":
+                // Get Remove Input
+                System.out.print(Remove_QUERY_MESSAGE);
                 inputValues.add(consoleInput.nextInt());
                 break;
             default:

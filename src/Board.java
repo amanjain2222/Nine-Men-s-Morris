@@ -7,7 +7,7 @@ public class Board {
     public static final int TOTAL_POSITION_IN_A_MILL = 3;
     private final Position[] boardPosition;
 
-    private ArrayList<Position[]> Mill_Combinations;
+    private ArrayList<Position[]> Mill_Combinations = new ArrayList<>();
 
     public Board(Player player1, Player player2) {
         this.boardPosition = new Position[TOTAL_POSITION];
@@ -82,13 +82,14 @@ public class Board {
             Position position1 = combination[0];
             Position position2 = combination[1];
             Position position3 = combination[2];
-
-            if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
-
-                if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
-                    return true;
+            if (position1.getPieceOccupying() != null && position2.getPieceOccupying() != null && position3.getPieceOccupying() != null){
+                if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
+                    if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
+                        return true;
+                    }
                 }
             }
+
 
         }
         return false;
