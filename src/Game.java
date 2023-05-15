@@ -52,7 +52,7 @@ public class Game {
             }else{
                 moveStatus = players[gameTurn % players.length].removePiece(targetPosition);
             }
-0
+
 
             if (moveStatus){
                 PreviousMovePositions.clear();
