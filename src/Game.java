@@ -51,12 +51,7 @@ public class Game {
 
         }  else if (getCurrentGamePhase().equals("Remove")){
             Position targetPosition =  gameBoard.getPosition(input.inputValues.get(0));
-
-            if (gameBoard.isMill(players[(gameTurn+1) % players.length], targetPosition)){
-                moveStatus = false;
-            }else{
-                moveStatus = players[gameTurn % players.length].removePiece(targetPosition);
-            }
+            moveStatus = players[gameTurn % players.length].removePiece(targetPosition);
             if (moveStatus){
                 PreviousMovePositions.clear();
             }
