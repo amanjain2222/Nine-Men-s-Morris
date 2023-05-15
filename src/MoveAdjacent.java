@@ -16,11 +16,11 @@ public class MoveAdjacent extends Move {
 
         // Move the piece if it belongs to the player whose trying to move it.
         Piece selectedPiece = startPosition.getPieceOccupying();
-        if (selectedPiece.getOwner() != player) return false;
+        if (selectedPiece.getOwner() != player) {return ExecutionCode.NOT_OWNER;}
 
         // Perform piece move.
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(selectedPiece);
-        return true;
+        return ExecutionCode.SUCCESS;
     }
 }

@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Game {
     private final int PLAYER_STARTING_PIECES = 9;
-
     private final String FIRST_PLAYER_NAME = "Ice";
     private final Character FIRST_PLAYER_CHAR = 'I';
     private final String SECOND_PLAYER_NAME = "Fire";
@@ -18,16 +17,21 @@ public class Game {
     private String currentGamePhase;
     // Keeps Track of whether Previous Game Move was Valid
     private boolean previousMoveInvalid = false;
+    private ErrorCode errorCode;
+    private String moveConsoleDescription = "";
 
     public Game() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
         currentGamePhase = "PLACEMENT";
+
     }
 
     public void updateGame(InputState input) {
         // Take Player Turn or Determine if Player Move was Invalid
-        boolean moveStatus = false;
+        ErrorCode moveStatusCode = ErrorCode.UNKNOWN;
+        String moveDescription = "";
+
         if (getCurrentGamePhase().equals("PLACEMENT")) {
             Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
             moveStatus = players[gameTurn % players.length].makePlaceMove(targetPosition);
@@ -86,6 +90,22 @@ public class Game {
 
     private void setPreviousMoveInvalid(boolean wasInvalid) {
         previousMoveInvalid = wasInvalid;
+    }
+
+    private void setErrorCode(ErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public String getMoveConsoleDescription() {
+        return moveConsoleDescription;
+    }
+
+    public void setMoveConsoleDescription(String moveConsoleDescription) {
+        this.moveConsoleDescription = moveConsoleDescription;
     }
 
     public Board getGameBoard() {

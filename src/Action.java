@@ -1,3 +1,3 @@
 public abstract class Action {
-    public abstract boolean execute();
+    public abstract ExecutionCode execute();
 }
