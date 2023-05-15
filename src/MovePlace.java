@@ -6,6 +6,7 @@ public class MovePlace extends Move{
     @Override
     public boolean execute() {
         if (!super.execute()) return false;
+        if (!targetPosition.isEmpty()) return false;
         
         targetPosition.setPieceOccupying(player.popPiecesRemaining());
         return true;

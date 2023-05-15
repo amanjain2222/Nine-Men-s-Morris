@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Game {
     private final int PLAYER_STARTING_PIECES = 9;
 
@@ -10,6 +12,8 @@ public class Game {
     private final Board gameBoard;
 
     private int gameTurn;
+
+    private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
 
     private String currentGamePhase;
     // Keeps Track of whether Previous Game Move was Valid
@@ -27,28 +31,59 @@ public class Game {
         if (getCurrentGamePhase().equals("PLACEMENT")) {
             Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
             moveStatus = players[gameTurn % players.length].makePlaceMove(targetPosition);
+            if (moveStatus){
+                PreviousMovePositions.add(targetPosition);
+            }
+
+
         } else if (getCurrentGamePhase().equals("MOVEMENT")) {
             Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
             Position targetPosition =  gameBoard.getPosition(input.inputValues.get(1));
-            moveStatus = players[gameTurn % players.length].makeAdjacentMove(startingPosition, targetPosition); 
+            moveStatus = players[gameTurn % players.length].makeAdjacentMove(startingPosition, targetPosition);
+            if (moveStatus){
+                PreviousMovePositions.add(targetPosition);
+            }
+
+
+        }  else if (getCurrentGamePhase().equals("Remove")){
+            Position targetPosition =  gameBoard.getPosition(input.inputValues.get(0));
+            if (gameBoard.isMill(players[(gameTurn+1) % players.length], targetPosition)){
+                moveStatus = false;
+            }else{
+                moveStatus = players[gameTurn % players.length].removePiece(targetPosition);
+            }
+
+
+            if (moveStatus){
+                PreviousMovePositions.clear();
+            }
         }
+
         setPreviousMoveInvalid(!moveStatus);
         if (!moveStatus) return;
 
         // Only if Move Was Valid Update Game Globals
+
         gameTurn++;
         updateCurrentGamePhase();
     }
 
     private void updateCurrentGamePhase() {
         // Set the current game phase
-        if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
+
+        if (PreviousMovePositions.size() > 0 && gameBoard.isMill(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
+            this.currentGamePhase = "Remove";
+            gameTurn--;
+
+        }else if (gameTurn >= players.length * PLAYER_STARTING_PIECES) {
+            this.currentGamePhase = "MOVEMENT";
+
+        }else{
             this.currentGamePhase = "PLACEMENT";
         }
-        else {
-            this.currentGamePhase = "MOVEMENT";
-        }
+
     }
+
 
     public boolean wasPreviousMoveInvalid() {
         // Returns whether or not the Previous Game Move was Valid

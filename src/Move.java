@@ -10,8 +10,8 @@ public abstract class Move extends Action {
     @Override
     public boolean execute() {
         // validate target position
-        if (targetPosition == null) return false;
-        if (!targetPosition.isEmpty()) return false;
-        return true;
+        return targetPosition != null;
     }
+
+
 }

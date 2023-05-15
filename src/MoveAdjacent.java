@@ -12,6 +12,7 @@ public class MoveAdjacent extends Move {
         if (startPosition == null) return false;
         if (!startPosition.isAdjacentToThisPosition(targetPosition)) return false;
         if (startPosition.isEmpty()) return false;
+        if (!targetPosition.isEmpty()) return false;
 
         // Move the piece if it belongs to the player whose trying to move it.
         Piece selectedPiece = startPosition.getPieceOccupying();

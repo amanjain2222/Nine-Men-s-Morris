@@ -1,16 +1,19 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
     public static final int TOTAL_POSITION = 24;
     public static final int TOTAL_MILLS_COMBINATION = 16;
     public static final int TOTAL_POSITION_IN_A_MILL = 3;
-
     private final Position[] boardPosition;
+
+    private ArrayList<Position[]> Mill_Combinations = new ArrayList<>();
 
     public Board(Player player1, Player player2) {
         this.boardPosition = new Position[TOTAL_POSITION];
         initBoard();
     }
+
 
     public Position[] getBoardPositions() {
         return boardPosition;
@@ -50,11 +53,49 @@ public class Board {
         boardPosition[15].addAdjacentPositions(boardPosition[11], boardPosition[16]);
         boardPosition[16].addAdjacentPositions(boardPosition[15], boardPosition[17], boardPosition[19]);
         boardPosition[17].addAdjacentPositions(boardPosition[12], boardPosition[16]);
+
+
+        Position[][] millPosition_combinations = new Position[][]{{boardPosition[0], boardPosition[1], boardPosition[2]},
+                {boardPosition[0], boardPosition[9], boardPosition[21]}, {boardPosition[0], boardPosition[3], boardPosition[6]},
+                {boardPosition[1], boardPosition[4], boardPosition[7]},
+                {boardPosition[2], boardPosition[5], boardPosition[7]}, {boardPosition[2], boardPosition[14], boardPosition[23]},
+                {boardPosition[3], boardPosition[4], boardPosition[5]}, {boardPosition[3], boardPosition[10], boardPosition[18]},
+                {boardPosition[5], boardPosition[13], boardPosition[20]}, {boardPosition[6], boardPosition[7],boardPosition[8]},
+                {boardPosition[6], boardPosition[11], boardPosition[15]}, {boardPosition[8], boardPosition[12], boardPosition[17]},
+                {boardPosition[9], boardPosition[10], boardPosition[11]}, {boardPosition[12], boardPosition[13], boardPosition[14]},
+                {boardPosition[15], boardPosition[16], boardPosition[17]}, {boardPosition[18], boardPosition[19], boardPosition[20]}};
+
+        Mill_Combinations.addAll(Arrays.asList(millPosition_combinations));
     }
+
+
+
+
 
     public Position getPosition(int positionIndex) {
         if (positionIndex < 0 || positionIndex > boardPosition.length) return null;
         return boardPosition[positionIndex];
     }
+
+    public boolean isMill(Player player, Position CurrentPosition) {
+        for (Position[] combination : Mill_Combinations) {
+            Position position1 = combination[0];
+            Position position2 = combination[1];
+            Position position3 = combination[2];
+            if (position1.getPieceOccupying() != null && position2.getPieceOccupying() != null && position3.getPieceOccupying() != null){
+                if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
+                    if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
+                        return true;
+                    }
+                }
+            }
+
+
+        }
+        return false;
+    }
+
+
+
 }
 

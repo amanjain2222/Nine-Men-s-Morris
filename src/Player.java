@@ -23,6 +23,10 @@ public class Player {
         return new MovePlace(this, targetPosition).execute();
     }
 
+    public boolean removePiece(Position targetPosition){
+        return new RemovePiece(this, targetPosition).execute();
+    }
+
     public String getName() {
         // return the name of the player
         return name;
