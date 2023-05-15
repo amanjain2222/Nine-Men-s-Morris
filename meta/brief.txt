@@ -1,0 +1,12 @@
+--------------- Brief --------------- Brief --------------- Brief --------------- Brief ---------------
+15p - Completed 9MM Prototype (Java, Console, Non-Advanced Functionality)
+2p - Revised Class Diagram Based on Final (Non-Advanced) Prototype (Whilst still including advanced functionality.)
+2p - Sequence Diagram: Initialization of 9MM (Advanced Functionality)
+1p - Sequence Diagram: Brainstorm 4 Others (Advanced Functionality)
+8p - Sequence Diagram: Complete 4 Others (Advanced Functionality)
+1p - Design Rationales: Revised Class Diagram Revisions
+2p - Design Rationales: 3 Quality Attributes with Design Evidence Explained Shown and Explained
+2p - Design Rationales: 2 Schwartz's Human Values with Relevance Explained + Design Evidence Shown and Explained
+1p - Design Rationales: Expanded to 3 Pages (A4, Time New Roman, 12)
+2p - Video Demonstration: Youtube Live Streamed, Sampled and Cut to 5 Minutes Showing All 9MM Functionality.
+2p - Screenshot Demonstration: 1-2 Screenshots of each previously detailed prototype state in prototype with description.
