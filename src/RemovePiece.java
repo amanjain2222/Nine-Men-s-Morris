@@ -1,6 +1,7 @@
 public class RemovePiece extends Move {
     public RemovePiece(Player player, Position targetPosition) {
         super(player, targetPosition);
+
     }
 
     @Override
