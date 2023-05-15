@@ -8,7 +8,7 @@ public abstract class Move extends Action {
     }
 
     @Override
-    public ExecutionCode execute() {
+    public boolean execute() {
         // validate target position
         return targetPosition != null;
     }

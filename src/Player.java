@@ -1,23 +1,26 @@
+import java.util.ArrayList;
+
 public class Player {
     private final String name;
-    private final char displayChar;
-    private int numOfPiecesRemaining;
+    private ArrayList<Piece> piecesRemaining;
     private int numOfPiecesOnBoard;
 
     public Player(String name, char displayChar) {
         this.name = name;
-        this.displayChar = displayChar;
         numOfPiecesOnBoard = 0;
-        numOfPiecesRemaining = 9;
+        piecesRemaining = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            piecesRemaining.add(new Piece(displayChar, this));
+        }
     }
 
-    public ExecutionCode makeAdjacentMove(Position startPosition, Position targetPosition) {
+    public boolean makeAdjacentMove(Position startPosition, Position targetPosition) {
         return new MoveAdjacent(this, startPosition, targetPosition).execute();
     }
 
-    public ExecutionCode makePlaceMove(Board board, Position targetPosition) {
+    public boolean makePlaceMove(Position targetPosition) {
         // Return any potential invalid status from the move so it can be used to update the GameState.
-        return new MovePlace(board,this, targetPosition).execute();
+        return new MovePlace(this, targetPosition).execute();
     }
 
     public boolean removePiece(Position targetPosition){
@@ -25,34 +28,22 @@ public class Player {
     }
 
     public String getName() {
+        // return the name of the player
         return name;
     }
 
-    public char getDisplayChar() {
-        return displayChar;
-    }
-
     public int getNumOfPiecesRemaining() {
-        return numOfPiecesRemaining;
-    }
-
-    public void increaseNumOfPiecesRemaining() {
-        numOfPiecesRemaining++;
-    }
-
-    public void decreaseNumOfPiecesRemaining() {
-        numOfPiecesRemaining--;
+        //  return the number of pieces remaining
+        return piecesRemaining.size();
     }
 
     public int getNumOfPiecesOnBoard() {
+        // return the number of pieces on the board
         return numOfPiecesOnBoard;
     }
 
-    public void increaseNumOfPiecesOnBoard() {
-        numOfPiecesOnBoard++;
-    }
-
-    public void decreaseNumOfPiecesOnBoard() {
-        numOfPiecesOnBoard--;
+    public Piece popPiecesRemaining() {
+        // pop a piece from the pieces remaining
+        return piecesRemaining.remove(piecesRemaining.size() - 1);
     }
 }

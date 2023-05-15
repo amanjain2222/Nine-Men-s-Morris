@@ -1,8 +1,6 @@
 public class MovePlace extends Move{
-    protected Board board;
-    public MovePlace(Board board, Player player, Position targetPosition) {
+    public MovePlace(Player player, Position targetPosition) {
         super(player, targetPosition);
-        this.board = board;
     }
 
     @Override

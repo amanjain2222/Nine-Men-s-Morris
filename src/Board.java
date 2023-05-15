@@ -3,24 +3,14 @@ import java.util.Arrays;
 
 public class Board {
     public static final int TOTAL_POSITION = 24;
-
-    public static final int TOTAL_START_POSITION = 9;
     public static final int TOTAL_MILLS_COMBINATION = 16;
     public static final int TOTAL_POSITION_IN_A_MILL = 3;
     private final Position[] boardPosition;
-    private final Position[] startPositionP1;
-    private final Position[] startPositionP2;
-    private final Player player1;
-    private final Player player2;
 
     private ArrayList<Position[]> Mill_Combinations = new ArrayList<>();
 
     public Board(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
         this.boardPosition = new Position[TOTAL_POSITION];
-        this.startPositionP1 = new Position[TOTAL_START_POSITION];
-        this.startPositionP2 = new Position[TOTAL_START_POSITION];
         initBoard();
     }
 
@@ -29,30 +19,10 @@ public class Board {
         return boardPosition;
     }
 
-    public Position[] getStartPositionP1() {
-        return startPositionP1;
-    }
-
-    public Position[] getStartPositionP2() {
-        return startPositionP2;
-    }
-
     private void initBoard() {
         // initialise the board positions
         for (int i = 0; i < TOTAL_POSITION; i++) {
-            boardPosition[i] = new Position(i);
-        }
-
-        // initialise the remaining position for player 1
-        for (int i = 0; i < TOTAL_START_POSITION; i++) {
-            startPositionP1[i] = new Position(i);
-            startPositionP1[i].setPieceOccupying(new Piece(player1));
-        }
-
-        // initialise the remaining position for player 2
-        for (int i = 0; i < TOTAL_START_POSITION; i++) {
-            startPositionP2[i] = new Position(i);
-            startPositionP2[i].setPieceOccupying(new Piece(player2));
+            boardPosition[i] = new Position();
         }
 
         // add the adjacent indexes for each position
