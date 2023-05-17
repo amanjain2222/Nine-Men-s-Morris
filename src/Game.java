@@ -58,8 +58,6 @@ public class Game {
 
     public GameState queryGameState() {
         return GameState.getGameStateBuilder()
-                .setNextInput(nextInput)
-                .setExecutionCode(executionCode)
                 // Current Player GameState Variables
                 .setCurrentPlayerName(getCurrentPlayer().getName())
                 .setCurrentPlayerPiecesRemaining(getCurrentPlayer().getNumOfPiecesRemaining())
@@ -68,12 +66,15 @@ public class Game {
                 .setCurrentPlayerMillsCreated(getCurrentPlayer().getNumOfMillsMade())
                 // Opponent Player GameState Variables
                 .setOpponentPlayerName(getOpponentPlayer().getName())
+                .setOpponentPlayerPiecesRemaining(getOpponentPlayer().getNumOfPiecesRemaining())
                 .setOpponentPlayerPiecesOnBoard(getOpponentPlayer().getNumOfPiecesOnBoard())
                 .setOpponentPlayerPiecesCaptured(getOpponentPlayer().getNumOfPiecesCaptured())
                 .setOpponentPlayerMillsCreated(getOpponentPlayer().getNumOfMillsMade())
                 // Meta GameState Variables
+                .setNextInput(nextInput)
+                .setExecutionCode(executionCode)
                 .setGameTurn(gameTurn)
-                .setBoard(getGameBoard())
+                .setBoard(getGameBoard().toCharArray())
                 .build();
     }
     

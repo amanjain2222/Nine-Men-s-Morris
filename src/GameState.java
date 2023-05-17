@@ -5,8 +5,7 @@ public class GameState {
     private PlayerData currentPlayerData;
     private PlayerData opponentPlayerData;
     private int gameTurn;
-
-    private Board board; // should probably be simplified array or nested class
+    private char[] board;
 
     private GameState(
             NextInput nextInput,
@@ -14,14 +13,12 @@ public class GameState {
             PlayerData currentPlayerData,
             PlayerData opponentPlayerData,
             int gameTurn,
-            
-            Board board) {
+            char[] board) {
         this.nextInput = nextInput;
         this.executionCode = executionCode;
         this.currentPlayerData = currentPlayerData;
         this.opponentPlayerData = opponentPlayerData;
         this.gameTurn = gameTurn;
-        
         this.board = board;
     }
 
@@ -99,8 +96,7 @@ public class GameState {
         private PlayerData currentPlayerData;
         private PlayerData opponentPlayerData;
         private int gameTurn;
-
-        private Board board;
+        private char[] board;
 
         private GameStateBuilder() {
             currentPlayerData = new PlayerData();
@@ -148,6 +144,11 @@ public class GameState {
             return this;
         }
 
+        public GameStateBuilder setOpponentPlayerPiecesRemaining(int opponentPiecesRemaining) {
+            this.opponentPlayerData.setPiecesRemaining(opponentPiecesRemaining);
+            return this;
+        }
+
         public GameStateBuilder setOpponentPlayerPiecesOnBoard(int opponentPlayerPiecesOnBoard) {
             this.opponentPlayerData.setPiecesOnBoard(opponentPlayerPiecesOnBoard);
             return this;
@@ -168,7 +169,7 @@ public class GameState {
             return this;
         }
 
-        public GameStateBuilder setBoard(Board board) {
+        public GameStateBuilder setBoard(char[] board) {
             this.board = board;
             return this;
         }
@@ -204,7 +205,7 @@ public class GameState {
         return gameTurn;
     }
 
-    public Board getBoard() {
+    public char[] getBoard() {
         return board;
     }
 }
