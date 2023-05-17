@@ -12,7 +12,7 @@ public abstract class Move extends Action {
     @Override
     public ExecutionCode execute() {
         // validate target position
-        if (targetPosition == null) return ExecutionCode.NULL;
+        if (targetPosition == null) return ExecutionCode.INVALID_NULL;
         return ExecutionCode.SUCCESS;
     }
 

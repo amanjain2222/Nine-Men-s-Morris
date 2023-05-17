@@ -1,0 +1,210 @@
+// Information about a game's state including it's enumerated phase.
+public class GameState {
+    private NextInput nextInput;
+    private ExecutionCode executionCode;
+    private PlayerData currentPlayerData;
+    private PlayerData opponentPlayerData;
+    private int gameTurn;
+
+    private Board board; // should probably be simplified array or nested class
+
+    private GameState(
+            NextInput nextInput,
+            ExecutionCode executionCode,
+            PlayerData currentPlayerData,
+            PlayerData opponentPlayerData,
+            int gameTurn,
+            
+            Board board) {
+        this.nextInput = nextInput;
+        this.executionCode = executionCode;
+        this.currentPlayerData = currentPlayerData;
+        this.opponentPlayerData = opponentPlayerData;
+        this.gameTurn = gameTurn;
+        
+        this.board = board;
+    }
+
+    public static enum NextInput {
+        AWAITING_PLACEMENT("PLACEMENT"),
+        AWAITING_MOVEMENT("MOVEMENT"),
+        AWAITING_REMOVAL("REMOVAL"),
+        AWAITING_JUMPING("JUMPING"),
+        
+        GAME_OVER("GAME OVER");
+
+        public final String INPUT_DESCRIPTOR;
+
+        private NextInput(String inputDescriptor) {
+            this.INPUT_DESCRIPTOR = inputDescriptor;
+        }
+    }
+
+    public static class PlayerData {
+        private String name;
+        private int piecesRemaining;
+        private int piecesOnBoard;
+        private int piecesCaptured;
+        private int millsCreated;
+
+        private void setName(String name) {
+            this.name = name;
+        }
+
+        private void setPiecesRemaining(int piecesRemaining) {
+            this.piecesRemaining = piecesRemaining;
+        }
+
+        private void setPiecesOnBoard(int piecesOnBoard) {
+            this.piecesOnBoard = piecesOnBoard;
+        }
+
+        private void setPiecesCaptured(int piecesCaptured) {
+            this.piecesCaptured = piecesCaptured;
+        }
+
+        private void setMillsCreated(int millsCreated) {
+            this.millsCreated = millsCreated;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getPieceRemaining() {
+            return piecesRemaining;
+        }
+
+        public int getPieceOnBoard() {
+            return piecesOnBoard;
+        }
+
+        public int getPiecesCaptured() {
+            return piecesCaptured;
+        }
+
+        public int getMillsCreated() {
+            return millsCreated;
+        }
+    }
+
+    public static GameStateBuilder getGameStateBuilder() {
+        return new GameStateBuilder();
+    }
+
+    public static class GameStateBuilder {
+
+        private NextInput nextInput;
+        private ExecutionCode executionCode;
+        private PlayerData currentPlayerData;
+        private PlayerData opponentPlayerData;
+        private int gameTurn;
+
+        private Board board;
+
+        private GameStateBuilder() {
+            currentPlayerData = new PlayerData();
+            opponentPlayerData = new PlayerData();
+        }
+
+        public GameStateBuilder setNextInput(NextInput nextInput) {
+            this.nextInput = nextInput;
+            return this;
+        }
+
+        public GameStateBuilder setExecutionCode(ExecutionCode executionCode) {
+            this.executionCode = executionCode;
+            return this;
+        }
+
+        public GameStateBuilder setCurrentPlayerName(String currentPlayerName) {
+            this.currentPlayerData.setName(currentPlayerName);
+            return this;
+        }
+
+        public GameStateBuilder setCurrentPlayerPiecesRemaining(
+                int currentPlayerPiecesRemaining) {
+            this.currentPlayerData.setPiecesRemaining(currentPlayerPiecesRemaining);
+            return this;
+        }
+
+        public GameStateBuilder setCurrentPlayerPiecesOnBoard(int currentPlayerPiecesOnBoard) {
+            this.currentPlayerData.setPiecesOnBoard(currentPlayerPiecesOnBoard);
+            return this;
+        }
+
+        public GameStateBuilder setCurrentPlayerPiecesCaptured(int currentPlayerPiecesCaptured) {
+            this.currentPlayerData.setPiecesCaptured(currentPlayerPiecesCaptured);
+            return this;
+        }
+
+        public GameStateBuilder setCurrentPlayerMillsCreated(int currentPlayerMillsCreated) {
+            this.currentPlayerData.setMillsCreated(currentPlayerMillsCreated);
+            return this;
+        }
+
+        public GameStateBuilder setOpponentPlayerName(String opponentPlayerName) {
+            this.opponentPlayerData.setName(opponentPlayerName);
+            return this;
+        }
+
+        public GameStateBuilder setOpponentPlayerPiecesOnBoard(int opponentPlayerPiecesOnBoard) {
+            this.opponentPlayerData.setPiecesOnBoard(opponentPlayerPiecesOnBoard);
+            return this;
+        }
+
+        public GameStateBuilder setOpponentPlayerPiecesCaptured(int opponentPlayerPiecesCaptured) {
+            this.opponentPlayerData.setPiecesCaptured(opponentPlayerPiecesCaptured);
+            return this;
+        }
+
+        public GameStateBuilder setOpponentPlayerMillsCreated(int opponentPlayerMillsCreated) {
+            this.opponentPlayerData.setMillsCreated(opponentPlayerMillsCreated);
+            return this;
+        } 
+
+        public GameStateBuilder setGameTurn(int gameTurn) {
+            this.gameTurn = gameTurn;
+            return this;
+        }
+
+        public GameStateBuilder setBoard(Board board) {
+            this.board = board;
+            return this;
+        }
+
+        public GameState build() {
+            return new GameState(
+                    nextInput,
+                    executionCode,
+                    currentPlayerData,
+                    opponentPlayerData,
+                    gameTurn,
+                    board);
+        }
+    }
+
+    public NextInput getNextInput() {
+        return nextInput;
+    }
+
+    public ExecutionCode getExecutionCode() {
+        return executionCode;
+    }
+
+    public PlayerData getCurrentPlayerData() {
+        return currentPlayerData;
+    }
+
+    public PlayerData getOpponentPlayerData() {
+        return opponentPlayerData;
+    }
+
+    public int getGameTurn() {
+        return gameTurn;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+}
