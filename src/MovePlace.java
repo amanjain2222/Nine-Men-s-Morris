@@ -8,6 +8,8 @@ public class MovePlace extends Move{
         ExecutionCode superExecutionCode = super.execute();
         if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
 
+        if (!targetPosition.isEmpty()) return ExecutionCode.NOT_EMPTY;
+
         targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
         board.addPlayerPositionOnBoard(targetPosition);
         return ExecutionCode.SUCCESS;

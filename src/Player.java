@@ -30,12 +30,11 @@ public class Player {
         return new MoveJump(board, this, startPosition, targetPosition).execute();
     }
 
-    public ExecutionCode performRemovePieceAction(Game game, Position targetPosition) {
-        // Return any potential invalid status from the move, so it can be used to update the GameState.
-        //TODO: Implement Remove Piece action
-        return null;
+    public ExecutionCode removePiece(Board board,Position targetPosition){
+        return new RemovePiece(board, this, targetPosition).execute();
     }
-    
+
+
 
     public String getName() {
         return name;
