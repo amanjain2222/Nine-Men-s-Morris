@@ -7,6 +7,7 @@ public class MoveJump extends MoveAdjacent {
     public ExecutionCode execute() {
         ExecutionCode superExecutionCode = super.execute();
         if (superExecutionCode != ExecutionCode.SUCCESS && superExecutionCode != ExecutionCode.INVALID_NOT_ADJACENT) return superExecutionCode;
+        if (!targetPosition.isEmpty()) return ExecutionCode.INVALID_NOT_EMPTY;
         board.removePlayerPositionOnBoard(startPosition);
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(startPosition.getPieceOccupying());

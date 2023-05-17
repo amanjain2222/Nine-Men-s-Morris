@@ -8,6 +8,7 @@ public enum ExecutionCode {
     INVALID_MILL_POSITION(true),
     INVALID_NOT_OPPONENT_PIECE(true),
     INVALID_OPPONENT_PIECE_IN_MILL_POSITION(true),
+    INVALID_CANNOT_REMOVE_YOUR_PIECE(true),
     MILL_FORMED(false),
     QUIT(false),
     UNDO(false),
