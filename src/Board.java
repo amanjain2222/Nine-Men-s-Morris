@@ -3,14 +3,26 @@ import java.util.Arrays;
 
 public class Board {
     public static final int TOTAL_POSITION = 24;
-    public static final int TOTAL_MILLS_COMBINATION = 16;
-    public static final int TOTAL_POSITION_IN_A_MILL = 3;
+    public static final int TOTAL_START_POSITION = 9;
     private final Position[] boardPosition;
+    private final Position[] startPositionP1;
+    private final Position[] startPositionP2;
+    private final Player player1;
+    private final Player player2;
+
+    private ArrayList<Position> positionOnBoardP1;
+    private ArrayList<Position> positionOnBoardP2;
 
     private ArrayList<Position[]> Mill_Combinations = new ArrayList<>();
 
     public Board(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.boardPosition = new Position[TOTAL_POSITION];
+        this.startPositionP1 = new Position[TOTAL_START_POSITION];
+        this.startPositionP2 = new Position[TOTAL_START_POSITION];
+        this.positionOnBoardP1 = new ArrayList<>();
+        this.positionOnBoardP2 = new ArrayList<>();
         initBoard();
     }
 
@@ -19,10 +31,30 @@ public class Board {
         return boardPosition;
     }
 
+    public Position[] getStartPositionP1() {
+        return startPositionP1;
+    }
+
+    public Position[] getStartPositionP2() {
+        return startPositionP2;
+    }
+
     private void initBoard() {
         // initialise the board positions
         for (int i = 0; i < TOTAL_POSITION; i++) {
-            boardPosition[i] = new Position();
+            boardPosition[i] = new Position(i);
+        }
+
+        // initialise the remaining position for player 1
+        for (int i = 0; i < TOTAL_START_POSITION; i++) {
+            startPositionP1[i] = new Position(i);
+            startPositionP1[i].setPieceOccupying(new Piece(player1.getDisplayChar(), player1));
+        }
+
+        // initialise the remaining position for player 2
+        for (int i = 0; i < TOTAL_START_POSITION; i++) {
+            startPositionP2[i] = new Position(i);
+            startPositionP2[i].setPieceOccupying(new Piece(player2.getDisplayChar(), player2));
         }
 
         // add the adjacent indexes for each position
@@ -73,29 +105,67 @@ public class Board {
 
 
     public Position getPosition(int positionIndex) {
-        if (positionIndex < 0 || positionIndex > boardPosition.length) return null;
+        if (positionIndex < 0 || positionIndex >= TOTAL_POSITION) return null;
         return boardPosition[positionIndex];
     }
 
-    public boolean isMill(Player player, Position CurrentPosition) {
-        for (Position[] combination : Mill_Combinations) {
-            Position position1 = combination[0];
-            Position position2 = combination[1];
-            Position position3 = combination[2];
-            if (position1.getPieceOccupying() != null && position2.getPieceOccupying() != null && position3.getPieceOccupying() != null){
-                if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
-                    if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
-                        return true;
-                    }
-                }
+    public Piece popPieceFromStartPosition(Player player) {
+        if (player == player1) {
+            if (player1.getNumOfPiecesRemaining() > 0) {
+                player1.decreaseNumOfPiecesRemaining();
+                player1.increaseNumOfPiecesOnBoard();
+                Piece piece = startPositionP1[player1.getNumOfPiecesRemaining()].getPieceOccupying();
+                startPositionP1[player1.getNumOfPiecesRemaining()].setEmpty();
+                return piece;
             }
-
-
+        } else if (player == player2) {
+            if (player2.getNumOfPiecesRemaining() > 0) {
+                player2.decreaseNumOfPiecesRemaining();
+                player2.increaseNumOfPiecesOnBoard();
+                Piece piece = startPositionP2[player2.getNumOfPiecesRemaining()].getPieceOccupying();
+                startPositionP2[player2.getNumOfPiecesRemaining()].setEmpty();
+                return piece;
+            }
         }
+        return null;
+    }
+
+    public void addPlayerPositionOnBoard(Position position) {
+        if (position.getPieceOccupying().getOwner() == player1) {
+            positionOnBoardP1.add(position);
+        } else if (position.getPieceOccupying().getOwner() == player2) {
+            positionOnBoardP2.add(position);
+        }
+    }
+
+    public void removePlayerPositionOnBoard(Position position) {
+        if (position.getPieceOccupying().getOwner() == player1) {
+            positionOnBoardP1.remove(position);
+        } else if (position.getPieceOccupying().getOwner() == player2) {
+            positionOnBoardP2.remove(position);
+        }
+    }
+
+    public boolean isValidBoardPosition(Position position) {
+        try {
+            boardPosition[position.getPositionNumber()].getPositionNumber();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isMillFormed(Position inputTargetPosition) {
+        //TODO: implement this method
         return false;
     }
 
+    public Position[] getStartPositionsP1() {
+        return startPositionP1;
+    }
 
-
+    public Position[] getStartPositionsP2() {
+        return startPositionP2;
+    }
 }
 
