@@ -1,49 +1,95 @@
-import java.util.ArrayList;
-
 public class Player {
     private final String name;
-    private ArrayList<Piece> piecesRemaining;
+    private final char displayChar;
+    private int numOfPiecesRemaining;
     private int numOfPiecesOnBoard;
+    private int numOfPiecesCaptured;
+    private int numOfMillsMade;
+    private boolean canJump;
 
     public Player(String name, char displayChar) {
         this.name = name;
+        this.displayChar = displayChar;
         numOfPiecesOnBoard = 0;
-        piecesRemaining = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            piecesRemaining.add(new Piece(displayChar, this));
-        }
+        numOfPiecesRemaining = 9;
+        numOfPiecesCaptured = 0;
+        numOfMillsMade = 0;
+        canJump = false;
     }
 
-    public boolean makeAdjacentMove(Position startPosition, Position targetPosition) {
-        return new MoveAdjacent(this, startPosition, targetPosition).execute();
+    public ExecutionCode makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
+        return new MoveAdjacent(board, this, startPosition, targetPosition).execute();
     }
 
-    public boolean makePlaceMove(Position targetPosition) {
+    public ExecutionCode makePlaceMove(Board board, Position targetPosition) {
         // Return any potential invalid status from the move so it can be used to update the GameState.
-        return new MovePlace(this, targetPosition).execute();
+        return new MovePlace(board,this, targetPosition).execute();
     }
 
-    public boolean removePiece(Position targetPosition){
-        return new RemovePiece(this, targetPosition).execute();
+    public ExecutionCode makeJumpMove(Board board, Position startPosition, Position targetPosition) {
+        return new MoveJump(board, this, startPosition, targetPosition).execute();
     }
+
+    public ExecutionCode performRemovePieceAction(Game game, Position targetPosition) {
+        // Return any potential invalid status from the move, so it can be used to update the GameState.
+        //TODO: Implement Remove Piece action
+        return null;
+    }
+    
 
     public String getName() {
-        // return the name of the player
         return name;
     }
 
+    public char getDisplayChar() {
+        return displayChar;
+    }
+
     public int getNumOfPiecesRemaining() {
-        //  return the number of pieces remaining
-        return piecesRemaining.size();
+        return numOfPiecesRemaining;
+    }
+
+    public void increaseNumOfPiecesRemaining() {
+        numOfPiecesRemaining++;
+    }
+
+    public void decreaseNumOfPiecesRemaining() {
+        numOfPiecesRemaining--;
     }
 
     public int getNumOfPiecesOnBoard() {
-        // return the number of pieces on the board
         return numOfPiecesOnBoard;
     }
 
-    public Piece popPiecesRemaining() {
-        // pop a piece from the pieces remaining
-        return piecesRemaining.remove(piecesRemaining.size() - 1);
+    public void increaseNumOfPiecesOnBoard() {
+        numOfPiecesOnBoard++;
+    }
+
+    public void decreaseNumOfPiecesOnBoard() {
+        numOfPiecesOnBoard--;
+    }
+
+    public int getNumOfPiecesCaptured() {
+        return numOfPiecesCaptured;
+    }
+
+    public void increaseNumOfPiecesCaptured() {
+        numOfPiecesCaptured++;
+    }
+
+    public int getNumOfMillsMade() {
+        return numOfMillsMade;
+    }
+
+    public void increaseNumOfMillsMade() {
+        numOfMillsMade++;
+    }
+
+    public boolean getCanJump() {
+        return canJump;
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
     }
 }
