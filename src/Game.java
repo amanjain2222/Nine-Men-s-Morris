@@ -43,38 +43,65 @@ public class Game {
                 moveStatusCode = handleMovementPhase(input, currentPlayer);
                 break;
             case "REMOVAL":
-                handleRemovalPhase(input, currentPlayer);
-                return;
+                moveStatusCode =handleRemovalPhase(input, currentPlayer);
+                break;
         }
 
-        // check if mill is formed
-        if (moveStatusCode == ExecutionCode.SUCCESS && gameBoard.isMillFormed(inputTargetPosition)) {
-            setExecutionCode(ExecutionCode.MILL_FORMED);
-            setGamePhase("REMOVAL");
-        } else if (moveStatusCode == ExecutionCode.SUCCESS) {
+
+        if (moveStatusCode == ExecutionCode.SUCCESS) {
             gameTurn++;
             updateCurrentGamePhase();
         }
     }
 
-    private void setGamePhase(String gamePhase) {
-        currentGamePhase = gamePhase;
+    private void updateCurrentGamePhase() {
+        if (PreviousMovePositions.size() > 0 && gameBoard.isMillFormed(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
+            setGamePhase("REMOVAL");
+            gameTurn--;
+        } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
+            setGamePhase("PLACEMENT");
+        } else {
+            setGamePhase("MOVEMENT");
+        }
+    }
+
+    private ExecutionCode handleRemovalPhase(InputState input, Player currentPlayer) {
+
+        ExecutionCode statusCode;
+        Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
+
+        if (gameBoard.isMillFormed(players[(gameTurn+1) % players.length], targetPosition)) {
+            statusCode = ExecutionCode.OPPONENT_PIECE_IN_MILL_POSITION;
+        }else{
+            statusCode = players[gameTurn % players.length].removePiece(gameBoard, targetPosition);
+        }
+
+        if (statusCode == ExecutionCode.SUCCESS){
+            PreviousMovePositions.clear();
+        }
+
+
+        updatePlayerCanJump(); // update opponent player's canJump status
+        updateIsGameOver();
+        return statusCode;
     }
 
     private ExecutionCode handlePlacementPhase(InputState input, Player currentPlayer) {
-        if(input.inputValues.get(0) == -1) return handleUndo();
+
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
         ExecutionCode statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
         setPreviousMoveInvalid(statusCode != ExecutionCode.SUCCESS);
         setExecutionCode(statusCode);
         this.inputTargetPosition = targetPosition;
+        if (statusCode == ExecutionCode.SUCCESS){
+            PreviousMovePositions.add(targetPosition);
+        }
 
         return statusCode;
     }
 
     private ExecutionCode handleMovementPhase(InputState input, Player currentPlayer) {
 
-        if(input.inputValues.get(0) == -1 || input.inputValues.get(1) == -1) return handleUndo();
 
         ExecutionCode statusCode;
         Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
@@ -90,17 +117,15 @@ public class Game {
         setExecutionCode(statusCode);
         this.inputStartPosition = startingPosition;
         this.inputTargetPosition = targetPosition;
+
+        if (statusCode == ExecutionCode.SUCCESS){
+            PreviousMovePositions.add(targetPosition);
+        }
         return statusCode;
     }
 
-    private ExecutionCode handleRemovalPhase(InputState input, Player currentPlayer) {
-
-        if(input.inputValues.get(2) == -1) return handleUndo();
-
-        //TODO: Handle Removal Phase
-        updatePlayerCanJump(); // update opponent player's canJump status
-        updateIsGameOver();
-        return ExecutionCode.Removed;
+    private void setGamePhase(String gamePhase) {
+        currentGamePhase = gamePhase;
     }
 
     private ExecutionCode handleUndo() {
@@ -114,13 +139,6 @@ public class Game {
         }
     }
 
-    private void updateCurrentGamePhase() {
-        if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
-            this.currentGamePhase = "PLACEMENT";
-        } else {
-            this.currentGamePhase = "MOVEMENT";
-        }
-    }
 
 
     public boolean wasPreviousMoveInvalid() {

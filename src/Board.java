@@ -155,10 +155,24 @@ public class Board {
         return true;
     }
 
-    public boolean isMillFormed(Position inputTargetPosition) {
-        //TODO: implement this method
+    public boolean isMillFormed(Player player, Position CurrentPosition) {
+        for (Position[] combination : Mill_Combinations) {
+            Position position1 = combination[0];
+            Position position2 = combination[1];
+            Position position3 = combination[2];
+            if (position1.getPieceOccupying() != null && position2.getPieceOccupying() != null && position3.getPieceOccupying() != null){
+                if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
+                    if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
+                        return true;
+                    }
+                }
+            }
+
+
+        }
         return false;
     }
+
 
     public Position[] getStartPositionsP1() {
         return startPositionP1;
