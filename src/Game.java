@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Game {
     private final int PLAYER_STARTING_PIECES = 9;
     private final String FIRST_PLAYER_NAME = "Ice";
@@ -11,9 +13,10 @@ public class Game {
 
     private int gameTurn;
 
+    private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
+
     private GameState.NextInput nextInput;
-    private ExecutionCode executionCode;
-    private String currentGamePhase;
+    private ExecutionCode executionCode = ExecutionCode.GAME_START;
     private boolean previousMoveInvalid = false;
     private boolean previousRemoveInvalid = true;
     private boolean undoMove = false;
@@ -25,22 +28,24 @@ public class Game {
     public Game() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
-        currentGamePhase = "PLACEMENT";
+        nextInput = GameState.NextInput.AWAITING_PLACEMENT;
     }
 
     public void updateGame(InputState input) {
         ExecutionCode moveStatusCode = ExecutionCode.UNKNOWN;
         Player currentPlayer = players[gameTurn % players.length];
 
-        switch (getCurrentGamePhase()) {
-            case "PLACEMENT":
+        switch (nextInput) {
+            case AWAITING_PLACEMENT:
                 moveStatusCode = handlePlacementPhase(input, currentPlayer);
                 break;
-            case "MOVEMENT":
+            case AWAITING_MOVEMENT:
                 moveStatusCode = handleMovementPhase(input, currentPlayer);
                 break;
-            case "REMOVAL":
-                moveStatusCode =handleRemovalPhase(input, currentPlayer);
+            case AWAITING_REMOVAL:
+                moveStatusCode = handleRemovalPhase(input, currentPlayer);
+                break;
+            default:
                 break;
         }
 
@@ -71,23 +76,28 @@ public class Game {
                 .setBoard(getGameBoard())
                 .build();
     }
-
-    private void setGamePhase(String gamePhase) {
-        currentGamePhase = gamePhase;
-    }
-
+    
     private ExecutionCode handlePlacementPhase(InputState input, Player currentPlayer) {
-        if (input.inputValues.get(0) == -1)
-            return handleUndo();
+        Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
+        ExecutionCode statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
+        setPreviousMoveInvalid(statusCode != ExecutionCode.SUCCESS);
+        setExecutionCode(statusCode);
+        this.inputTargetPosition = targetPosition;
+        if (statusCode == ExecutionCode.SUCCESS){
+            PreviousMovePositions.add(targetPosition);
+        }
+
+        return statusCode;
+    }
 
     private void updateCurrentGamePhase() {
         if (PreviousMovePositions.size() > 0 && gameBoard.isMillFormed(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
-            setGamePhase("REMOVAL");
+            nextInput = GameState.NextInput.AWAITING_REMOVAL;
             gameTurn--;
         } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
-            setGamePhase("PLACEMENT");
+            nextInput = GameState.NextInput.AWAITING_PLACEMENT;
         } else {
-            setGamePhase("MOVEMENT");
+            nextInput = GameState.NextInput.AWAITING_MOVEMENT;
         }
     }
 
@@ -97,7 +107,7 @@ public class Game {
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
 
         if (gameBoard.isMillFormed(players[(gameTurn+1) % players.length], targetPosition)) {
-            statusCode = ExecutionCode.OPPONENT_PIECE_IN_MILL_POSITION;
+            statusCode = ExecutionCode.INVALID_OPPONENT_PIECE_IN_MILL_POSITION;
         }else{
             statusCode = players[gameTurn % players.length].removePiece(gameBoard, targetPosition);
         }
@@ -109,19 +119,6 @@ public class Game {
 
         updatePlayerCanJump(); // update opponent player's canJump status
         updateIsGameOver();
-        return statusCode;
-    }
-
-    private ExecutionCode handlePlacementPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-        ExecutionCode statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
-        setPreviousMoveInvalid(statusCode != ExecutionCode.SUCCESS);
-        setExecutionCode(statusCode);
-        this.inputTargetPosition = targetPosition;
-        if (statusCode == ExecutionCode.SUCCESS){
-            PreviousMovePositions.add(targetPosition);
-        }
-
         return statusCode;
     }
 
@@ -149,21 +146,6 @@ public class Game {
             PreviousMovePositions.add(targetPosition);
         }
         return statusCode;
-    }
-
-    private ExecutionCode handleRemovalPhase(InputState input, Player currentPlayer) {
-
-        if (input.inputValues.get(2) == -1)
-            return handleUndo();
-
-        // TODO: Handle Removal Phase
-        updatePlayerCanJump(); // update opponent player's canJump status
-        updateIsGameOver();
-        return ExecutionCode.REMOVED;
-
-    private void setGamePhase(String gamePhase) {
-        currentGamePhase = gamePhase;
-
     }
 
     private ExecutionCode handleUndo() {
@@ -197,10 +179,6 @@ public class Game {
 
     public Board getGameBoard() {
         return gameBoard;
-    }
-
-    public String getCurrentGamePhase() {
-        return currentGamePhase;
     }
 
     public Player getCurrentPlayer() {
@@ -255,7 +233,7 @@ public class Game {
     public void restartGame() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
-        currentGamePhase = "PLACEMENT";
+        nextInput = GameState.NextInput.AWAITING_PLACEMENT;
         gameOver = false;
         gameRestarted = true;
     }

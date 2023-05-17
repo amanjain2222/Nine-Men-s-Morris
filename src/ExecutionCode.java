@@ -13,6 +13,7 @@ public enum ExecutionCode {
     QUIT(false),
     UNDO(false),
     REMOVED(false),
+    GAME_START(false),
     UNKNOWN(false);
 
     public final boolean IS_INVALID;

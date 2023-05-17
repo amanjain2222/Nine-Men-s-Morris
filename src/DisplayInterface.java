@@ -18,6 +18,7 @@ public class DisplayInterface {
     GameState gameState = null;
 
     public void updateDisplay(GameState gameState) {
+        this.gameState = gameState;
         // Game hasn't started yet.
         if(gameState == null) {
             printStartScreen();
@@ -33,14 +34,12 @@ public class DisplayInterface {
         this.printGamePhaseAndPlayer();
         this.printOtherOptions();
         System.out.println();
-
-        this.gameState = gameState;
     }
 
     public InputState queryInputState() {
         // No game currently exists, get menu input.
         if (gameState == null) {
-            handleStartGameInputQuery();
+            return handleStartGameInputQuery();
         }
         
         // Game is over so handle accordingly.
