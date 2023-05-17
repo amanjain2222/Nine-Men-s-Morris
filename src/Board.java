@@ -95,7 +95,8 @@ public class Board {
                 {boardPosition[5], boardPosition[13], boardPosition[20]}, {boardPosition[6], boardPosition[7],boardPosition[8]},
                 {boardPosition[6], boardPosition[11], boardPosition[15]}, {boardPosition[8], boardPosition[12], boardPosition[17]},
                 {boardPosition[9], boardPosition[10], boardPosition[11]}, {boardPosition[12], boardPosition[13], boardPosition[14]},
-                {boardPosition[15], boardPosition[16], boardPosition[17]}, {boardPosition[18], boardPosition[19], boardPosition[20]}};
+                {boardPosition[15], boardPosition[16], boardPosition[17]}, {boardPosition[18], boardPosition[19], boardPosition[20]},
+                {boardPosition[21], boardPosition[22], boardPosition[23]}};
 
         Mill_Combinations.addAll(Arrays.asList(millPosition_combinations));
     }
