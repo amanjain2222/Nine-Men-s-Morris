@@ -12,8 +12,8 @@ public abstract class Move extends Action {
     @Override
     public ExecutionCode execute() {
         // validate target position
-        if (targetPosition == null) return ExecutionCode.NULL;
-        if (!targetPosition.isEmpty()) return ExecutionCode.NOT_EMPTY;
+        if (targetPosition == null) return ExecutionCode.INVALID_NULL;
+        if (!targetPosition.isEmpty()) return ExecutionCode.INVALID_NOT_EMPTY;
         return ExecutionCode.SUCCESS;
     }
 

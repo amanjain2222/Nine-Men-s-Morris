@@ -1,23 +1,23 @@
 public class Program {
+
     public static void main(String[] args) {
         // Main Entry Point for 9MM Program
-        runGame();
+        runProgram();
     }
 
-    private static void runGame() {
+    private static void runProgram() {
         DisplayInterface displayInterface = new DisplayInterface();
-        Game game = new Game();
-        displayInterface.printStartScreen(game);
-        while(true) {
-            // Game Updates By Processing Any Pending Input and Resolving Any Game Constraints
-            // game.updateGame();
-            // Query GameState and use it to update the display.
-            //GameState currentGameState = game.queryGameState(); 
-            displayInterface.updateDisplay(game);
+        GameHandler gameHandler = new GameHandler();
+
+        while (true) {
+            // Query GameState from Game Object.
+            GameState currentGameState = gameHandler.queryGameState();
+            // Use GameState to update the display.
+            displayInterface.updateDisplay(currentGameState);
             // Query InputState and queue it to be processed in Game object.
-            InputState currentInputState = displayInterface.queryInputState(game);
-            //game.queueInputProcess(currentInputState);
-            game.updateGame(currentInputState);
+            InputState currentInputState = displayInterface.queryInputState();
+            // game.queueInputProcess(currentInputState);
+            gameHandler.updateGame(currentInputState);
         }
     }
 }
