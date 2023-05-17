@@ -7,7 +7,7 @@ public class Program {
     private static void runGame() {
         DisplayInterface displayInterface = new DisplayInterface();
         Game game = new Game();
-
+        displayInterface.printStartScreen(game);
         while(true) {
             // Game Updates By Processing Any Pending Input and Resolving Any Game Constraints
             // game.updateGame();
@@ -21,12 +21,3 @@ public class Program {
         }
     }
 }
-
-
-
-
-
-
-
-
-

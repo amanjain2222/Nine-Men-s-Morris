@@ -1,15 +1,17 @@
 public class MovePlace extends Move{
-    protected Board board;
     public MovePlace(Board board, Player player, Position targetPosition) {
-        super(player, targetPosition);
-        this.board = board;
+        super(board, player, targetPosition);
     }
 
     @Override
     public ExecutionCode execute() {
         ExecutionCode superExecutionCode = super.execute();
         if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
+
+        if (!targetPosition.isEmpty()) return ExecutionCode.NOT_EMPTY;
+
         targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
+        board.addPlayerPositionOnBoard(targetPosition);
         return ExecutionCode.SUCCESS;
     }
 }

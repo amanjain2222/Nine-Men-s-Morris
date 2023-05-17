@@ -2,9 +2,9 @@ public class Piece {
     private final char displayChar;
     private final Player owner;
 
-    public Piece(Player owner) {
+    public Piece(char displayCharacter, Player owner) {
+        this.displayChar = displayCharacter;
         this.owner = owner;
-        this.displayChar = owner.getDisplayChar();
     }
 
     public Player getOwner() {
