@@ -63,25 +63,7 @@ public class Game {
     }
 
     public GameState queryGameState() {
-        return GameState.getGameStateBuilder()
-                // Current Player GameState Variables
-                .setCurrentPlayerName(getCurrentPlayer().getName())
-                .setCurrentPlayerPiecesRemaining(getCurrentPlayer().getNumOfPiecesRemaining())
-                .setCurrentPlayerPiecesOnBoard(getCurrentPlayer().getNumOfPiecesOnBoard())
-                .setCurrentPlayerPiecesCaptured(getCurrentPlayer().getNumOfPiecesCaptured())
-                .setCurrentPlayerMillsCreated(getCurrentPlayer().getNumOfMillsMade())
-                // Opponent Player GameState Variables
-                .setOpponentPlayerName(getOpponentPlayer().getName())
-                .setOpponentPlayerPiecesRemaining(getOpponentPlayer().getNumOfPiecesRemaining())
-                .setOpponentPlayerPiecesOnBoard(getOpponentPlayer().getNumOfPiecesOnBoard())
-                .setOpponentPlayerPiecesCaptured(getOpponentPlayer().getNumOfPiecesCaptured())
-                .setOpponentPlayerMillsCreated(getOpponentPlayer().getNumOfMillsMade())
-                // Meta GameState Variables
-                .setGameStatus(gameStatus)
-                .setMoveStatus(moveStatus)
-                .setGameTurn(gameTurn)
-                .setBoard(getGameBoard().toCharArray())
-                .build();
+        return new GameState(this);
     }
     
     private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
@@ -161,6 +143,10 @@ public class Game {
 
     public int getGameTurn() {
         return gameTurn;
+    }
+
+    public GameState.GameStatus getGameStatus() {
+        return gameStatus;
     }
 
     public boolean getIsGameOver() {
