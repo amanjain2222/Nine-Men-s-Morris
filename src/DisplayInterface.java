@@ -27,7 +27,7 @@ public class DisplayInterface {
             return;
         }
         // Game is over.
-        if (gameState.getNextInput() == GameState.NextInput.GAME_OVER) {
+        if (gameState.getGameStatus() == GameState.GameStatus.GAME_OVER) {
             printEndGameResult();
             return;
         }
@@ -45,7 +45,7 @@ public class DisplayInterface {
         }
         
         // Game is over so handle accordingly.
-        if (gameState.getNextInput() == GameState.NextInput.GAME_OVER) {
+        if (gameState.getGameStatus() == GameState.GameStatus.GAME_OVER) {
             return handleEndGameInputQuery();
         }
 
@@ -56,7 +56,7 @@ public class DisplayInterface {
         ArrayList<Integer> inputValues = new ArrayList<>();
         InputState alternateInput = null;
 
-        switch (gameState.getNextInput()) {
+        switch (gameState.getGameStatus()) {
             case AWAITING_PLACEMENT -> {
                 // Get Placement Input
                 System.out.print(PLACEMENT_QUERY_MESSAGE);
@@ -98,8 +98,8 @@ public class DisplayInterface {
         System.out.printf("%nWelcome to %s!%n", GAME_TITLE_MESSAGE);
         System.out.printf("%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n", GAME_TITLE_MESSAGE);
         System.out.println("\nOther Options: ");
-        System.out.println("- Exit Game   : Type 'E' or '-2'.");
-        System.out.println("- Restart Game: Type 'R' or '-3'.");
+        System.out.println("- Exit Game   : Type 'E'.");
+        System.out.println("- Restart Game: Type 'R'.");
     }
 
     private InputState handleStartGameInputQuery() {
@@ -108,9 +108,9 @@ public class DisplayInterface {
         if (input.equalsIgnoreCase("Y")) {
             System.out.println("\nStarting Game... \n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
-        } else if (input.equalsIgnoreCase("E") || input.equalsIgnoreCase("-2")) {
+        } else if (input.equalsIgnoreCase("E")) {
             return exitGame();
-        } else if (input.equalsIgnoreCase("R") || input.equalsIgnoreCase("-3")) {
+        } else if (input.equalsIgnoreCase("R")) {
             return new InputState(InputState.InputType.GAME_START);
         } else {
             System.out.println("Invalid input. Please try again.");
@@ -129,6 +129,7 @@ public class DisplayInterface {
 
     private int transcriptInputValue(String inputValue) {
        if (inputValue.toLowerCase(Locale.ROOT).equals("U")) return -1;
+       if (!inputValue.matches("-?\\d+(\\.\\d+)?")) return -1;
        return Integer.parseInt(inputValue);
     }
 
@@ -140,9 +141,9 @@ public class DisplayInterface {
 
     private void printOtherOptions() {
         System.out.println("\nOther Options: ");
-        System.out.println("- Undo Move   : Type 'U' or '-1'");
-        System.out.println("- Exit Game   : Type 'E' or '-2'");
-        System.out.println("- Restart Game: Type 'R' or '-3'");
+        System.out.println("- Undo Move   : Type 'U'");
+        System.out.println("- Exit Game   : Type 'E'");
+        System.out.println("- Restart Game: Type 'R'");
     }
 
     private void printMoveDescription() {
@@ -158,7 +159,7 @@ public class DisplayInterface {
 
     private void printGamePhaseAndPlayer() {
         // Print game phase and player turn info
-        System.out.println("\n                        " + GAME_PHASE_MESSAGE + gameState.getNextInput().INPUT_DESCRIPTOR);
+        System.out.println("\n                        " + GAME_PHASE_MESSAGE + gameState.getGameStatus().INPUT_DESCRIPTOR);
         System.out.println("                        " + CURRENT_PLAYER_MESSAGE + gameState.getCurrentPlayerData().getName());
     }
 
@@ -221,7 +222,7 @@ public class DisplayInterface {
         if (gameState.getGameTurn() == 0) return "Game has Started.";
         // TODO: This is a hardcode to fix null pointer exception when game phase change from Placement to Movement but still need to print one last placement move description description
         if (gameState.getGameTurn() == 18) return gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
-        switch (gameState.getNextInput()) {
+        switch (gameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
                     moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece at Position.";
             case AWAITING_MOVEMENT ->

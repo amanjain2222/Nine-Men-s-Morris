@@ -15,7 +15,7 @@ public class Game {
 
     private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
 
-    private GameState.NextInput nextInput;
+    private GameState.GameStatus gameStatus;
     private ExecutionCode executionCode = ExecutionCode.GAME_START;
     private boolean previousMoveInvalid = false;
     private boolean previousRemoveInvalid = true;
@@ -28,14 +28,14 @@ public class Game {
     public Game() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
-        nextInput = GameState.NextInput.AWAITING_PLACEMENT;
+        gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
     }
 
     public void updateGame(InputState input) {
         ExecutionCode moveStatusCode = ExecutionCode.UNKNOWN;
         Player currentPlayer = players[gameTurn % players.length];
 
-        switch (nextInput) {
+        switch (gameStatus) {
             case AWAITING_PLACEMENT:
                 moveStatusCode = handlePlacementPhase(input, currentPlayer);
                 break;
@@ -71,7 +71,7 @@ public class Game {
                 .setOpponentPlayerPiecesCaptured(getOpponentPlayer().getNumOfPiecesCaptured())
                 .setOpponentPlayerMillsCreated(getOpponentPlayer().getNumOfMillsMade())
                 // Meta GameState Variables
-                .setNextInput(nextInput)
+                .setGameStatus(gameStatus)
                 .setExecutionCode(executionCode)
                 .setGameTurn(gameTurn)
                 .setBoard(getGameBoard().toCharArray())
@@ -93,12 +93,12 @@ public class Game {
 
     private void updateCurrentGamePhase() {
         if (PreviousMovePositions.size() > 0 && gameBoard.isMillFormed(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
-            nextInput = GameState.NextInput.AWAITING_REMOVAL;
+            gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
             gameTurn--;
         } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
-            nextInput = GameState.NextInput.AWAITING_PLACEMENT;
+            gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
         } else {
-            nextInput = GameState.NextInput.AWAITING_MOVEMENT;
+            gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
         }
     }
 
@@ -234,7 +234,7 @@ public class Game {
     public void restartGame() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
-        nextInput = GameState.NextInput.AWAITING_PLACEMENT;
+        gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
         gameOver = false;
         gameRestarted = true;
     }
