@@ -19,7 +19,6 @@ public class Game {
     private MoveStatus moveStatus = MoveStatus.GAME_START;
     private boolean undoMove = false;
     private boolean gameOver = false;
-    private boolean gameRestarted = false;
     private Position inputStartPosition;
     private Position inputTargetPosition;
 
@@ -194,21 +193,5 @@ public class Game {
 
     public boolean isPreviousMoveUndo() {
         return undoMove;
-    }
-
-    public void resetGameRestarted() {
-        this.gameRestarted = false;
-    }
-
-    public boolean isGameRestarted() {
-        return gameRestarted;
-    }
-
-    public void restartGame() {
-        gameTurn = 0;
-        gameBoard = new Board(players[0], players[1]);
-        gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
-        gameOver = false;
-        gameRestarted = true;
     }
 }
