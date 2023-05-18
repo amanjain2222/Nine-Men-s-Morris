@@ -10,7 +10,7 @@ public class MoveAdjacent extends Move {
     public MoveStatus execute() {
         MoveStatus superMoveStatus = super.execute();
         if (superMoveStatus != MoveStatus.SUCCESS) return superMoveStatus;
-        if (startPosition.getPieceOccupying() == null) return MoveStatus.INVALID_NULL;
+        if (startPosition.getPieceOccupying() == null) return MoveStatus.INVALID_OUT_OF_BOUNDS_POSITION;
         if (!startPosition.isAdjacentToThisPosition(targetPosition)) return MoveStatus.INVALID_NOT_ADJACENT;
 
         // Move the piece if it belongs to the player whose trying to move it.
@@ -22,6 +22,7 @@ public class MoveAdjacent extends Move {
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(selectedPiece);
         board.addPlayerPositionOnBoard(targetPosition);
-        return MoveStatus.SUCCESS;
+        
+        return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;
     }
 }
