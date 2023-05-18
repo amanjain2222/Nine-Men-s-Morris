@@ -14,7 +14,6 @@ public class MovePlace extends Move{
 
         // Perform Placement
         targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
-        board.addPlayerPositionOnBoard(targetPosition);   
 
         // Return successful move status.
         return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;

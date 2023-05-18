@@ -18,10 +18,8 @@ public class MoveAdjacent extends Move {
         if (selectedPiece.getOwner() != player) {return MoveStatus.INVALID_NOT_OWNER;}
 
         // Perform piece move.
-        board.removePlayerPositionOnBoard(startPosition);
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(selectedPiece);
-        board.addPlayerPositionOnBoard(targetPosition);
         
         return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;
     }
