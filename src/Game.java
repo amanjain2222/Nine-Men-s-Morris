@@ -28,9 +28,10 @@ public class Game {
     }
 
     public void updateGame(InputState input) {
-        moveStatus = MoveStatus.UNKNOWN;
+        // Get current player.
         Player currentPlayer = players[gameTurn % players.length];
 
+        // Process that player's input.
         switch (gameStatus) {
             case AWAITING_PLACEMENT:
                 moveStatus = handlePlacementPhase(input, currentPlayer);
@@ -45,33 +46,36 @@ public class Game {
                 break;
         }
 
-        // Don't update game globals if move failed to process.
+        // First ensure input didn't fail to process, else we can stop processing update.
         if (moveStatus.IS_INVALID) {
             return;
         }
 
+        // Check if a removal move is required from the player.
         if (moveStatus == MoveStatus.MILL_FORMED) {
             gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
-        } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
+            return;
+        }
+
+        // Move on to next game turn if no additional steps are required from player.
+        gameTurn++;
+        if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
             gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
-        } else {
-            gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
+            return;
         }
-        if (moveStatus == MoveStatus.SUCCESS) {
-            gameTurn++;
-        }
+        gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
     }
 
     public GameState queryGameState() {
         return new GameState(this);
     }
-    
+
     private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
         MoveStatus statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
         setMoveStatus(statusCode);
         this.inputTargetPosition = targetPosition;
-        if (!statusCode.IS_INVALID){
+        if (!statusCode.IS_INVALID) {
             PreviousMovePositions.add(targetPosition);
         }
 
@@ -101,7 +105,7 @@ public class Game {
         this.inputStartPosition = startingPosition;
         this.inputTargetPosition = targetPosition;
 
-        if (statusCode == MoveStatus.SUCCESS){
+        if (statusCode == MoveStatus.SUCCESS) {
             PreviousMovePositions.add(targetPosition);
         }
         return statusCode;
