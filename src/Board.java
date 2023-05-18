@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +13,6 @@ public class Board {
 
     private ArrayList<Position> positionOnBoardP1;
     private ArrayList<Position> positionOnBoardP2;
-
-    private ArrayList<Position[]> Mill_Combinations = new ArrayList<>();
 
     public Board(Player player1, Player player2) {
         this.player1 = player1;
@@ -61,51 +58,33 @@ public class Board {
 
         // add the adjacent indexes for each position
         // outer square
-        boardPosition[0].addAdjacentPositions(boardPosition[1], boardPosition[9]);
-        boardPosition[1].addAdjacentPositions(boardPosition[0], boardPosition[2], boardPosition[4]);
-        boardPosition[2].addAdjacentPositions(boardPosition[1], boardPosition[14]);
-        boardPosition[9].addAdjacentPositions(boardPosition[0], boardPosition[10], boardPosition[21]);
-        boardPosition[14].addAdjacentPositions(boardPosition[2], boardPosition[13], boardPosition[23]);
-        boardPosition[21].addAdjacentPositions(boardPosition[9], boardPosition[22]);
-        boardPosition[22].addAdjacentPositions(boardPosition[19], boardPosition[21], boardPosition[23]);
-        boardPosition[23].addAdjacentPositions(boardPosition[14], boardPosition[22]);
+        boardPosition[0].setAdjacentPositions().setRight(boardPosition[1]).setBottom(boardPosition[9]).build();
+        boardPosition[1].setAdjacentPositions().setLeft(boardPosition[0]).setRight(boardPosition[2]).setBottom(boardPosition[4]).build();
+        boardPosition[2].setAdjacentPositions().setLeft(boardPosition[1]).setBottom(boardPosition[14]).build();
+        boardPosition[9].setAdjacentPositions().setTop(boardPosition[0]).setRight(boardPosition[10]).setBottom(boardPosition[21]).build();
+        boardPosition[14].setAdjacentPositions().setTop(boardPosition[2]).setLeft(boardPosition[13]).setBottom(boardPosition[23]).build();
+        boardPosition[21].setAdjacentPositions().setTop(boardPosition[9]).setRight(boardPosition[22]).build();
+        boardPosition[22].setAdjacentPositions().setTop(boardPosition[19]).setLeft(boardPosition[21]).setRight(boardPosition[23]).build();
+        boardPosition[23].setAdjacentPositions().setTop(boardPosition[14]).setLeft(boardPosition[22]).build();
         // middle square
-        boardPosition[3].addAdjacentPositions(boardPosition[4], boardPosition[10]);
-        boardPosition[4].addAdjacentPositions(boardPosition[1], boardPosition[3], boardPosition[5], boardPosition[7]);
-        boardPosition[5].addAdjacentPositions(boardPosition[4], boardPosition[13]);
-        boardPosition[10].addAdjacentPositions(boardPosition[3], boardPosition[9], boardPosition[11], boardPosition[18]);
-        boardPosition[13].addAdjacentPositions(boardPosition[5], boardPosition[12], boardPosition[14], boardPosition[20]);
-        boardPosition[18].addAdjacentPositions(boardPosition[10], boardPosition[19]);
-        boardPosition[19].addAdjacentPositions(boardPosition[16], boardPosition[18], boardPosition[20], boardPosition[22]);
-        boardPosition[20].addAdjacentPositions(boardPosition[13],boardPosition[19]);
+        boardPosition[3].setAdjacentPositions().setRight(boardPosition[4]).setBottom(boardPosition[10]).build();
+        boardPosition[4].setAdjacentPositions().setTop(boardPosition[1]).setLeft(boardPosition[3]).setRight(boardPosition[5]).setBottom(boardPosition[7]).build();
+        boardPosition[5].setAdjacentPositions().setLeft(boardPosition[4]).setBottom(boardPosition[13]).build();
+        boardPosition[10].setAdjacentPositions().setTop(boardPosition[3]).setLeft(boardPosition[9]).setRight(boardPosition[11]).setBottom(boardPosition[18]).build();
+        boardPosition[13].setAdjacentPositions().setTop(boardPosition[5]).setLeft(boardPosition[12]).setRight(boardPosition[14]).setBottom(boardPosition[20]).build();
+        boardPosition[18].setAdjacentPositions().setTop(boardPosition[10]).setRight(boardPosition[19]).build();
+        boardPosition[19].setAdjacentPositions().setTop(boardPosition[16]).setRight(boardPosition[20]).setLeft(boardPosition[18]).setBottom(boardPosition[22]).build();
+        boardPosition[20].setAdjacentPositions().setTop(boardPosition[13]).setLeft(boardPosition[19]).build();
         // inner square
-        boardPosition[6].addAdjacentPositions(boardPosition[7], boardPosition[11]);
-        boardPosition[7].addAdjacentPositions(boardPosition[4], boardPosition[6], boardPosition[8]);
-        boardPosition[8].addAdjacentPositions(boardPosition[7], boardPosition[12]);
-        boardPosition[11].addAdjacentPositions(boardPosition[6], boardPosition[10], boardPosition[15]);
-        boardPosition[12].addAdjacentPositions(boardPosition[8], boardPosition[13], boardPosition[17]);
-        boardPosition[15].addAdjacentPositions(boardPosition[11], boardPosition[16]);
-        boardPosition[16].addAdjacentPositions(boardPosition[15], boardPosition[17], boardPosition[19]);
-        boardPosition[17].addAdjacentPositions(boardPosition[12], boardPosition[16]);
-
-
-        Position[][] millPosition_combinations = new Position[][]{{boardPosition[0], boardPosition[1], boardPosition[2]},
-                {boardPosition[0], boardPosition[9], boardPosition[21]}, {boardPosition[0], boardPosition[3], boardPosition[6]},
-                {boardPosition[1], boardPosition[4], boardPosition[7]},
-                {boardPosition[2], boardPosition[5], boardPosition[7]}, {boardPosition[2], boardPosition[14], boardPosition[23]},
-                {boardPosition[3], boardPosition[4], boardPosition[5]}, {boardPosition[3], boardPosition[10], boardPosition[18]},
-                {boardPosition[5], boardPosition[13], boardPosition[20]}, {boardPosition[6], boardPosition[7],boardPosition[8]},
-                {boardPosition[6], boardPosition[11], boardPosition[15]}, {boardPosition[8], boardPosition[12], boardPosition[17]},
-                {boardPosition[9], boardPosition[10], boardPosition[11]}, {boardPosition[12], boardPosition[13], boardPosition[14]},
-                {boardPosition[15], boardPosition[16], boardPosition[17]}, {boardPosition[18], boardPosition[19], boardPosition[20]},
-                {boardPosition[21], boardPosition[22], boardPosition[23]},{boardPosition[16], boardPosition[19], boardPosition[22]}};
-
-        Mill_Combinations.addAll(Arrays.asList(millPosition_combinations));
+        boardPosition[6].setAdjacentPositions().setRight(boardPosition[7]).setBottom(boardPosition[11]).build();
+        boardPosition[7].setAdjacentPositions().setTop(boardPosition[4]).setLeft(boardPosition[6]).setRight(boardPosition[8]).build();
+        boardPosition[8].setAdjacentPositions().setLeft(boardPosition[7]).setBottom(boardPosition[12]).build();
+        boardPosition[11].setAdjacentPositions().setTop(boardPosition[6]).setLeft(boardPosition[10]).setBottom(boardPosition[15]).build();
+        boardPosition[12].setAdjacentPositions().setTop(boardPosition[8]).setRight(boardPosition[13]).setBottom(boardPosition[17]).build();
+        boardPosition[15].setAdjacentPositions().setTop(boardPosition[11]).setRight(boardPosition[16]).build();
+        boardPosition[16].setAdjacentPositions().setLeft(boardPosition[15]).setRight(boardPosition[17]).setBottom(boardPosition[19]).build();
+        boardPosition[17].setAdjacentPositions().setTop(boardPosition[12]).setLeft(boardPosition[16]).build();
     }
-
-
-
-
 
     public Position getPosition(int positionIndex) {
         if (positionIndex < 0 || positionIndex >= TOTAL_POSITION) return null;
@@ -156,24 +135,6 @@ public class Board {
             return false;
         }
         return true;
-    }
-
-    public boolean isMillFormed(Player player, Position CurrentPosition) {
-        for (Position[] combination : Mill_Combinations) {
-            Position position1 = combination[0];
-            Position position2 = combination[1];
-            Position position3 = combination[2];
-            if (position1.getPieceOccupying() != null && position2.getPieceOccupying() != null && position3.getPieceOccupying() != null){
-                if (position1.getPieceOccupying().getOwner() == player && position2.getPieceOccupying().getOwner() == player && position3.getPieceOccupying().getOwner() == player) {
-                    if (CurrentPosition == position1 || CurrentPosition == position2 || CurrentPosition == position3) {
-                        return true;
-                    }
-                }
-            }
-
-
-        }
-        return false;
     }
 
     public Position[] getStartPositionsP1() {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class DisplayInterface {
     private static final int STARTING_PIECE_TOTAL = 9;
     private static final char[] PLAYER_CHARS = {'I', 'F'};
-    private static final String REMOVE_QUERY_MESSAGE = " Player, Please enter the position of the Opponent's piece you want to remove: ";
+    private static final String REMOVE_QUERY_MESSAGE = "Now is the time to strike %s Player, enter the position of the Opponent's piece you want to remove: ";
     private static final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
     private static final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
     private static final String GAME_PHASE_MESSAGE = "Current Game Phase: ";
@@ -18,8 +18,10 @@ public class DisplayInterface {
     Scanner consoleInput = new Scanner(System.in);
 
     GameState gameState = null;
+    GameState previousGameState = null;
 
     public void updateDisplay(GameState gameState) {
+        previousGameState = this.gameState;
         this.gameState = gameState;
         // Game hasn't started yet.
         if(gameState == null) {
@@ -80,8 +82,8 @@ public class DisplayInterface {
                 inputValues.add(transcriptInputValue(input));
             }
             case AWAITING_REMOVAL -> {
-                // Get Removal Input
-                System.out.print(REMOVE_QUERY_MESSAGE);
+                // Get Removal Inputy
+                System.out.print(String.format(REMOVE_QUERY_MESSAGE, gameState.getCurrentPlayerData().getName()));
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
                 inputValues.add(transcriptInputValue(input));
@@ -150,6 +152,8 @@ public class DisplayInterface {
         if (gameState.getMoveStatus().IS_INVALID) {
             System.out.println(getErrorMessage(gameState.getMoveStatus()) + "\n");
             System.out.println(gameState.getCurrentPlayerData().getName() + PLAYER_TURN_INFO_AGAIN_MESSAGE);
+        } else if (gameState.getGameStatus() == GameState.GameStatus.AWAITING_REMOVAL) {
+            System.out.println(getMoveDescription() + "\n");
         } else {
             System.out.println(getMoveDescription() + "\n");
             System.out.println(gameState.getCurrentPlayerData().getName() + PLAYER_TURN_INFO_MESSAGE);
@@ -207,29 +211,31 @@ public class DisplayInterface {
 
     private String getErrorMessage(MoveStatus moveStatus) {
         return switch (moveStatus) {
-            case INVALID_NULL -> "Error : The position you have entered does not exist.";
-            case INVALID_NOT_EMPTY -> "Error : The position you have entered is not empty.";
-            case INVALID_NOT_OWNER -> "Error : The piece you have selected is not yours.";
-            case INVALID_NOT_ADJACENT ->
-                    "Error : The position you have entered is not adjacent to the piece you have selected.";
-            default -> "Error : An unknown error has occurred. Error Code: " + moveStatus;
+            case INVALID_OUT_OF_BOUNDS_POSITION -> "Invalid Move : The position you have entered does not exist.";
+            case INVALID_NOT_EMPTY -> "Invalid Move : The position you have entered is not empty.";
+            case INVALID_NOT_OWNER -> "Invalid Move : The piece you have selected is not yours.";
+            case INVALID_NOT_ADJACENT -> "Invalid Move : The position you have entered is not adjacent to the piece you have selected.";
+            case INVALID_CANNOT_REMOVE_YOUR_PIECE -> "Invalid Move : You can't take your own piece.";
+            case INVALID_CANNOT_REMOVE_NO_PIECE_FOUND -> "Invalid Move : There is no piece there to remove.";
+            case INVALID_OPPONENT_PIECE_IN_MILL_POSITION -> "Invalid Move : Cannot remove a piece that is already in a mill.";
+                    
+            default -> "Invalid Move : An unknown invalid move has occurred. Invalid Move Code: " + moveStatus;
         };
     }
 
     private String getMoveDescription() {
         String moveDescription = "";
         if (gameState.getGameTurn() == 0) return "Game has Started.";
-        // TODO: This is a hardcode to fix null pointer exception when game phase change from Placement to Movement but still need to print one last placement move description description
-        if (gameState.getGameTurn() == 18) return gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
-        switch (gameState.getGameStatus()) {
+        if (gameState.getGameStatus() == GameState.GameStatus.AWAITING_REMOVAL) return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
+        switch (previousGameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
-                    moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece at Position.";
+                    moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
             case AWAITING_MOVEMENT ->
                     moveDescription = gameState.getOpponentPlayerData().getName()  + " Player moved a piece.";
             case AWAITING_REMOVAL ->
-                    moveDescription = gameState.getCurrentPlayerData().getName() + " Player removed a piece of Player " + gameState.getOpponentPlayerData().getName() + ".";
+                    moveDescription = gameState.getOpponentPlayerData().getName()  + " Player captured a piece.";
             default -> 
-                moveDescription = "Unknown Move.";
+                moveDescription = "Unknown move made.";
         }
         return moveDescription;
     }

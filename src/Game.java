@@ -17,7 +17,6 @@ public class Game {
 
     private GameState.GameStatus gameStatus;
     private MoveStatus moveStatus = MoveStatus.GAME_START;
-    private boolean undoMove = false;
     private boolean gameOver = false;
     private Position inputStartPosition;
     private Position inputTargetPosition;
@@ -29,27 +28,37 @@ public class Game {
     }
 
     public void updateGame(InputState input) {
-        MoveStatus moveStatusCode = MoveStatus.UNKNOWN;
+        moveStatus = MoveStatus.UNKNOWN;
         Player currentPlayer = players[gameTurn % players.length];
 
         switch (gameStatus) {
             case AWAITING_PLACEMENT:
-                moveStatusCode = handlePlacementPhase(input, currentPlayer);
+                moveStatus = handlePlacementPhase(input, currentPlayer);
                 break;
             case AWAITING_MOVEMENT:
-                moveStatusCode = handleMovementPhase(input, currentPlayer);
+                moveStatus = handleMovementPhase(input, currentPlayer);
                 break;
             case AWAITING_REMOVAL:
-                moveStatusCode = handleRemovalPhase(input, currentPlayer);
+                moveStatus = handleRemovalPhase(input, currentPlayer);
                 break;
             default:
                 break;
         }
 
+        // Don't update game globals if move failed to process.
+        if (moveStatus.IS_INVALID) {
+            return;
+        }
 
-        if (moveStatusCode == MoveStatus.SUCCESS) {
+        if (moveStatus == MoveStatus.MILL_FORMED) {
+            gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
+        } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
+            gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
+        } else {
+            gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
+        }
+        if (moveStatus == MoveStatus.SUCCESS) {
             gameTurn++;
-            updateCurrentGamePhase();
         }
     }
 
@@ -80,40 +89,16 @@ public class Game {
         MoveStatus statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
         setMoveStatus(statusCode);
         this.inputTargetPosition = targetPosition;
-        if (statusCode == MoveStatus.SUCCESS){
+        if (!statusCode.IS_INVALID){
             PreviousMovePositions.add(targetPosition);
         }
 
         return statusCode;
     }
 
-    private void updateCurrentGamePhase() {
-        if (PreviousMovePositions.size() > 0 && gameBoard.isMillFormed(players[(gameTurn - 1) % players.length] , PreviousMovePositions.get(PreviousMovePositions.size() - 1))) {
-            gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
-            gameTurn--;
-        } else if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
-            gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
-        } else {
-            gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
-        }
-    }
-
     private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
-
-        MoveStatus statusCode;
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-
-        if (gameBoard.isMillFormed(players[(gameTurn+1) % players.length], targetPosition)) {
-            statusCode = MoveStatus.INVALID_OPPONENT_PIECE_IN_MILL_POSITION;
-        }else{
-            statusCode = players[gameTurn % players.length].removePiece(gameBoard, targetPosition);
-        }
-
-        if (statusCode == MoveStatus.SUCCESS){
-            PreviousMovePositions.clear();
-        }
-
-
+        MoveStatus statusCode = currentPlayer.removePiece(gameBoard, targetPosition);
         updatePlayerCanJump(); // update opponent player's canJump status
         updateIsGameOver();
         return statusCode;
@@ -189,9 +174,5 @@ public class Game {
             gameOver = false;
         } else if (getOpponentPlayer().getNumOfPiecesOnBoard() < 3)
             gameOver = true;
-    }
-
-    public boolean isPreviousMoveUndo() {
-        return undoMove;
     }
 }
