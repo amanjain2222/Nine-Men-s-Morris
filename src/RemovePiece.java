@@ -5,13 +5,13 @@ public class RemovePiece extends Move {
 
 
     @Override
-    public ExecutionCode execute() {
-        ExecutionCode superExecutionCode = super.execute();
-        if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
-        if (targetPosition.getPieceOccupying().getOwner() == player) return ExecutionCode.INVALID_CANNOT_REMOVE_YOUR_PIECE;
+    public MoveStatus execute() {
+        MoveStatus superMoveStatus = super.execute();
+        if (superMoveStatus != MoveStatus.SUCCESS) return superMoveStatus;
+        if (targetPosition.getPieceOccupying().getOwner() == player) return MoveStatus.INVALID_CANNOT_REMOVE_YOUR_PIECE;
         board.removePlayerPositionOnBoard(targetPosition);
         targetPosition.setEmpty();
-        return ExecutionCode.SUCCESS;
+        return MoveStatus.SUCCESS;
     }
 }
 

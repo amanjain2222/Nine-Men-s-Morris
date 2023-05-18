@@ -10,10 +10,10 @@ public abstract class Move extends Action {
     }
 
     @Override
-    public ExecutionCode execute() {
+    public MoveStatus execute() {
         // validate target position
-        if (targetPosition == null) return ExecutionCode.INVALID_NULL;
-        return ExecutionCode.SUCCESS;
+        if (targetPosition == null) return MoveStatus.INVALID_NULL;
+        return MoveStatus.SUCCESS;
     }
 
 

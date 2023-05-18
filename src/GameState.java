@@ -1,7 +1,7 @@
 // Information about a game's state including it's enumerated phase.
 public class GameState {
     private GameStatus gameStatus;
-    private ExecutionCode executionCode;
+    private MoveStatus moveStatus;
     private PlayerData currentPlayerData;
     private PlayerData opponentPlayerData;
     private int gameTurn;
@@ -9,13 +9,13 @@ public class GameState {
 
     private GameState(
             GameStatus gameStatus,
-            ExecutionCode executionCode,
+            MoveStatus moveStatus,
             PlayerData currentPlayerData,
             PlayerData opponentPlayerData,
             int gameTurn,
             char[] board) {
         this.gameStatus = gameStatus;
-        this.executionCode = executionCode;
+        this.moveStatus = moveStatus;
         this.currentPlayerData = currentPlayerData;
         this.opponentPlayerData = opponentPlayerData;
         this.gameTurn = gameTurn;
@@ -92,7 +92,7 @@ public class GameState {
     public static class GameStateBuilder {
 
         private GameStatus gameStatus;
-        private ExecutionCode executionCode;
+        private MoveStatus moveStatus;
         private PlayerData currentPlayerData;
         private PlayerData opponentPlayerData;
         private int gameTurn;
@@ -108,8 +108,8 @@ public class GameState {
             return this;
         }
 
-        public GameStateBuilder setExecutionCode(ExecutionCode executionCode) {
-            this.executionCode = executionCode;
+        public GameStateBuilder setMoveStatus(MoveStatus moveStatus) {
+            this.moveStatus = moveStatus;
             return this;
         }
 
@@ -177,7 +177,7 @@ public class GameState {
         public GameState build() {
             return new GameState(
                     gameStatus,
-                    executionCode,
+                    moveStatus,
                     currentPlayerData,
                     opponentPlayerData,
                     gameTurn,
@@ -189,8 +189,8 @@ public class GameState {
         return gameStatus;
     }
 
-    public ExecutionCode getExecutionCode() {
-        return executionCode;
+    public MoveStatus getMoveStatus() {
+        return moveStatus;
     }
 
     public PlayerData getCurrentPlayerData() {

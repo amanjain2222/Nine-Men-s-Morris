@@ -4,15 +4,15 @@ public class MoveJump extends MoveAdjacent {
     }
 
     @Override
-    public ExecutionCode execute() {
-        ExecutionCode superExecutionCode = super.execute();
-        if (superExecutionCode != ExecutionCode.SUCCESS && superExecutionCode != ExecutionCode.INVALID_NOT_ADJACENT) return superExecutionCode;
-        if (!targetPosition.isEmpty()) return ExecutionCode.INVALID_NOT_EMPTY;
+    public MoveStatus execute() {
+        MoveStatus superMoveStatus = super.execute();
+        if (superMoveStatus != MoveStatus.SUCCESS && superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT) return superMoveStatus;
+        if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
         board.removePlayerPositionOnBoard(startPosition);
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(startPosition.getPieceOccupying());
         board.addPlayerPositionOnBoard(targetPosition);
-        return ExecutionCode.SUCCESS;
+        return MoveStatus.SUCCESS;
     }
     // TODO: Implement Jump Move
 }

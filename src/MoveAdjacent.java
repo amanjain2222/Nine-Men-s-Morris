@@ -7,21 +7,21 @@ public class MoveAdjacent extends Move {
     }
 
     @Override
-    public ExecutionCode execute() {
-        ExecutionCode superExecutionCode = super.execute();
-        if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
-        if (startPosition.getPieceOccupying() == null) return ExecutionCode.INVALID_NULL;
-        if (!startPosition.isAdjacentToThisPosition(targetPosition)) return ExecutionCode.INVALID_NOT_ADJACENT;
+    public MoveStatus execute() {
+        MoveStatus superMoveStatus = super.execute();
+        if (superMoveStatus != MoveStatus.SUCCESS) return superMoveStatus;
+        if (startPosition.getPieceOccupying() == null) return MoveStatus.INVALID_NULL;
+        if (!startPosition.isAdjacentToThisPosition(targetPosition)) return MoveStatus.INVALID_NOT_ADJACENT;
 
         // Move the piece if it belongs to the player whose trying to move it.
         Piece selectedPiece = startPosition.getPieceOccupying();
-        if (selectedPiece.getOwner() != player) {return ExecutionCode.INVALID_NOT_OWNER;}
+        if (selectedPiece.getOwner() != player) {return MoveStatus.INVALID_NOT_OWNER;}
 
         // Perform piece move.
         board.removePlayerPositionOnBoard(startPosition);
         startPosition.setEmpty();
         targetPosition.setPieceOccupying(selectedPiece);
         board.addPlayerPositionOnBoard(targetPosition);
-        return ExecutionCode.SUCCESS;
+        return MoveStatus.SUCCESS;
     }
 }
