@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
 public class Game {
-    private final int PLAYER_STARTING_PIECES = 9;
     private final String FIRST_PLAYER_NAME = "Ice";
     private final Character FIRST_PLAYER_CHAR = 'I';
     private final String SECOND_PLAYER_NAME = "Fire";
     private final Character SECOND_PLAYER_CHAR = 'F';
     private final Player[] players = { new Player(FIRST_PLAYER_NAME, FIRST_PLAYER_CHAR),
             new Player(SECOND_PLAYER_NAME, SECOND_PLAYER_CHAR) };
+    private final int PLAYER_STARTING_PIECES = 9;
+    private final int TOTAL_PLACEMENT_TURNS = PLAYER_STARTING_PIECES * players.length;
 
     private Board gameBoard;
 
@@ -15,7 +16,7 @@ public class Game {
 
     private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
 
-    private GameState.GameStatus gameStatus;
+    private GameStatus gameStatus;
     private MoveStatus moveStatus = MoveStatus.GAME_START;
     private boolean gameOver = false;
     private Position inputStartPosition;
@@ -24,7 +25,7 @@ public class Game {
     public Game() {
         gameTurn = 0;
         gameBoard = new Board(players[0], players[1]);
-        gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
+        gameStatus = GameStatus.AWAITING_PLACEMENT;
     }
 
     public void updateGame(InputState input) {
@@ -46,24 +47,21 @@ public class Game {
                 break;
         }
 
-        // First ensure input didn't fail to process, else we can stop processing update.
+        // First ensure input didn't fail to process, else we can stop processing
+        // update.
         if (moveStatus.IS_INVALID) {
             return;
         }
 
         // Check if a removal move is required from the player.
         if (moveStatus == MoveStatus.MILL_FORMED) {
-            gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
+            gameStatus = GameStatus.AWAITING_REMOVAL;
             return;
         }
 
         // Move on to next game turn if no additional steps are required from player.
         gameTurn++;
-        if (gameTurn < players.length * PLAYER_STARTING_PIECES) {
-            gameStatus = GameState.GameStatus.AWAITING_PLACEMENT;
-            return;
-        }
-        gameStatus = GameState.GameStatus.AWAITING_MOVEMENT;
+        gameStatus = gameTurn < TOTAL_PLACEMENT_TURNS ? GameStatus.AWAITING_PLACEMENT : GameStatus.AWAITING_MOVEMENT;
     }
 
     public GameState queryGameState() {
@@ -149,7 +147,7 @@ public class Game {
         return gameTurn;
     }
 
-    public GameState.GameStatus getGameStatus() {
+    public GameStatus getGameStatus() {
         return gameStatus;
     }
 

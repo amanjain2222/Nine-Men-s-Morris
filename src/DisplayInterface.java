@@ -29,7 +29,7 @@ public class DisplayInterface {
             return;
         }
         // Game is over.
-        if (gameState.getGameStatus() == GameState.GameStatus.GAME_OVER) {
+        if (gameState.getGameStatus() == GameStatus.GAME_OVER) {
             printEndGameResult();
             return;
         }
@@ -47,7 +47,7 @@ public class DisplayInterface {
         }
         
         // Game is over so handle accordingly.
-        if (gameState.getGameStatus() == GameState.GameStatus.GAME_OVER) {
+        if (gameState.getGameStatus() == GameStatus.GAME_OVER) {
             return handleEndGameInputQuery();
         }
 
@@ -152,7 +152,7 @@ public class DisplayInterface {
         if (gameState.getMoveStatus().IS_INVALID) {
             System.out.println(getErrorMessage(gameState.getMoveStatus()) + "\n");
             System.out.println(gameState.getCurrentPlayerData().getName() + PLAYER_TURN_INFO_AGAIN_MESSAGE);
-        } else if (gameState.getGameStatus() == GameState.GameStatus.AWAITING_REMOVAL) {
+        } else if (gameState.getGameStatus() == GameStatus.AWAITING_REMOVAL) {
             System.out.println(getMoveDescription() + "\n");
         } else {
             System.out.println(getMoveDescription() + "\n");
@@ -226,7 +226,7 @@ public class DisplayInterface {
     private String getMoveDescription() {
         String moveDescription = "";
         if (gameState.getGameTurn() == 0) return "Game has Started.";
-        if (gameState.getGameStatus() == GameState.GameStatus.AWAITING_REMOVAL) return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
+        if (gameState.getGameStatus() == GameStatus.AWAITING_REMOVAL) return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
         switch (previousGameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
                     moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
