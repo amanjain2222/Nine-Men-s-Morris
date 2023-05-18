@@ -141,7 +141,6 @@ public class DisplayInterface {
 
     private void printOtherOptions() {
         System.out.println("\nOther Options: ");
-        System.out.println("- Undo Move   : Type 'U'");
         System.out.println("- Exit Game   : Type 'E'");
         System.out.println("- Restart Game: Type 'R'");
     }
