@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int TOTAL_POSITION = 24;
@@ -174,13 +176,20 @@ public class Board {
         return false;
     }
 
-
     public Position[] getStartPositionsP1() {
         return startPositionP1;
     }
 
     public Position[] getStartPositionsP2() {
         return startPositionP2;
+    }
+
+    public char[] toCharArray() {
+        List<Character> charArray = new ArrayList<>();
+        for (int i = 0; i < boardPosition.length; i++) {
+            charArray.add(boardPosition[i].getPieceOccupying() == null ? ' ' : boardPosition[i].getPieceOccupying().getOwner().getDisplayChar());
+        }
+        return charArray.stream().map(Object::toString).collect(Collectors.joining()).toCharArray();
     }
 }
 

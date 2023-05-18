@@ -3,6 +3,8 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class DisplayInterface {
+    private static final int STARTING_PIECE_TOTAL = 9;
+    private static final char[] PLAYER_CHARS = {'I', 'F'};
     private static final String REMOVE_QUERY_MESSAGE = " Player, Please enter the position of the Opponent's piece you want to remove: ";
     private static final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
     private static final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
@@ -160,59 +162,47 @@ public class DisplayInterface {
         System.out.println("                        " + CURRENT_PLAYER_MESSAGE + gameState.getCurrentPlayerData().getName());
     }
 
-    private void printBoard(Board board) {
-        Position[] boardPositions = board.getBoardPositions();
-        Position[] startPositionsP1 = board.getStartPositionsP1();
-        Position[] startPositionsP2 = board.getStartPositionsP2();
+    private void printBoard(char[] board) {
+        // Construct start position values.
+        String firstPlayerStartPositions = "";
+        String secondPlayerStartPositions = "";
+        for (int i = 0; i < STARTING_PIECE_TOTAL; i++) {
+            if (i < (gameState.getGameTurn() % 2 == 0 ? gameState.getCurrentPlayerData().getPieceRemaining() : gameState.getOpponentPlayerData().getPieceRemaining())) {
+                firstPlayerStartPositions += "  " + PLAYER_CHARS[0];
+            } else {
+                firstPlayerStartPositions += "  _";
+            }
+            if (i < (gameState.getGameTurn() % 2 == 1 ? gameState.getCurrentPlayerData().getPieceRemaining() : gameState.getOpponentPlayerData().getPieceRemaining())) {
+                secondPlayerStartPositions += "  " + PLAYER_CHARS[1];
+            } else {
+                secondPlayerStartPositions += "  _";
+            }
+        }
 
-        // Print Title
+        // Print Title + Start Positions + Board
         System.out.println("\n                              " + GAME_TITLE_MESSAGE + "\n");
-
-        // Print Player 2 Start Positions
-        System.out.println("                       Ice :  " + startPositionToChar(startPositionsP1[0]) + "  " + startPositionToChar(startPositionsP1[1]) + "  " + startPositionToChar(startPositionsP1[2]) + "  " + startPositionToChar(startPositionsP1[3]) + "  "
-                + startPositionToChar(startPositionsP1[4]) + "  " + startPositionToChar(startPositionsP1[5]) + "  " + startPositionToChar(startPositionsP1[6]) + "  " + startPositionToChar(startPositionsP1[7]) + "  " + startPositionToChar(startPositionsP1[8]) + "\n");
-
-        // Print Board
+        System.out.println("                       Ice :" + firstPlayerStartPositions + "\n");
         System.out.print(
-                "  0{ " + boardPositionToChar(boardPositions[0]) + " }---------------------------- 1{ " + boardPositionToChar(boardPositions[1]) + " }----------------------------- 2{ " + boardPositionToChar(boardPositions[2]) + " }\n"
+                "  0{ " + board[0] + " }---------------------------- 1{ " + board[1] + " }----------------------------- 2{ " + board[2] + " }\n"
                         + "     |                                  |                                   | \n"
                         + "     |                                  |                                   | \n"
-                        + "     |       3{ " + boardPositionToChar(boardPositions[3]) + " }----------------- 4{ " + boardPositionToChar(boardPositions[4]) + " }------------------ 5{ " + boardPositionToChar(boardPositions[5]) + " }        | \n"
+                        + "     |       3{ " + board[3] + " }----------------- 4{ " + board[4] + " }------------------ 5{ " + board[5] + " }        | \n"
                         + "     |          |                       |                        |          |    \n"
                         + "     |          |                       |                        |          |    \n"
-                        + "     |          |       6{ " + boardPositionToChar(boardPositions[6]) + " }------ 7{ " + boardPositionToChar(boardPositions[7]) + " }------- 8{ " + boardPositionToChar(boardPositions[8]) + " }        |          | \n"
+                        + "     |          |       6{ " + board[6] + " }------ 7{ " + board[7] + " }------- 8{ " + board[8] + " }        |          | \n"
                         + "     |          |          |                          |          |          | \n"
                         + "     |          |          |                          |          |          | \n"
-                        + "  9{ " + boardPositionToChar(boardPositions[9]) + " }--- 10{ " + boardPositionToChar(boardPositions[10]) + " }--- 11{ " + boardPositionToChar(boardPositions[11]) + " }                    12{ " + boardPositionToChar(boardPositions[12]) + " }--- 13{ " + boardPositionToChar(boardPositions[13]) + " }--- 14{ " + boardPositionToChar(boardPositions[14]) + " }\n"
+                        + "  9{ " + board[9] + " }--- 10{ " + board[10] + " }--- 11{ " + board[11] + " }                    12{ " + board[12] + " }--- 13{ " + board[13] + " }--- 14{ " + board[14] + " }\n"
                         + "     |          |          |                          |          |          | \n"
                         + "     |          |          |                          |          |          | \n"
-                        + "     |          |      15{ " + boardPositionToChar(boardPositions[15]) + " }----- 16{ " + boardPositionToChar(boardPositions[16]) + " }------ 17{ " + boardPositionToChar(boardPositions[17]) + " }        |          |\n"
+                        + "     |          |      15{ " + board[15] + " }----- 16{ " + board[16] + " }------ 17{ " + board[17] + " }        |          |\n"
                         + "     |          |                       |                        |          |    \n"
                         + "     |          |                       |                        |          |    \n"
-                        + "     |      18{ " + boardPositionToChar(boardPositions[18]) + " }---------------- 19{ " + boardPositionToChar(boardPositions[19]) + " }----------------- 20{ " + boardPositionToChar(boardPositions[20]) + " }        | \n"
+                        + "     |      18{ " + board[18] + " }---------------- 19{ " + board[19] + " }----------------- 20{ " + board[20] + " }        | \n"
                         + "     |                                  |                                   | \n"
                         + "     |                                  |                                   | \n"
-                        + " 21{ " + boardPositionToChar(boardPositions[21]) + " }--------------------------- 22{ " + boardPositionToChar(boardPositions[22]) + " }---------------------------- 23{ " + boardPositionToChar(boardPositions[23]) + " }\n\n");
-
-        // Print Player 1 Start Positions
-        System.out.println("                       Fire :  " + startPositionToChar(startPositionsP2[0]) + "  " + startPositionToChar(startPositionsP2[1]) + "  " + startPositionToChar(startPositionsP2[2]) + "  " + startPositionToChar(startPositionsP2[3]) + "  "
-                + startPositionToChar(startPositionsP2[4]) + "  " + startPositionToChar(startPositionsP2[5]) + "  " + startPositionToChar(startPositionsP2[6]) + "  " + startPositionToChar(startPositionsP2[7]) + "  " + startPositionToChar(startPositionsP2[8]) + "\n");
-    }
-
-    private char boardPositionToChar(Position position) {
-        if (position.isEmpty()) {
-            return ' ';
-        } else {
-            return position.getPieceOccupying().getDisplayChar();
-        }
-    }
-
-    private char startPositionToChar(Position position) {
-        if (position.isEmpty()) {
-            return '_';
-        } else {
-            return position.getPieceOccupying().getDisplayChar();
-        }
+                        + " 21{ " + board[21] + " }--------------------------- 22{ " + board[22] + " }---------------------------- 23{ " + board[23] + " }\n\n");
+        System.out.println("                       Fire :" + secondPlayerStartPositions + "\n");
     }
 
     private String getErrorMessage(ExecutionCode executionCode) {
