@@ -17,8 +17,6 @@ public class Game {
 
     private GameState.GameStatus gameStatus;
     private MoveStatus moveStatus = MoveStatus.GAME_START;
-    private boolean previousMoveInvalid = false;
-    private boolean previousRemoveInvalid = true;
     private boolean undoMove = false;
     private boolean gameOver = false;
     private boolean gameRestarted = false;
@@ -81,7 +79,6 @@ public class Game {
     private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
         MoveStatus statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
-        setPreviousMoveInvalid(statusCode != MoveStatus.SUCCESS);
         setMoveStatus(statusCode);
         this.inputTargetPosition = targetPosition;
         if (statusCode == MoveStatus.SUCCESS){
@@ -124,10 +121,6 @@ public class Game {
     }
 
     private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
-
-        if (input.inputValues.get(0) == -1 || input.inputValues.get(1) == -1)
-            return handleUndo();
-
         MoveStatus statusCode;
         Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(1));
@@ -138,7 +131,6 @@ public class Game {
             statusCode = currentPlayer.makeJumpMove(gameBoard, startingPosition, targetPosition);
         }
 
-        setPreviousMoveInvalid(statusCode != MoveStatus.SUCCESS);
         setMoveStatus(statusCode);
         this.inputStartPosition = startingPosition;
         this.inputTargetPosition = targetPosition;
@@ -149,25 +141,10 @@ public class Game {
         return statusCode;
     }
 
-    private MoveStatus handleUndo() {
-        // TODO: implement code to handle undo move
-        return MoveStatus.UNDO;
-    }
-
     private void updatePlayerCanJump() {
         if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
             this.getOpponentPlayer().setCanJump(true);
         }
-    }
-
-
-    public boolean wasPreviousMoveInvalid() {
-        // Returns whether the Previous Game Move was Valid
-        return previousMoveInvalid;
-    }
-
-    private void setPreviousMoveInvalid(boolean wasInvalid) {
-        previousMoveInvalid = wasInvalid;
     }
 
     private void setMoveStatus(MoveStatus moveStatus) {
@@ -196,10 +173,6 @@ public class Game {
 
     public Position getInputTargetPosition() {
         return inputTargetPosition;
-    }
-
-    public boolean isPreviousRemoveValid() {
-        return previousRemoveInvalid;
     }
 
     public int getGameTurn() {
