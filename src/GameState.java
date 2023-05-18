@@ -1,6 +1,6 @@
 // Information about a game's state including it's enumerated phase.
 public class GameState {
-    private NextInput nextInput;
+    private GameStatus gameStatus;
     private ExecutionCode executionCode;
     private PlayerData currentPlayerData;
     private PlayerData opponentPlayerData;
@@ -8,13 +8,13 @@ public class GameState {
     private char[] board;
 
     private GameState(
-            NextInput nextInput,
+            GameStatus gameStatus,
             ExecutionCode executionCode,
             PlayerData currentPlayerData,
             PlayerData opponentPlayerData,
             int gameTurn,
             char[] board) {
-        this.nextInput = nextInput;
+        this.gameStatus = gameStatus;
         this.executionCode = executionCode;
         this.currentPlayerData = currentPlayerData;
         this.opponentPlayerData = opponentPlayerData;
@@ -22,7 +22,7 @@ public class GameState {
         this.board = board;
     }
 
-    public static enum NextInput {
+    public static enum GameStatus {
         AWAITING_PLACEMENT("PLACEMENT"),
         AWAITING_MOVEMENT("MOVEMENT"),
         AWAITING_REMOVAL("REMOVAL"),
@@ -32,7 +32,7 @@ public class GameState {
 
         public final String INPUT_DESCRIPTOR;
 
-        private NextInput(String inputDescriptor) {
+        private GameStatus(String inputDescriptor) {
             this.INPUT_DESCRIPTOR = inputDescriptor;
         }
     }
@@ -91,7 +91,7 @@ public class GameState {
 
     public static class GameStateBuilder {
 
-        private NextInput nextInput;
+        private GameStatus gameStatus;
         private ExecutionCode executionCode;
         private PlayerData currentPlayerData;
         private PlayerData opponentPlayerData;
@@ -103,8 +103,8 @@ public class GameState {
             opponentPlayerData = new PlayerData();
         }
 
-        public GameStateBuilder setNextInput(NextInput nextInput) {
-            this.nextInput = nextInput;
+        public GameStateBuilder setGameStatus(GameStatus gameStatus) {
+            this.gameStatus = gameStatus;
             return this;
         }
 
@@ -176,7 +176,7 @@ public class GameState {
 
         public GameState build() {
             return new GameState(
-                    nextInput,
+                    gameStatus,
                     executionCode,
                     currentPlayerData,
                     opponentPlayerData,
@@ -185,8 +185,8 @@ public class GameState {
         }
     }
 
-    public NextInput getNextInput() {
-        return nextInput;
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 
     public ExecutionCode getExecutionCode() {
