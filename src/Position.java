@@ -44,15 +44,15 @@ public class Position {
         Character pieceChar = getPieceOccupying().getDisplayChar();
         boolean isMill = false;
         // Check if part of vertical mill.
-        isMill |= pieceChar == adjacentPositions.topMostChar()
+        isMill |= (pieceChar == adjacentPositions.topMostChar()
                 && pieceChar != adjacentPositions.bottomMostChar()
-                || pieceChar == adjacentPositions.bottomChar()
+                || pieceChar == adjacentPositions.bottomChar())
                         && (pieceChar == adjacentPositions.topChar()
                                 || pieceChar == adjacentPositions.bottomMostChar());
         // Check if part of horizontal mill.
-        isMill |= pieceChar == adjacentPositions.leftMostChar()
+        isMill |= (pieceChar == adjacentPositions.leftMostChar()
                 && pieceChar != adjacentPositions.rightMostChar()
-                || pieceChar == adjacentPositions.rightChar()
+                || pieceChar == adjacentPositions.rightChar())
                         && (pieceChar == adjacentPositions.leftChar()
                                 || pieceChar == adjacentPositions.rightMostChar());
         return isMill;
