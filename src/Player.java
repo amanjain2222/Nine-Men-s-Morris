@@ -17,20 +17,20 @@ public class Player {
         canJump = false;
     }
 
-    public ExecutionCode makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
+    public MoveStatus makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
         return new MoveAdjacent(board, this, startPosition, targetPosition).execute();
     }
 
-    public ExecutionCode makePlaceMove(Board board, Position targetPosition) {
+    public MoveStatus makePlaceMove(Board board, Position targetPosition) {
         // Return any potential invalid status from the move so it can be used to update the GameState.
         return new MovePlace(board,this, targetPosition).execute();
     }
 
-    public ExecutionCode makeJumpMove(Board board, Position startPosition, Position targetPosition) {
+    public MoveStatus makeJumpMove(Board board, Position startPosition, Position targetPosition) {
         return new MoveJump(board, this, startPosition, targetPosition).execute();
     }
 
-    public ExecutionCode removePiece(Board board,Position targetPosition){
+    public MoveStatus removePiece(Board board,Position targetPosition){
         return new RemovePiece(board, this, targetPosition).execute();
     }
 

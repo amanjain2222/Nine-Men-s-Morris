@@ -4,14 +4,14 @@ public class MovePlace extends Move{
     }
 
     @Override
-    public ExecutionCode execute() {
-        ExecutionCode superExecutionCode = super.execute();
-        if (superExecutionCode != ExecutionCode.SUCCESS) return superExecutionCode;
+    public MoveStatus execute() {
+        MoveStatus superMoveStatus = super.execute();
+        if (superMoveStatus != MoveStatus.SUCCESS) return superMoveStatus;
 
-        if (!targetPosition.isEmpty()) return ExecutionCode.INVALID_NOT_EMPTY;
+        if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
 
         targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
         board.addPlayerPositionOnBoard(targetPosition);
-        return ExecutionCode.SUCCESS;
+        return MoveStatus.SUCCESS;
     }
 }

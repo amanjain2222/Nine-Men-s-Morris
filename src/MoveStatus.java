@@ -1,4 +1,4 @@
-public enum ExecutionCode {
+public enum MoveStatus {
     SUCCESS(false),
     INVALID_NULL(true),
     INVALID_NOT_EMPTY(true),
@@ -18,7 +18,7 @@ public enum ExecutionCode {
 
     public final boolean IS_INVALID;
 
-    private ExecutionCode(boolean IS_INVALID) {
+    private MoveStatus(boolean IS_INVALID) {
         this.IS_INVALID = IS_INVALID;
     }
 }

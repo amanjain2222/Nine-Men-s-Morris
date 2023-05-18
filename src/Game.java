@@ -16,7 +16,7 @@ public class Game {
     private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
 
     private GameState.GameStatus gameStatus;
-    private ExecutionCode executionCode = ExecutionCode.GAME_START;
+    private MoveStatus moveStatus = MoveStatus.GAME_START;
     private boolean previousMoveInvalid = false;
     private boolean previousRemoveInvalid = true;
     private boolean undoMove = false;
@@ -32,7 +32,7 @@ public class Game {
     }
 
     public void updateGame(InputState input) {
-        ExecutionCode moveStatusCode = ExecutionCode.UNKNOWN;
+        MoveStatus moveStatusCode = MoveStatus.UNKNOWN;
         Player currentPlayer = players[gameTurn % players.length];
 
         switch (gameStatus) {
@@ -50,7 +50,7 @@ public class Game {
         }
 
 
-        if (moveStatusCode == ExecutionCode.SUCCESS) {
+        if (moveStatusCode == MoveStatus.SUCCESS) {
             gameTurn++;
             updateCurrentGamePhase();
         }
@@ -72,19 +72,19 @@ public class Game {
                 .setOpponentPlayerMillsCreated(getOpponentPlayer().getNumOfMillsMade())
                 // Meta GameState Variables
                 .setGameStatus(gameStatus)
-                .setExecutionCode(executionCode)
+                .setMoveStatus(moveStatus)
                 .setGameTurn(gameTurn)
                 .setBoard(getGameBoard().toCharArray())
                 .build();
     }
     
-    private ExecutionCode handlePlacementPhase(InputState input, Player currentPlayer) {
+    private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-        ExecutionCode statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
-        setPreviousMoveInvalid(statusCode != ExecutionCode.SUCCESS);
-        setExecutionCode(statusCode);
+        MoveStatus statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
+        setPreviousMoveInvalid(statusCode != MoveStatus.SUCCESS);
+        setMoveStatus(statusCode);
         this.inputTargetPosition = targetPosition;
-        if (statusCode == ExecutionCode.SUCCESS){
+        if (statusCode == MoveStatus.SUCCESS){
             PreviousMovePositions.add(targetPosition);
         }
 
@@ -102,18 +102,18 @@ public class Game {
         }
     }
 
-    private ExecutionCode handleRemovalPhase(InputState input, Player currentPlayer) {
+    private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
 
-        ExecutionCode statusCode;
+        MoveStatus statusCode;
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
 
         if (gameBoard.isMillFormed(players[(gameTurn+1) % players.length], targetPosition)) {
-            statusCode = ExecutionCode.INVALID_OPPONENT_PIECE_IN_MILL_POSITION;
+            statusCode = MoveStatus.INVALID_OPPONENT_PIECE_IN_MILL_POSITION;
         }else{
             statusCode = players[gameTurn % players.length].removePiece(gameBoard, targetPosition);
         }
 
-        if (statusCode == ExecutionCode.SUCCESS){
+        if (statusCode == MoveStatus.SUCCESS){
             PreviousMovePositions.clear();
         }
 
@@ -123,12 +123,12 @@ public class Game {
         return statusCode;
     }
 
-    private ExecutionCode handleMovementPhase(InputState input, Player currentPlayer) {
+    private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
 
         if (input.inputValues.get(0) == -1 || input.inputValues.get(1) == -1)
             return handleUndo();
 
-        ExecutionCode statusCode;
+        MoveStatus statusCode;
         Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
         Position targetPosition = gameBoard.getPosition(input.inputValues.get(1));
 
@@ -138,20 +138,20 @@ public class Game {
             statusCode = currentPlayer.makeJumpMove(gameBoard, startingPosition, targetPosition);
         }
 
-        setPreviousMoveInvalid(statusCode != ExecutionCode.SUCCESS);
-        setExecutionCode(statusCode);
+        setPreviousMoveInvalid(statusCode != MoveStatus.SUCCESS);
+        setMoveStatus(statusCode);
         this.inputStartPosition = startingPosition;
         this.inputTargetPosition = targetPosition;
 
-        if (statusCode == ExecutionCode.SUCCESS){
+        if (statusCode == MoveStatus.SUCCESS){
             PreviousMovePositions.add(targetPosition);
         }
         return statusCode;
     }
 
-    private ExecutionCode handleUndo() {
+    private MoveStatus handleUndo() {
         // TODO: implement code to handle undo move
-        return ExecutionCode.UNDO;
+        return MoveStatus.UNDO;
     }
 
     private void updatePlayerCanJump() {
@@ -170,12 +170,12 @@ public class Game {
         previousMoveInvalid = wasInvalid;
     }
 
-    private void setExecutionCode(ExecutionCode executionCode) {
-        this.executionCode = executionCode;
+    private void setMoveStatus(MoveStatus moveStatus) {
+        this.moveStatus = moveStatus;
     }
 
-    public ExecutionCode getExecutionCode() {
-        return executionCode;
+    public MoveStatus getMoveStatus() {
+        return moveStatus;
     }
 
     public Board getGameBoard() {

@@ -148,8 +148,8 @@ public class DisplayInterface {
 
     private void printMoveDescription() {
         // Print Previous Input Result
-        if (gameState.getExecutionCode().IS_INVALID) {
-            System.out.println(getErrorMessage(gameState.getExecutionCode()) + "\n");
+        if (gameState.getMoveStatus().IS_INVALID) {
+            System.out.println(getErrorMessage(gameState.getMoveStatus()) + "\n");
             System.out.println(gameState.getCurrentPlayerData().getName() + PLAYER_TURN_INFO_AGAIN_MESSAGE);
         } else {
             System.out.println(getMoveDescription() + "\n");
@@ -206,14 +206,14 @@ public class DisplayInterface {
         System.out.println("                       Fire :" + secondPlayerStartPositions + "\n");
     }
 
-    private String getErrorMessage(ExecutionCode executionCode) {
-        return switch (executionCode) {
+    private String getErrorMessage(MoveStatus moveStatus) {
+        return switch (moveStatus) {
             case INVALID_NULL -> "Error : The position you have entered does not exist.";
             case INVALID_NOT_EMPTY -> "Error : The position you have entered is not empty.";
             case INVALID_NOT_OWNER -> "Error : The piece you have selected is not yours.";
             case INVALID_NOT_ADJACENT ->
                     "Error : The position you have entered is not adjacent to the piece you have selected.";
-            default -> "Error : An unknown error has occurred. Error Code: " + executionCode;
+            default -> "Error : An unknown error has occurred. Error Code: " + moveStatus;
         };
     }
 
