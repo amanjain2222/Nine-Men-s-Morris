@@ -1,6 +1,6 @@
 public class MovePlace extends Move{
-    public MovePlace(Board board, Player player, Position targetPosition) {
-        super(board, player, targetPosition);
+    public MovePlace(Player player, Position targetPosition) {
+        super(player, targetPosition);
     }
 
     @Override
@@ -13,7 +13,7 @@ public class MovePlace extends Move{
         if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
 
         // Perform Placement
-        targetPosition.setPieceOccupying(board.popPieceFromStartPosition(player));
+        targetPosition.setPieceOccupying(new Piece(player.getDisplayChar(), player));
 
         // Return successful move status.
         return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;

@@ -1,6 +1,6 @@
 public class MoveJump extends MoveAdjacent {
-    public MoveJump(Board board, Player player, Position startPosition, Position targetPosition) {
-        super(board, player, startPosition, targetPosition);
+    public MoveJump(Player player, Position startPosition, Position targetPosition) {
+        super(player, startPosition, targetPosition);
     }
 
     @Override

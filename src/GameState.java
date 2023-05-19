@@ -14,7 +14,7 @@ public class GameState {
         this.currentPlayerData = new PlayerData(game.getCurrentPlayer());
         this.opponentPlayerData = new PlayerData(game.getOpponentPlayer());
         this.gameTurn = game.getGameTurn();
-        this.board = game.getGameBoard().toCharArray();
+        this.board = game.getBoard().toCharArray();
     }
 
     public static class PlayerData {

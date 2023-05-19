@@ -1,38 +1,27 @@
-import java.util.ArrayList;
-
 public class Game {
     private final String FIRST_PLAYER_NAME = "Ice";
     private final Character FIRST_PLAYER_CHAR = 'I';
     private final String SECOND_PLAYER_NAME = "Fire";
     private final Character SECOND_PLAYER_CHAR = 'F';
-    private final Player[] players = { new Player(FIRST_PLAYER_NAME, FIRST_PLAYER_CHAR),
+
+    private final Player[] PLAYERS = { new Player(FIRST_PLAYER_NAME, FIRST_PLAYER_CHAR),
             new Player(SECOND_PLAYER_NAME, SECOND_PLAYER_CHAR) };
+
+    private final Board BOARD = new Board(PLAYERS[0], PLAYERS[1]);
+
     private final int PLAYER_STARTING_PIECES = 9;
-    private final int TOTAL_PLACEMENT_TURNS = PLAYER_STARTING_PIECES * players.length;
+    private final int TOTAL_PLACEMENT_TURNS = PLAYER_STARTING_PIECES * PLAYERS.length;
 
-    private Board gameBoard;
-
-    private int gameTurn;
-
-    private ArrayList<Position> PreviousMovePositions = new ArrayList<>();
-
-    private GameStatus gameStatus;
+    private int gameTurn = 0;
+    private GameStatus gameStatus = GameStatus.AWAITING_PLACEMENT;
     private MoveStatus moveStatus = MoveStatus.GAME_START;
     private boolean gameOver = false;
-    private Position inputStartPosition;
-    private Position inputTargetPosition;
-
-    public Game() {
-        gameTurn = 0;
-        gameBoard = new Board(players[0], players[1]);
-        gameStatus = GameStatus.AWAITING_PLACEMENT;
-    }
 
     public void updateGame(InputState input) {
         // Get current player.
-        Player currentPlayer = players[gameTurn % players.length];
+        Player currentPlayer = PLAYERS[gameTurn % PLAYERS.length];
 
-        // Process that player's input.
+        // Pass input as current player's input.
         switch (gameStatus) {
             case AWAITING_PLACEMENT:
                 moveStatus = handlePlacementPhase(input, currentPlayer);
@@ -47,13 +36,12 @@ public class Game {
                 break;
         }
 
-        // First ensure input didn't fail to process, else we can stop processing
-        // update.
+        // First ensure input didn't fail to process, else we can stop processing.
         if (moveStatus.IS_INVALID) {
             return;
         }
 
-        // Check if a removal move is required from the player.
+        // Check if a removal move is required from the player before game continuation.
         if (moveStatus == MoveStatus.MILL_FORMED) {
             gameStatus = GameStatus.AWAITING_REMOVAL;
             return;
@@ -69,86 +57,46 @@ public class Game {
     }
 
     private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-        MoveStatus statusCode = currentPlayer.makePlaceMove(gameBoard, targetPosition);
-        setMoveStatus(statusCode);
-        this.inputTargetPosition = targetPosition;
-        if (!statusCode.IS_INVALID) {
-            PreviousMovePositions.add(targetPosition);
-        }
-
-        return statusCode;
+        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
+        return currentPlayer.makePlaceMove(targetPosition);
     }
 
     private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = gameBoard.getPosition(input.inputValues.get(0));
-        MoveStatus statusCode = currentPlayer.removePiece(gameBoard, targetPosition);
-        updatePlayerCanJump(); // update opponent player's canJump status
+        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
+        updatePlayerCanJump();
         updateIsGameOver();
-        return statusCode;
+        return currentPlayer.removePiece(targetPosition);
     }
 
     private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
-        MoveStatus statusCode;
-        Position startingPosition = gameBoard.getPosition(input.inputValues.get(0));
-        Position targetPosition = gameBoard.getPosition(input.inputValues.get(1));
-
-        if (!currentPlayer.getCanJump()) {
-            statusCode = currentPlayer.makeAdjacentMove(gameBoard, startingPosition, targetPosition);
-        } else {
-            statusCode = currentPlayer.makeJumpMove(gameBoard, startingPosition, targetPosition);
-        }
-
-        setMoveStatus(statusCode);
-        this.inputStartPosition = startingPosition;
-        this.inputTargetPosition = targetPosition;
-
-        if (statusCode == MoveStatus.SUCCESS) {
-            PreviousMovePositions.add(targetPosition);
-        }
-        return statusCode;
+        Position startingPosition = BOARD.getPosition(input.inputValues.get(0));
+        Position targetPosition = BOARD.getPosition(input.inputValues.get(1));
+        return !currentPlayer.getCanJump() ? currentPlayer.makeAdjacentMove(startingPosition, targetPosition)
+                : currentPlayer.makeJumpMove(startingPosition, targetPosition);
     }
 
-    private void updatePlayerCanJump() {
-        if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
-            this.getOpponentPlayer().setCanJump(true);
-        }
-    }
-
-    private void setMoveStatus(MoveStatus moveStatus) {
-        this.moveStatus = moveStatus;
-    }
-
-    public MoveStatus getMoveStatus() {
-        return moveStatus;
-    }
-
-    public Board getGameBoard() {
-        return gameBoard;
-    }
-
-    public Player getCurrentPlayer() {
-        return players[gameTurn % players.length];
-    }
-
-    public Player getOpponentPlayer() {
-        return players[(gameTurn + 1) % players.length];
-    }
-
-    public Position getInputStartPosition() {
-        return inputStartPosition;
-    }
-
-    public Position getInputTargetPosition() {
-        return inputTargetPosition;
+    public Board getBoard() {
+        return BOARD;
     }
 
     public int getGameTurn() {
         return gameTurn;
     }
 
+    public Player getCurrentPlayer() {
+        return PLAYERS[gameTurn % PLAYERS.length];
+    }
+
+    public Player getOpponentPlayer() {
+        return PLAYERS[(gameTurn + 1) % PLAYERS.length];
+    }
+
     public GameStatus getGameStatus() {
         return gameStatus;
+    }
+
+    public MoveStatus getMoveStatus() {
+        return moveStatus;
     }
 
     public boolean getIsGameOver() {
@@ -162,5 +110,11 @@ public class Game {
             gameOver = false;
         } else if (getOpponentPlayer().getNumOfPiecesOnBoard() < 3)
             gameOver = true;
+    }
+
+    private void updatePlayerCanJump() {
+        if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
+            this.getOpponentPlayer().setCanJump(true);
+        }
     }
 }

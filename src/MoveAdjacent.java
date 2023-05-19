@@ -1,8 +1,8 @@
 public class MoveAdjacent extends Move {
     protected Position startPosition;
 
-    public MoveAdjacent(Board board, Player player, Position startPosition, Position targetPosition) {
-        super(board, player, targetPosition);
+    public MoveAdjacent(Player player, Position startPosition, Position targetPosition) {
+        super(player, targetPosition);
         this.startPosition = startPosition;
     }
 

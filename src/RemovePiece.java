@@ -1,6 +1,6 @@
 public class RemovePiece extends Move {
-    public RemovePiece(Board board, Player player, Position targetPosition) {
-        super(board, player, targetPosition);
+    public RemovePiece(Player player, Position targetPosition) {
+        super(player, targetPosition);
     }
 
 

@@ -17,26 +17,26 @@ public class Player {
         canJump = false;
     }
 
-    public MoveStatus makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
-        MoveStatus moveStatus = new MoveAdjacent(board, this, startPosition, targetPosition).execute();
+    public MoveStatus makeAdjacentMove(Position startPosition, Position targetPosition) {
+        MoveStatus moveStatus = new MoveAdjacent(this, startPosition, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
 
-    public MoveStatus makePlaceMove(Board board, Position targetPosition) {
-        MoveStatus moveStatus = new MovePlace(board,this, targetPosition).execute();
+    public MoveStatus makePlaceMove(Position targetPosition) {
+        MoveStatus moveStatus = new MovePlace(this, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
 
-    public MoveStatus makeJumpMove(Board board, Position startPosition, Position targetPosition) {
-        MoveStatus moveStatus = new MoveJump(board, this, startPosition, targetPosition).execute();
+    public MoveStatus makeJumpMove(Position startPosition, Position targetPosition) {
+        MoveStatus moveStatus = new MoveJump(this, startPosition, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
 
-    public MoveStatus removePiece(Board board,Position targetPosition){
-        return new RemovePiece(board, this, targetPosition).execute();
+    public MoveStatus removePiece(Position targetPosition){
+        return new RemovePiece(this, targetPosition).execute();
     }
 
     public String getName() {
