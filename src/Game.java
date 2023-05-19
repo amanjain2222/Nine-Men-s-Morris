@@ -110,9 +110,8 @@ public class Game {
     }
 
     private void updatePlayerCanJump() {
-        if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
-            this.getOpponentPlayer().setCanJump(true);
-        }
+        if (gameStatus == GameState.GameStatus.AWAITING_PLACEMENT) return;
+        this.getOpponentPlayer().setCanJump(this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3);
     }
 
     private void setMoveStatus(MoveStatus moveStatus) {
