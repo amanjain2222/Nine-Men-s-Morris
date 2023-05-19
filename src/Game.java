@@ -59,9 +59,9 @@ public class Game {
 
         // Move on to next game turn if no additional steps are required from player.
         gameTurn++;
-        //gameStatus = gameTurn < TOTAL_PLACEMENT_TURNS ? GameStatus.AWAITING_PLACEMENT : GameStatus.AWAITING_MOVEMENT;
+        gameStatus = gameTurn < TOTAL_PLACEMENT_TURNS ? GameStatus.AWAITING_PLACEMENT : GameStatus.AWAITING_MOVEMENT;
         // TODO: This is temp fix to make the code work change as necessary
-        gameStatus = getCurrentPlayer().getNumOfPiecesRemaining() <= 0 ? GameStatus.AWAITING_MOVEMENT : GameStatus.AWAITING_PLACEMENT;
+        //gameStatus = getCurrentPlayer().getNumOfPiecesRemaining() <= 0 ? GameStatus.AWAITING_MOVEMENT : GameStatus.AWAITING_PLACEMENT;
     }
 
     public GameState queryGameState() {
