@@ -19,10 +19,12 @@ public class Player {
         if (numOfPiecesRemaining == 0 && numOfPiecesOnBoard == 3){
             MoveStatus moveStatus = new MoveJump(board, this, startPosition, targetPosition).execute();
             numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
+            numOfPiecesCaptured += moveStatus == MoveStatus.SUCCESS ? 1 : 0;
             return moveStatus;
         }
         MoveStatus moveStatus = new MoveAdjacent(board, this, startPosition, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
+        numOfPiecesCaptured += moveStatus == MoveStatus.SUCCESS ? 1 : 0;
         return moveStatus;
     }
 
@@ -48,10 +50,6 @@ public class Player {
         return numOfPiecesRemaining;
     }
 
-    public void increaseNumOfPiecesRemaining() {
-        numOfPiecesRemaining++;
-    }
-
     public void decreaseNumOfPiecesRemaining() {
         numOfPiecesRemaining--;
     }
@@ -72,15 +70,7 @@ public class Player {
         return numOfPiecesCaptured;
     }
 
-    public void increaseNumOfPiecesCaptured() {
-        numOfPiecesCaptured++;
-    }
-
     public int getNumOfMillsMade() {
         return numOfMillsMade;
-    }
-
-    public void increaseNumOfMillsMade() {
-        numOfMillsMade++;
     }
 }
