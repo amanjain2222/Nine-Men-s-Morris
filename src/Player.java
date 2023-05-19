@@ -5,7 +5,6 @@ public class Player {
     private int numOfPiecesOnBoard;
     private int numOfPiecesCaptured;
     private int numOfMillsMade;
-    private boolean canJump;
 
     public Player(String name, char displayChar) {
         this.name = name;
@@ -14,10 +13,14 @@ public class Player {
         numOfPiecesRemaining = 9;
         numOfPiecesCaptured = 0;
         numOfMillsMade = 0;
-        canJump = false;
     }
 
-    public MoveStatus makeAdjacentMove(Board board, Position startPosition, Position targetPosition) {
+    public MoveStatus movePiece(Board board, Position startPosition, Position targetPosition) {
+        if (numOfPiecesRemaining == 0 && numOfPiecesOnBoard == 3){
+            MoveStatus moveStatus = new MoveJump(board, this, startPosition, targetPosition).execute();
+            numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
+            return moveStatus;
+        }
         MoveStatus moveStatus = new MoveAdjacent(board, this, startPosition, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
         return moveStatus;
@@ -25,12 +28,6 @@ public class Player {
 
     public MoveStatus makePlaceMove(Board board, Position targetPosition) {
         MoveStatus moveStatus = new MovePlace(board,this, targetPosition).execute();
-        numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
-        return moveStatus;
-    }
-
-    public MoveStatus makeJumpMove(Board board, Position startPosition, Position targetPosition) {
-        MoveStatus moveStatus = new MoveJump(board, this, startPosition, targetPosition).execute();
         numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
@@ -85,13 +82,5 @@ public class Player {
 
     public void increaseNumOfMillsMade() {
         numOfMillsMade++;
-    }
-
-    public boolean getCanJump() {
-        return canJump;
-    }
-
-    public void setCanJump(boolean canJump) {
-        this.canJump = canJump;
     }
 }
