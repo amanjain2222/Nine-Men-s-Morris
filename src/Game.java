@@ -46,9 +46,7 @@ public class Game {
         }
 
         // Don't update game globals if move failed to process.
-        if (moveStatus.IS_INVALID) {
-            return;
-        }
+        if (moveStatus.IS_INVALID) return;
 
         if (moveStatus == MoveStatus.MILL_FORMED) {
             gameStatus = GameState.GameStatus.AWAITING_REMOVAL;
@@ -108,9 +106,8 @@ public class Game {
     }
 
     private void updatePlayerCanJump() {
-        if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
-            this.getOpponentPlayer().setCanJump(true);
-        }
+        if (gameStatus == GameState.GameStatus.AWAITING_PLACEMENT) return;
+        this.getOpponentPlayer().setCanJump(this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3);
     }
 
     private void setMoveStatus(MoveStatus moveStatus) {

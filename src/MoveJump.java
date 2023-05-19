@@ -9,10 +9,10 @@ public class MoveJump extends MoveAdjacent {
         if (superMoveStatus != MoveStatus.SUCCESS && superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT) return superMoveStatus;
         if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
 
-        board.removePlayerPositionOnBoard(startPosition);
-        startPosition.setEmpty();
         targetPosition.setPieceOccupying(startPosition.getPieceOccupying());
         board.addPlayerPositionOnBoard(targetPosition);
+        board.removePlayerPositionOnBoard(startPosition);
+        startPosition.setEmpty();
 
         return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;
     }
