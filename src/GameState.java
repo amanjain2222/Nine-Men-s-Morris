@@ -17,21 +17,6 @@ public class GameState {
         this.board = game.getGameBoard().toCharArray();
     }
 
-    public static enum GameStatus {
-        AWAITING_PLACEMENT("PLACEMENT"),
-        AWAITING_MOVEMENT("MOVEMENT"),
-        AWAITING_REMOVAL("REMOVAL"),
-        AWAITING_JUMPING("JUMPING"),
-        
-        GAME_OVER("GAME OVER");
-
-        public final String INPUT_DESCRIPTOR;
-
-        private GameStatus(String inputDescriptor) {
-            this.INPUT_DESCRIPTOR = inputDescriptor;
-        }
-    }
-
     public static class PlayerData {
         private String name;
         private int piecesRemaining;
