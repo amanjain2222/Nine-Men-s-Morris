@@ -64,6 +64,7 @@ public class DisplayInterface {
                 System.out.print(PLACEMENT_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
+                if (alternateInput != null) return alternateInput;
                 inputValues.add(transcriptInputValue(input));
             }
             case AWAITING_MOVEMENT -> {
@@ -71,9 +72,7 @@ public class DisplayInterface {
                 System.out.print(MOVEMENT_FIRST_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
-                if (alternateInput != null) {
-                    return alternateInput;
-                }
+                if (alternateInput != null) return alternateInput;
                 inputValues.add(transcriptInputValue(input));
                 // Get Target Input
                 System.out.print(MOVEMENT_SECOND_QUERY_MESSAGE);
@@ -82,10 +81,11 @@ public class DisplayInterface {
                 inputValues.add(transcriptInputValue(input));
             }
             case AWAITING_REMOVAL -> {
-                // Get Removal Inputy
+                // Get Removal Input
                 System.out.print(String.format(REMOVE_QUERY_MESSAGE, gameState.getCurrentPlayerData().getName()));
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
+                if (alternateInput != null) return alternateInput;
                 inputValues.add(transcriptInputValue(input));
             }
             default ->
@@ -101,7 +101,6 @@ public class DisplayInterface {
         System.out.printf("%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n", GAME_TITLE_MESSAGE);
         System.out.println("\nOther Options: ");
         System.out.println("- Exit Game   : Type 'E'.");
-        System.out.println("- Restart Game: Type 'R'.");
     }
 
     private InputState handleStartGameInputQuery() {
@@ -112,8 +111,6 @@ public class DisplayInterface {
             return new InputState(InputState.InputType.GAME_START);
         } else if (input.equalsIgnoreCase("E")) {
             return exitGame();
-        } else if (input.equalsIgnoreCase("R")) {
-            return new InputState(InputState.InputType.GAME_START);
         } else {
             System.out.println("Invalid input. Please try again.");
             return handleStartGameInputQuery();
@@ -121,9 +118,10 @@ public class DisplayInterface {
     }
 
     private InputState checkForRestartOrExitInput(String input) {
-        if (input.equals("E") || input.equals("-2")) {
+        if (input.equalsIgnoreCase("E")) {
             return exitGame();
-        } else if (input.equals("R") || input.equals("-3")) {
+        } else if (input.equalsIgnoreCase("R")) {
+            System.out.println("Restarting game...\n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
         }
         return null;
