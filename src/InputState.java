@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-
 public class InputState {
     public InputType inputType;
-    public ArrayList<Integer> inputValues;
+    public int[] inputValues;
 
     public static enum InputType {
         GAME_START,
@@ -14,7 +12,7 @@ public class InputState {
         this.inputType = inputType;
     }
 
-    public InputState(InputType inputType, ArrayList<Integer> inputValues) {
+    public InputState(InputType inputType, int[] inputValues) {
         this.inputType = inputType;
         this.inputValues = inputValues;
     }

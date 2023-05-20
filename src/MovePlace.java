@@ -7,15 +7,17 @@ public class MovePlace extends Move {
     public MoveStatus execute() {
         // Ensure super reqs are met.
         MoveStatus superMoveStatus = super.execute();
-        if (superMoveStatus != MoveStatus.SUCCESS) return superMoveStatus;
+        if (superMoveStatus != MoveStatus.SUCCESS)
+            return superMoveStatus;
 
         // Ensure other reqs are met.
-        if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
+        if (!targetPosition.isEmpty())
+            return MoveStatus.INVALID_TARGET_POSITION_NOT_EMPTY;
 
         // Perform Placement
-        targetPosition.setPieceOccupying(new Piece(player.getDisplayChar(), player));
+        targetPosition.setPieceOccupying(new Piece(player));
 
         // Return successful move status.
-        return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;
+        return targetPosition.isMill() ? MoveStatus.SUCCESS_MILL_FORMED : MoveStatus.SUCCESS;
     }
 }

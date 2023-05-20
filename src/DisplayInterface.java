@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -55,7 +54,7 @@ public class DisplayInterface {
         String input;
 
         // Get Input Based On Current Game Phase
-        ArrayList<Integer> inputValues = new ArrayList<>();
+        int[] inputValues = {-1, -1};
         InputState alternateInput = null;
 
         switch (gameState.getGameStatus()) {
@@ -65,7 +64,7 @@ public class DisplayInterface {
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
                 if (alternateInput != null) return alternateInput;
-                inputValues.add(transcriptInputValue(input));
+                inputValues[0] = transcriptInputValue(input);
             }
             case AWAITING_MOVEMENT -> {
                 // Get Start Input
@@ -73,12 +72,12 @@ public class DisplayInterface {
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
                 if (alternateInput != null) return alternateInput;
-                inputValues.add(transcriptInputValue(input));
+                inputValues[1] = transcriptInputValue(input);
                 // Get Target Input
                 System.out.print(MOVEMENT_SECOND_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
-                inputValues.add(transcriptInputValue(input));
+                inputValues[0] = transcriptInputValue(input);
             }
             case AWAITING_REMOVAL -> {
                 // Get Removal Input
@@ -86,7 +85,7 @@ public class DisplayInterface {
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
                 if (alternateInput != null) return alternateInput;
-                inputValues.add(transcriptInputValue(input));
+                inputValues[0] = transcriptInputValue(input);
             }
             default ->
                 System.out.println(INVALID_GAME_PHASE);
@@ -210,9 +209,9 @@ public class DisplayInterface {
     private String getErrorMessage(MoveStatus moveStatus) {
         return switch (moveStatus) {
             case INVALID_OUT_OF_BOUNDS_POSITION -> "Invalid Move : The position you have entered does not exist.";
-            case INVALID_NOT_EMPTY -> "Invalid Move : The position you have entered is not empty.";
-            case INVALID_NOT_OWNER -> "Invalid Move : The piece you have selected is not yours.";
-            case INVALID_NOT_ADJACENT -> "Invalid Move : The position you have entered is not adjacent to the piece you have selected.";
+            case INVALID_TARGET_POSITION_NOT_EMPTY -> "Invalid Move : The position you have entered is not empty.";
+            case INVALID_NOT_PIECE_OWNER -> "Invalid Move : The piece you have selected is not yours.";
+            case INVALID_NOT_ADJACENT_POSITION -> "Invalid Move : The position you have entered is not adjacent to the piece you have selected.";
             case INVALID_CANNOT_REMOVE_YOUR_PIECE -> "Invalid Move : You can't take your own piece.";
             case INVALID_CANNOT_REMOVE_NO_PIECE_FOUND -> "Invalid Move : There is no piece there to remove.";
             case INVALID_OPPONENT_PIECE_IN_MILL_POSITION -> "Invalid Move : Cannot remove a piece that is already in a mill.";

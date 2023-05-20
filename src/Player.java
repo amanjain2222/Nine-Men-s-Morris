@@ -15,24 +15,20 @@ public class Player {
     }
 
     public MoveStatus takeMovementTurn(Position startPosition, Position targetPosition) {
-        if (totalPieces == 3){
-            MoveStatus moveStatus = new MoveJump(this, startPosition, targetPosition).execute();
-            numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
-            return moveStatus;
-        }
-        MoveStatus moveStatus = new MoveAdjacent(this, startPosition, targetPosition).execute();
-        numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
+        MoveStatus moveStatus = totalPieces == 3 ? new MoveJump(this, startPosition, targetPosition).execute()
+                : new MoveAdjacent(this, startPosition, targetPosition).execute();
+        numOfMillsMade += moveStatus == MoveStatus.SUCCESS_MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
 
     public MoveStatus takePlaceTurn(Position targetPosition) {
         MoveStatus moveStatus = new MovePlace(this, targetPosition).execute();
         piecesLeftToPlace -= !moveStatus.IS_INVALID ? 1 : 0;
-        numOfMillsMade += moveStatus == MoveStatus.MILL_FORMED ? 1 : 0;
+        numOfMillsMade += moveStatus == MoveStatus.SUCCESS_MILL_FORMED ? 1 : 0;
         return moveStatus;
     }
 
-    public MoveStatus takeRemoveTurn(Position targetPosition){
+    public MoveStatus takeRemoveTurn(Position targetPosition) {
         return new RemovePiece(this, targetPosition).execute();
     }
 

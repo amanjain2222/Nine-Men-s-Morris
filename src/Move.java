@@ -9,9 +9,8 @@ public abstract class Move extends Action {
 
     @Override
     public MoveStatus execute() {
-        if (targetPosition == null) return MoveStatus.INVALID_OUT_OF_BOUNDS_POSITION;
+        if (targetPosition == null)
+            return MoveStatus.INVALID_OUT_OF_BOUNDS_POSITION;
         return MoveStatus.SUCCESS;
     }
-
-
 }

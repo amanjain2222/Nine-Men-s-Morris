@@ -6,11 +6,12 @@ public class MoveJump extends MoveAdjacent {
     @Override
     public MoveStatus execute() {
         MoveStatus superMoveStatus = super.execute();
-        if (superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT) return superMoveStatus;
+        if (superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT_POSITION)
+            return superMoveStatus;
 
         targetPosition.setPieceOccupying(startPosition.getPieceOccupying());
         startPosition.setEmpty();
 
-        return targetPosition.isMill() ? MoveStatus.MILL_FORMED : MoveStatus.SUCCESS;
+        return targetPosition.isMill() ? MoveStatus.SUCCESS_MILL_FORMED : MoveStatus.SUCCESS;
     }
 }
