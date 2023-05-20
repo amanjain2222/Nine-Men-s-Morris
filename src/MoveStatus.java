@@ -1,22 +1,21 @@
 public enum MoveStatus {
-    SUCCESS(false),
-    INVALID_OUT_OF_BOUNDS_POSITION(true),
-    INVALID_NO_PIECE(true),
-    INVALID_NOT_EMPTY(true),
-    INVALID_NOT_OWNER(true),
-    INVALID_NOT_ADJACENT(true),
-    INVALID_POSITION(true),
-    INVALID_MILL_POSITION(true),
-    INVALID_NOT_OPPONENT_PIECE(true),
-    INVALID_OPPONENT_PIECE_IN_MILL_POSITION(true),
-    INVALID_CANNOT_REMOVE_YOUR_PIECE(true),
-    INVALID_CANNOT_REMOVE_NO_PIECE_FOUND(true),
-    MILL_FORMED(false),
-    QUIT(false),
-    UNDO(false),
-    REMOVED(false),
-    GAME_START(false),
-    UNKNOWN(false);
+    INVALID_OUT_OF_BOUNDS_POSITION(MoveStatus.INVALID),
+    INVALID_NO_STARTING_PIECE(MoveStatus.INVALID),
+    INVALID_TARGET_POSITION_NOT_EMPTY(MoveStatus.INVALID),
+    INVALID_NOT_PIECE_OWNER(MoveStatus.INVALID),
+    INVALID_NOT_ADJACENT_POSITION(MoveStatus.INVALID),
+    INVALID_OPPONENT_PIECE_IN_MILL_POSITION(MoveStatus.INVALID),
+    INVALID_CANNOT_REMOVE_YOUR_PIECE(MoveStatus.INVALID),
+    INVALID_CANNOT_REMOVE_NO_PIECE_FOUND(MoveStatus.INVALID),
+    
+    SUCCESS(MoveStatus.VALID),
+    SUCCESS_MILL_FORMED(MoveStatus.VALID),
+    
+    GAME_START(MoveStatus.VALID),
+    GAME_OVER(MoveStatus.INVALID);
+
+    private static final boolean INVALID = true;
+    private static final boolean VALID = false;
 
     public final boolean IS_INVALID;
 

@@ -19,22 +19,22 @@ public class Game {
     public void updateGame(InputState input) {
         // Get current player.
         Player currentPlayer = PLAYERS[gameTurn % PLAYERS.length];
+        Position targetPosition = BOARD.getPosition(input.inputValues[0]);
+        Position startPosition = BOARD.getPosition(input.inputValues[1]);
 
         // Pass input as current player's input.
         switch (gameStatus) {
-            case AWAITING_PLACEMENT:
-                moveStatus = handlePlacementPhase(input, currentPlayer);
-                break;
-            case AWAITING_MOVEMENT:
-                moveStatus = handleMovementPhase(input, currentPlayer);
-                break;
-            case AWAITING_REMOVAL:
-                moveStatus = handleRemovalPhase(input, currentPlayer);
-                updateIsGameOver();
-                break;
-            default:
-                break;
+            case AWAITING_PLACEMENT ->
+                moveStatus = currentPlayer.takePlaceTurn(targetPosition);
+            case AWAITING_MOVEMENT ->
+                moveStatus = currentPlayer.takeMovementTurn(startPosition, targetPosition);
+            case AWAITING_REMOVAL ->
+                moveStatus = currentPlayer.takeRemoveTurn(targetPosition);
+            case GAME_OVER ->
+                moveStatus = MoveStatus.GAME_OVER;
         }
+
+        updateIsGameOver();
 
         // First ensure input didn't fail to process, else we can stop processing.
         if (moveStatus.IS_INVALID) {
@@ -42,7 +42,7 @@ public class Game {
         }
 
         // Check if a removal move is required from the player before game continuation.
-        if (moveStatus == MoveStatus.MILL_FORMED) {
+        if (moveStatus == MoveStatus.SUCCESS_MILL_FORMED) {
             gameStatus = GameStatus.AWAITING_REMOVAL;
             return;
         }
@@ -54,22 +54,6 @@ public class Game {
 
     public GameState queryGameState() {
         return new GameState(this);
-    }
-
-    private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
-        return currentPlayer.takePlaceTurn(targetPosition);
-    }
-
-    private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
-        Position startPosition = BOARD.getPosition(input.inputValues.get(0));
-        Position targetPosition = BOARD.getPosition(input.inputValues.get(1));
-        return currentPlayer.takeMovementTurn(startPosition, targetPosition);
-    }
-
-    private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
-        return currentPlayer.takeRemoveTurn(targetPosition);
     }
 
     public Board getBoard() {
