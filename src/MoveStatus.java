@@ -1,6 +1,7 @@
 public enum MoveStatus {
     SUCCESS(false),
     INVALID_OUT_OF_BOUNDS_POSITION(true),
+    INVALID_NO_PIECE(true),
     INVALID_NOT_EMPTY(true),
     INVALID_NOT_OWNER(true),
     INVALID_NOT_ADJACENT(true),

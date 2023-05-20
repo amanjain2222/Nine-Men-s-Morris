@@ -6,8 +6,7 @@ public class MoveJump extends MoveAdjacent {
     @Override
     public MoveStatus execute() {
         MoveStatus superMoveStatus = super.execute();
-        if (superMoveStatus != MoveStatus.SUCCESS && superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT) return superMoveStatus;
-        if (!targetPosition.isEmpty()) return MoveStatus.INVALID_NOT_EMPTY;
+        if (superMoveStatus != MoveStatus.INVALID_NOT_ADJACENT) return superMoveStatus;
 
         targetPosition.setPieceOccupying(startPosition.getPieceOccupying());
         startPosition.setEmpty();

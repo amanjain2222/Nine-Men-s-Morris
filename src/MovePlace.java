@@ -1,4 +1,4 @@
-public class MovePlace extends Move{
+public class MovePlace extends Move {
     public MovePlace(Player player, Position targetPosition) {
         super(player, targetPosition);
     }

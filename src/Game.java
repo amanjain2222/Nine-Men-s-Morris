@@ -1,16 +1,15 @@
 public class Game {
-    private final String FIRST_PLAYER_NAME = "Ice";
-    private final Character FIRST_PLAYER_CHAR = 'I';
-    private final String SECOND_PLAYER_NAME = "Fire";
-    private final Character SECOND_PLAYER_CHAR = 'F';
+    private static final String FIRST_PLAYER_NAME = "Ice";
+    private static final Character FIRST_PLAYER_CHAR = 'I';
+    private static final String SECOND_PLAYER_NAME = "Fire";
+    private static final Character SECOND_PLAYER_CHAR = 'F';
 
     private final Player[] PLAYERS = { new Player(FIRST_PLAYER_NAME, FIRST_PLAYER_CHAR),
             new Player(SECOND_PLAYER_NAME, SECOND_PLAYER_CHAR) };
 
     private final Board BOARD = new Board(PLAYERS[0], PLAYERS[1]);
 
-    private final int PLAYER_STARTING_PIECES = 9;
-    private final int TOTAL_PLACEMENT_TURNS = PLAYER_STARTING_PIECES * PLAYERS.length;
+    private final int TOTAL_PLACEMENT_TURNS = Player.STARTING_PIECES * PLAYERS.length;
 
     private int gameTurn = 0;
     private GameStatus gameStatus = GameStatus.AWAITING_PLACEMENT;
@@ -51,8 +50,6 @@ public class Game {
         // Move on to next game turn if no additional steps are required from player.
         gameTurn++;
         gameStatus = gameTurn < TOTAL_PLACEMENT_TURNS ? GameStatus.AWAITING_PLACEMENT : GameStatus.AWAITING_MOVEMENT;
-        // TODO: This is temp fix to make the code work change as necessary
-        //gameStatus = getCurrentPlayer().getNumOfPiecesRemaining() <= 0 ? GameStatus.AWAITING_MOVEMENT : GameStatus.AWAITING_PLACEMENT;
     }
 
     public GameState queryGameState() {
@@ -61,18 +58,18 @@ public class Game {
 
     private MoveStatus handlePlacementPhase(InputState input, Player currentPlayer) {
         Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
-        return currentPlayer.makePlaceMove(targetPosition);
+        return currentPlayer.takePlaceTurn(targetPosition);
     }
 
     private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
-        Position startingPosition = BOARD.getPosition(input.inputValues.get(0));
+        Position startPosition = BOARD.getPosition(input.inputValues.get(0));
         Position targetPosition = BOARD.getPosition(input.inputValues.get(1));
-        return currentPlayer.movePiece(gameBoard, startPosition, targetPosition);
+        return currentPlayer.takeMovementTurn(startPosition, targetPosition);
     }
 
     private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
         Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
-        return currentPlayer.removePiece(targetPosition);
+        return currentPlayer.takeRemoveTurn(targetPosition);
     }
 
     public Board getBoard() {
@@ -106,15 +103,9 @@ public class Game {
     }
 
     private void updateIsGameOver() {
-        if (getOpponentPlayer().getNumOfPiecesRemaining() > 0) {
+        if (getOpponentPlayer().getTotalPieces() > 0) {
             gameOver = false;
-        } else if (getOpponentPlayer().getNumOfPiecesOnBoard() < 3)
+        } else if (getOpponentPlayer().getTotalPieces() < 3)
             gameOver = true;
-    }
-
-    private void updatePlayerCanJump() {
-        if (this.getOpponentPlayer().getNumOfPiecesOnBoard() == 3) {
-            this.getOpponentPlayer().setCanJump(true);
-        }
     }
 }

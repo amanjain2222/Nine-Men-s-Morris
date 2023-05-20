@@ -19,16 +19,14 @@ public class GameState {
 
     public static class PlayerData {
         private String name;
-        private int piecesRemaining;
-        private int piecesOnBoard;
-        private int piecesCaptured;
+        private int totalPieces;
+        private int piecesLeftToPlace;
         private int millsCreated;
 
         private PlayerData(Player player) {
             this.name = player.getName();
-            this.piecesRemaining = player.getNumOfPiecesRemaining();
-            this.piecesOnBoard = player.getNumOfPiecesOnBoard();
-            this.piecesCaptured = player.getNumOfPiecesCaptured();
+            this.totalPieces = player.getTotalPieces();
+            this.piecesLeftToPlace = player.getPiecesLeftToPlace();
             this.millsCreated = player.getNumOfMillsMade();
         }
 
@@ -36,16 +34,12 @@ public class GameState {
             return name;
         }
 
-        public int getPieceRemaining() {
-            return piecesRemaining;
+        public int getTotalPieces() {
+            return totalPieces;
         }
 
-        public int getPieceOnBoard() {
-            return piecesOnBoard;
-        }
-
-        public int getPiecesCaptured() {
-            return piecesCaptured;
+        public int getPiecesLeftToPlace() {
+            return piecesLeftToPlace;
         }
 
         public int getMillsCreated() {
