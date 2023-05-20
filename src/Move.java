@@ -1,8 +1,10 @@
 public abstract class Move extends Action {
     protected Player player;
     protected Position targetPosition;
+    protected Board board;
 
-    public Move(Player player, Position targetPosition) {
+    public Move(Board board, Player player, Position targetPosition) {
+        this.board = board;
         this.player = player;
         this.targetPosition = targetPosition;
     }

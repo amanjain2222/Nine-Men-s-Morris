@@ -6,9 +6,17 @@ public class Board {
     public static final int TOTAL_POSITION = 24;
     public static final int TOTAL_START_POSITION = 9;
     private final Position[] boardPosition;
+    private final Position[] startPositionP1;
+    private final Position[] startPositionP2;
+    private final Player player1;
+    private final Player player2;
 
     public Board(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.boardPosition = new Position[TOTAL_POSITION];
+        this.startPositionP1 = new Position[TOTAL_START_POSITION];
+        this.startPositionP2 = new Position[TOTAL_START_POSITION];
         initBoard();
     }
 
@@ -16,6 +24,18 @@ public class Board {
         // initialise the board positions
         for (int i = 0; i < TOTAL_POSITION; i++) {
             boardPosition[i] = new Position(i);
+        }
+
+        // initialise the remaining position for player 1
+        for (int i = 0; i < TOTAL_START_POSITION; i++) {
+            startPositionP1[i] = new Position(i);
+            startPositionP1[i].setPieceOccupying(new Piece(player1.getDisplayChar(), player1));
+        }
+
+        // initialise the remaining position for player 2
+        for (int i = 0; i < TOTAL_START_POSITION; i++) {
+            startPositionP2[i] = new Position(i);
+            startPositionP2[i].setPieceOccupying(new Piece(player2.getDisplayChar(), player2));
         }
 
         // add the adjacent indexes for each position
@@ -64,6 +84,27 @@ public class Board {
         if (positionIndex < 0 || positionIndex >= TOTAL_POSITION)
             return null;
         return boardPosition[positionIndex];
+    }
+
+    public Piece popPieceFromStartPosition(Player player) {
+        if (player == player1) {
+            if (player1.getNumOfPiecesRemaining() > 0) {
+                player1.decreaseNumOfPiecesRemaining();
+                player1.increaseNumOfPiecesOnBoard();
+                Piece piece = startPositionP1[player1.getNumOfPiecesRemaining()].getPieceOccupying();
+                startPositionP1[player1.getNumOfPiecesRemaining()].setEmpty();
+                return piece;
+            }
+        } else if (player == player2) {
+            if (player2.getNumOfPiecesRemaining() > 0) {
+                player2.decreaseNumOfPiecesRemaining();
+                player2.increaseNumOfPiecesOnBoard();
+                Piece piece = startPositionP2[player2.getNumOfPiecesRemaining()].getPieceOccupying();
+                startPositionP2[player2.getNumOfPiecesRemaining()].setEmpty();
+                return piece;
+            }
+        }
+        return null;
     }
 
     public char[] toCharArray() {
