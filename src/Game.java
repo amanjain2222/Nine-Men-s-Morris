@@ -31,6 +31,7 @@ public class Game {
                 break;
             case AWAITING_REMOVAL:
                 moveStatus = handleRemovalPhase(input, currentPlayer);
+                updateIsGameOver();
                 break;
             default:
                 break;
@@ -50,6 +51,8 @@ public class Game {
         // Move on to next game turn if no additional steps are required from player.
         gameTurn++;
         gameStatus = gameTurn < TOTAL_PLACEMENT_TURNS ? GameStatus.AWAITING_PLACEMENT : GameStatus.AWAITING_MOVEMENT;
+        // TODO: This is temp fix to make the code work change as necessary
+        //gameStatus = getCurrentPlayer().getNumOfPiecesRemaining() <= 0 ? GameStatus.AWAITING_MOVEMENT : GameStatus.AWAITING_PLACEMENT;
     }
 
     public GameState queryGameState() {
@@ -61,18 +64,15 @@ public class Game {
         return currentPlayer.makePlaceMove(targetPosition);
     }
 
-    private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
-        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
-        updatePlayerCanJump();
-        updateIsGameOver();
-        return currentPlayer.removePiece(targetPosition);
-    }
-
     private MoveStatus handleMovementPhase(InputState input, Player currentPlayer) {
         Position startingPosition = BOARD.getPosition(input.inputValues.get(0));
         Position targetPosition = BOARD.getPosition(input.inputValues.get(1));
-        return !currentPlayer.getCanJump() ? currentPlayer.makeAdjacentMove(startingPosition, targetPosition)
-                : currentPlayer.makeJumpMove(startingPosition, targetPosition);
+        return currentPlayer.movePiece(gameBoard, startPosition, targetPosition);
+    }
+
+    private MoveStatus handleRemovalPhase(InputState input, Player currentPlayer) {
+        Position targetPosition = BOARD.getPosition(input.inputValues.get(0));
+        return currentPlayer.removePiece(targetPosition);
     }
 
     public Board getBoard() {

@@ -12,6 +12,7 @@ public class RemovePiece extends Move {
         if (targetPosition.getPieceOccupying().getOwner() == player) return MoveStatus.INVALID_CANNOT_REMOVE_YOUR_PIECE;
         if (targetPosition.isMill()) return MoveStatus.INVALID_OPPONENT_PIECE_IN_MILL_POSITION;
 
+        targetPosition.getPieceOccupying().getOwner().decreaseNumOfPiecesOnBoard();
         targetPosition.setEmpty();
 
         return MoveStatus.SUCCESS;
