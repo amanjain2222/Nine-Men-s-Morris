@@ -169,12 +169,12 @@ public class DisplayInterface {
         String firstPlayerStartPositions = "";
         String secondPlayerStartPositions = "";
         for (int i = 0; i < STARTING_PIECE_TOTAL; i++) {
-            if (i < (gameState.getGameTurn() % 2 == 0 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace() : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
+            if (i < (gameState.getGameTurn() % 2 == 0 ? gameState.getCurrentPlayerData().getPieceRemaining() : gameState.getOpponentPlayerData().getPieceRemaining())) {
                 firstPlayerStartPositions += "  " + PLAYER_CHARS[0];
             } else {
                 firstPlayerStartPositions += "  _";
             }
-            if (i < (gameState.getGameTurn() % 2 == 1 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace() : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
+            if (i < (gameState.getGameTurn() % 2 == 1 ? gameState.getCurrentPlayerData().getPieceRemaining() : gameState.getOpponentPlayerData().getPieceRemaining())) {
                 secondPlayerStartPositions += "  " + PLAYER_CHARS[1];
             } else {
                 secondPlayerStartPositions += "  _";
@@ -244,7 +244,8 @@ public class DisplayInterface {
         System.out.println("                                          Game Statistics\n");
         System.out.println("                                          Total Turns: " + gameState.getGameTurn() + "\n");
         System.out.printf("                                %s                          %s\n", gameState.getCurrentPlayerData().getName(), gameState.getOpponentPlayerData().getName());
-        System.out.printf("Total Pieces Remaining:         %d                            %d\n", gameState.getCurrentPlayerData().getTotalPieces(), gameState.getOpponentPlayerData().getTotalPieces());
+        System.out.printf("Total Pieces Remaining:         %d                            %d\n", gameState.getCurrentPlayerData().getPieceOnBoard(), gameState.getOpponentPlayerData().getPieceOnBoard());
+        System.out.printf("Total Pieces Captured:          %d                            %d\n", gameState.getCurrentPlayerData().getPiecesCaptured(), gameState.getOpponentPlayerData().getPiecesCaptured());
         System.out.printf("Total Mills Made:               %d                            %d\n", gameState.getCurrentPlayerData().getMillsCreated(), gameState.getOpponentPlayerData().getMillsCreated());
     }
 
