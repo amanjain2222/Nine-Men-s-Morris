@@ -1,5 +1,5 @@
-public class RemovePiece extends Move {
-    public RemovePiece(Player player, Position targetPosition) {
+public class MoveRemove extends Move {
+    public MoveRemove(Player player, Position targetPosition) {
         super(player, targetPosition);
     }
 

@@ -29,7 +29,7 @@ public class Player {
     }
 
     public MoveStatus takeRemoveTurn(Position targetPosition) {
-        return new RemovePiece(this, targetPosition).execute();
+        return new MoveRemove(this, targetPosition).execute();
     }
 
     public String getName() {
