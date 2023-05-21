@@ -56,6 +56,7 @@ public class Position {
     public boolean hasEmptyAdjacent() {
         return Stream
                 .of(adjacentPositions.top, adjacentPositions.bottom, adjacentPositions.left, adjacentPositions.right)
+                .filter(i -> (i != null))
                 .anyMatch(i -> (i.getPieceOccupying() == null));
     }
 
