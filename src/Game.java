@@ -91,6 +91,7 @@ public class Game {
 
         // Case where player has no valid moves.
         if (getOpponentPlayer().getTotalPieces() > 3
+                && getOpponentPlayer().getPiecesLeftToPlace() < 1
                 && BOARD.isNoValidPieceMoves(getOpponentPlayer().getDisplayChar())) {
             return true;
         }
