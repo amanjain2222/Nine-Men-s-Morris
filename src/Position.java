@@ -6,7 +6,7 @@ public class Position {
     private Piece pieceOccupying;
 
     public Character getCurrentPieceChar() {
-        return pieceOccupying.getDisplayChar();
+        return pieceOccupying != null ? pieceOccupying.getDisplayChar() : ' ';
     }
 
     public Piece getPieceOccupying() {
