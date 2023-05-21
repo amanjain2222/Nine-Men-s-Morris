@@ -12,7 +12,7 @@ public enum MoveStatus {
     SUCCESS_MILL_FORMED(MoveStatus.VALID),
     
     GAME_START(MoveStatus.VALID),
-    GAME_OVER(MoveStatus.INVALID);
+    GAME_OVER(MoveStatus.VALID);
 
     private static final boolean INVALID = true;
     private static final boolean VALID = false;

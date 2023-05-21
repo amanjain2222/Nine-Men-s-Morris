@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class DisplayInterface {
     private static final int STARTING_PIECE_TOTAL = 9;
-    private static final char[] PLAYER_CHARS = {'I', 'F'};
+    private static final char[] PLAYER_CHARS = { 'I', 'F' };
     private static final String REMOVE_QUERY_MESSAGE = "Now is the time to strike %s Player, enter the position of the Opponent's piece you want to remove: ";
     private static final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
     private static final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
@@ -23,7 +23,7 @@ public class DisplayInterface {
         previousGameState = this.gameState;
         this.gameState = gameState;
         // Game hasn't started yet.
-        if(gameState == null) {
+        if (gameState == null) {
             printStartScreen();
             return;
         }
@@ -44,7 +44,7 @@ public class DisplayInterface {
         if (gameState == null) {
             return handleStartGameInputQuery();
         }
-        
+
         // Game is over so handle accordingly.
         if (gameState.getGameStatus() == GameStatus.GAME_OVER) {
             return handleEndGameInputQuery();
@@ -54,7 +54,7 @@ public class DisplayInterface {
         String input;
 
         // Get Input Based On Current Game Phase
-        int[] inputValues = {-1, -1};
+        int[] inputValues = { -1, -1 };
         InputState alternateInput = null;
 
         switch (gameState.getGameStatus()) {
@@ -63,7 +63,8 @@ public class DisplayInterface {
                 System.out.print(PLACEMENT_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
-                if (alternateInput != null) return alternateInput;
+                if (alternateInput != null)
+                    return alternateInput;
                 inputValues[0] = transcriptInputValue(input);
             }
             case AWAITING_MOVEMENT -> {
@@ -71,7 +72,8 @@ public class DisplayInterface {
                 System.out.print(MOVEMENT_FIRST_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
-                if (alternateInput != null) return alternateInput;
+                if (alternateInput != null)
+                    return alternateInput;
                 inputValues[1] = transcriptInputValue(input);
                 // Get Target Input
                 System.out.print(MOVEMENT_SECOND_QUERY_MESSAGE);
@@ -84,7 +86,8 @@ public class DisplayInterface {
                 System.out.print(String.format(REMOVE_QUERY_MESSAGE, gameState.getCurrentPlayerData().getName()));
                 input = consoleInput.nextLine();
                 alternateInput = checkForRestartOrExitInput(input);
-                if (alternateInput != null) return alternateInput;
+                if (alternateInput != null)
+                    return alternateInput;
                 inputValues[0] = transcriptInputValue(input);
             }
             default ->
@@ -97,7 +100,9 @@ public class DisplayInterface {
 
     public void printStartScreen() {
         System.out.printf("%nWelcome to %s!%n", GAME_TITLE_MESSAGE);
-        System.out.printf("%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n", GAME_TITLE_MESSAGE);
+        System.out.printf(
+                "%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n",
+                GAME_TITLE_MESSAGE);
         System.out.println("\nOther Options: ");
         System.out.println("- Exit Game   : Type 'E'.");
     }
@@ -127,9 +132,11 @@ public class DisplayInterface {
     }
 
     private int transcriptInputValue(String inputValue) {
-       if (inputValue.toLowerCase(Locale.ROOT).equals("U")) return -1;
-       if (!inputValue.matches("-?\\d+(\\.\\d+)?")) return -1;
-       return Integer.parseInt(inputValue);
+        if (inputValue.toLowerCase(Locale.ROOT).equals("U"))
+            return -1;
+        if (!inputValue.matches("-?\\d+(\\.\\d+)?"))
+            return -1;
+        return Integer.parseInt(inputValue);
     }
 
     private static InputState exitGame() {
@@ -159,8 +166,10 @@ public class DisplayInterface {
 
     private void printGamePhaseAndPlayer() {
         // Print game phase and player turn info
-        System.out.println("\n                        " + GAME_PHASE_MESSAGE + gameState.getGameStatus().INPUT_DESCRIPTOR);
-        System.out.println("                        " + CURRENT_PLAYER_MESSAGE + gameState.getCurrentPlayerData().getName());
+        System.out.println(
+                "\n                        " + GAME_PHASE_MESSAGE + gameState.getGameStatus().INPUT_DESCRIPTOR);
+        System.out.println(
+                "                        " + CURRENT_PLAYER_MESSAGE + gameState.getCurrentPlayerData().getName());
     }
 
     private void printBoard(char[] board) {
@@ -168,12 +177,14 @@ public class DisplayInterface {
         String firstPlayerStartPositions = "";
         String secondPlayerStartPositions = "";
         for (int i = 0; i < STARTING_PIECE_TOTAL; i++) {
-            if (i < (gameState.getGameTurn() % 2 == 0 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace() : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
+            if (i < (gameState.getGameTurn() % 2 == 0 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace()
+                    : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
                 firstPlayerStartPositions += "  " + PLAYER_CHARS[0];
             } else {
                 firstPlayerStartPositions += "  _";
             }
-            if (i < (gameState.getGameTurn() % 2 == 1 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace() : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
+            if (i < (gameState.getGameTurn() % 2 == 1 ? gameState.getCurrentPlayerData().getPiecesLeftToPlace()
+                    : gameState.getOpponentPlayerData().getPiecesLeftToPlace())) {
                 secondPlayerStartPositions += "  " + PLAYER_CHARS[1];
             } else {
                 secondPlayerStartPositions += "  _";
@@ -184,25 +195,33 @@ public class DisplayInterface {
         System.out.println("\n                              " + GAME_TITLE_MESSAGE + "\n");
         System.out.println("                       Ice :" + firstPlayerStartPositions + "\n");
         System.out.print(
-                "  0{ " + board[0] + " }---------------------------- 1{ " + board[1] + " }----------------------------- 2{ " + board[2] + " }\n"
+                "  0{ " + board[0] + " }---------------------------- 1{ " + board[1]
+                        + " }----------------------------- 2{ " + board[2] + " }\n"
                         + "     |                                  |                                   | \n"
                         + "     |                                  |                                   | \n"
-                        + "     |       3{ " + board[3] + " }----------------- 4{ " + board[4] + " }------------------ 5{ " + board[5] + " }        | \n"
+                        + "     |       3{ " + board[3] + " }----------------- 4{ " + board[4]
+                        + " }------------------ 5{ " + board[5] + " }        | \n"
                         + "     |          |                       |                        |          |    \n"
                         + "     |          |                       |                        |          |    \n"
-                        + "     |          |       6{ " + board[6] + " }------ 7{ " + board[7] + " }------- 8{ " + board[8] + " }        |          | \n"
+                        + "     |          |       6{ " + board[6] + " }------ 7{ " + board[7] + " }------- 8{ "
+                        + board[8] + " }        |          | \n"
                         + "     |          |          |                          |          |          | \n"
                         + "     |          |          |                          |          |          | \n"
-                        + "  9{ " + board[9] + " }--- 10{ " + board[10] + " }--- 11{ " + board[11] + " }                    12{ " + board[12] + " }--- 13{ " + board[13] + " }--- 14{ " + board[14] + " }\n"
+                        + "  9{ " + board[9] + " }--- 10{ " + board[10] + " }--- 11{ " + board[11]
+                        + " }                    12{ " + board[12] + " }--- 13{ " + board[13] + " }--- 14{ " + board[14]
+                        + " }\n"
                         + "     |          |          |                          |          |          | \n"
                         + "     |          |          |                          |          |          | \n"
-                        + "     |          |      15{ " + board[15] + " }----- 16{ " + board[16] + " }------ 17{ " + board[17] + " }        |          |\n"
+                        + "     |          |      15{ " + board[15] + " }----- 16{ " + board[16] + " }------ 17{ "
+                        + board[17] + " }        |          |\n"
                         + "     |          |                       |                        |          |    \n"
                         + "     |          |                       |                        |          |    \n"
-                        + "     |      18{ " + board[18] + " }---------------- 19{ " + board[19] + " }----------------- 20{ " + board[20] + " }        | \n"
+                        + "     |      18{ " + board[18] + " }---------------- 19{ " + board[19]
+                        + " }----------------- 20{ " + board[20] + " }        | \n"
                         + "     |                                  |                                   | \n"
                         + "     |                                  |                                   | \n"
-                        + " 21{ " + board[21] + " }--------------------------- 22{ " + board[22] + " }---------------------------- 23{ " + board[23] + " }\n\n");
+                        + " 21{ " + board[21] + " }--------------------------- 22{ " + board[22]
+                        + " }---------------------------- 23{ " + board[23] + " }\n\n");
         System.out.println("                       Fire :" + secondPlayerStartPositions + "\n");
     }
 
@@ -211,27 +230,31 @@ public class DisplayInterface {
             case INVALID_OUT_OF_BOUNDS_POSITION -> "Invalid Move : The position you have entered does not exist.";
             case INVALID_TARGET_POSITION_NOT_EMPTY -> "Invalid Move : The position you have entered is not empty.";
             case INVALID_NOT_PIECE_OWNER -> "Invalid Move : The piece you have selected is not yours.";
-            case INVALID_NOT_ADJACENT_POSITION -> "Invalid Move : The position you have entered is not adjacent to the piece you have selected.";
+            case INVALID_NOT_ADJACENT_POSITION ->
+                "Invalid Move : The position you have entered is not adjacent to the piece you have selected.";
             case INVALID_CANNOT_REMOVE_YOUR_PIECE -> "Invalid Move : You can't take your own piece.";
             case INVALID_CANNOT_REMOVE_NO_PIECE_FOUND -> "Invalid Move : There is no piece there to remove.";
-            case INVALID_OPPONENT_PIECE_IN_MILL_POSITION -> "Invalid Move : Cannot remove a piece that is already in a mill.";
-                    
+            case INVALID_OPPONENT_PIECE_IN_MILL_POSITION ->
+                "Invalid Move : Cannot remove a piece that is already in a mill.";
+
             default -> "Invalid Move : An unknown invalid move has occurred. Invalid Move Code: " + moveStatus;
         };
     }
 
     private String getMoveDescription() {
         String moveDescription = "";
-        if (gameState.getGameTurn() == 0) return "Game has Started.";
-        if (gameState.getGameStatus() == GameStatus.AWAITING_REMOVAL) return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
+        if (gameState.getGameTurn() == 0)
+            return "Game has Started.";
+        if (gameState.getGameStatus() == GameStatus.AWAITING_REMOVAL)
+            return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
         switch (previousGameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
-                    moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
+                moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
             case AWAITING_MOVEMENT ->
-                    moveDescription = gameState.getOpponentPlayerData().getName()  + " Player moved a piece.";
+                moveDescription = gameState.getOpponentPlayerData().getName() + " Player moved a piece.";
             case AWAITING_REMOVAL ->
-                    moveDescription = gameState.getOpponentPlayerData().getName()  + " Player captured a piece.";
-            default -> 
+                moveDescription = gameState.getOpponentPlayerData().getName() + " Player captured a piece.";
+            default ->
                 moveDescription = "Unknown move made.";
         }
         return moveDescription;
@@ -239,12 +262,16 @@ public class DisplayInterface {
 
     private void printEndGameResult() {
         System.out.println("\nGame Over!");
-        System.out.println(gameState.getOpponentPlayerData().getName() + " Player has won the game!\n");
+        System.out.println(gameState.getCurrentPlayerData().getName() + " Player has won the game!\n");
         System.out.println("                                          Game Statistics\n");
         System.out.println("                                          Total Turns: " + gameState.getGameTurn() + "\n");
-        System.out.printf("                                %s                          %s\n", gameState.getCurrentPlayerData().getName(), gameState.getOpponentPlayerData().getName());
-        System.out.printf("Total Pieces Remaining:         %d                            %d\n", gameState.getCurrentPlayerData().getTotalPieces(), gameState.getOpponentPlayerData().getTotalPieces());
-        System.out.printf("Total Mills Made:               %d                            %d\n", gameState.getCurrentPlayerData().getMillsCreated(), gameState.getOpponentPlayerData().getMillsCreated());
+        System.out.printf("                                %s                          %s\n",
+                gameState.getCurrentPlayerData().getName(), gameState.getOpponentPlayerData().getName());
+        System.out.printf("Total Pieces Remaining:         %d                            %d\n",
+                gameState.getCurrentPlayerData().getTotalPieces(), gameState.getOpponentPlayerData().getTotalPieces());
+        System.out.printf("Total Mills Made:               %d                            %d\n",
+                gameState.getCurrentPlayerData().getMillsCreated(),
+                gameState.getOpponentPlayerData().getMillsCreated());
     }
 
     private InputState handleEndGameInputQuery() {
