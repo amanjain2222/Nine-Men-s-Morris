@@ -38,7 +38,7 @@ public class Board {
                 return Stream.of(positions)
                                 .filter(i -> (i.getCurrentPieceChar() == pieceChar))
                                 .filter(i -> (!i.isMill()))
-                                .count() == 0;
+                                .count() != 0;
         }
 
         private void initBoard() {

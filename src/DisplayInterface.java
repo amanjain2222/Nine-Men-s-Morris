@@ -248,8 +248,8 @@ public class DisplayInterface {
         if (gameState.getMoveStatus() == MoveStatus.SUCCESS_MILL_FORMED)
             return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
         if (gameState.getMoveStatus() == MoveStatus.SUCCESS_MILL_FORMED_NO_REMOVAL_NEEDED)
-            return gameState.getOpponentPlayerData().getName() + "Player formed a mill! But all of "
-                    + gameState.getCurrentPlayerData() + "'s pieces were protected.";
+            return gameState.getOpponentPlayerData().getName() + " Player formed a mill! But all of "
+                    + gameState.getCurrentPlayerData().getName() + "'s pieces were protected.";
         switch (previousGameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
                 moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";
