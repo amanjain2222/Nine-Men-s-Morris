@@ -245,8 +245,11 @@ public class DisplayInterface {
         String moveDescription = "";
         if (gameState.getGameTurn() == 0)
             return "Game has Started.";
-        if (gameState.getGameStatus() == GameStatus.AWAITING_REMOVAL)
+        if (gameState.getMoveStatus() == MoveStatus.SUCCESS_MILL_FORMED)
             return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
+        if (gameState.getMoveStatus() == MoveStatus.SUCCESS_MILL_FORMED_NO_REMOVAL_NEEDED)
+            return gameState.getOpponentPlayerData().getName() + "Player formed a mill! But all of "
+                    + gameState.getCurrentPlayerData() + "'s pieces were protected.";
         switch (previousGameState.getGameStatus()) {
             case AWAITING_PLACEMENT ->
                 moveDescription = gameState.getOpponentPlayerData().getName() + " Player placed a piece.";

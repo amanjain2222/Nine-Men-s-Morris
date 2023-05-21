@@ -34,6 +34,13 @@ public class Board {
                                 .count() == 0;
         }
 
+        public boolean findUnprotectedPieces(Character pieceChar) {
+                return Stream.of(positions)
+                                .filter(i -> (i.getCurrentPieceChar() == pieceChar))
+                                .filter(i -> (!i.isMill()))
+                                .count() == 0;
+        }
+
         private void initBoard() {
                 // initialise the board positions
                 for (int i = 0; i < TOTAL_POSITION; i++) {

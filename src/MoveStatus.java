@@ -10,6 +10,7 @@ public enum MoveStatus {
     
     SUCCESS(MoveStatus.VALID),
     SUCCESS_MILL_FORMED(MoveStatus.VALID),
+    SUCCESS_MILL_FORMED_NO_REMOVAL_NEEDED(MoveStatus.VALID),
     
     GAME_START(MoveStatus.VALID),
     GAME_OVER(MoveStatus.VALID);

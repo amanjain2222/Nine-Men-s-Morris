@@ -40,8 +40,12 @@ public class Game {
 
         // Check if a removal move is required from the player before game continuation.
         if (moveStatus == MoveStatus.SUCCESS_MILL_FORMED) {
-            gameStatus = GameStatus.AWAITING_REMOVAL;
-            return;
+            // Handle edge case where no piece is able to be removed.
+            if (BOARD.findUnprotectedPieces(getOpponentPlayer().getDisplayChar())) {
+                gameStatus = GameStatus.AWAITING_REMOVAL;
+                return;
+            }
+            moveStatus = MoveStatus.SUCCESS_MILL_FORMED_NO_REMOVAL_NEEDED;
         }
 
         // Check for game over conditions.
