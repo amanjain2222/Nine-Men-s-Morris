@@ -1,13 +1,12 @@
+import java.util.stream.Stream;
+
 public class Position {
     // Adjacent Positions Stored as Nested Class
     private AdjacentPositions adjacentPositions;
     private Piece pieceOccupying;
-    private int positionNumber;
 
-    public Position(int positionNumber) {
-        pieceOccupying = null;
-        this.positionNumber = positionNumber;
-
+    public Character getCurrentPieceChar() {
+        return pieceOccupying.getDisplayChar();
     }
 
     public Piece getPieceOccupying() {
@@ -32,30 +31,32 @@ public class Position {
         pieceOccupying = null;
     }
 
-    public boolean isAdjacentToThisPosition(Position queryPosition) {
-        return adjacentPositions.contains(queryPosition);
-    }
-
-    public int getPositionNumber() {
-        return positionNumber;
-    }
-
     public boolean isMill() {
-        Character pieceChar = getPieceOccupying().getDisplayChar();
+        Character pieceChar = getCurrentPieceChar();
         boolean isMill = false;
         // Check if part of vertical mill.
         isMill |= (pieceChar == adjacentPositions.topMostChar()
                 && pieceChar != adjacentPositions.bottomMostChar()
                 || pieceChar == adjacentPositions.bottomChar())
-                        && (pieceChar == adjacentPositions.topChar()
-                                || pieceChar == adjacentPositions.bottomMostChar());
+                && (pieceChar == adjacentPositions.topChar()
+                        || pieceChar == adjacentPositions.bottomMostChar());
         // Check if part of horizontal mill.
         isMill |= (pieceChar == adjacentPositions.leftMostChar()
                 && pieceChar != adjacentPositions.rightMostChar()
                 || pieceChar == adjacentPositions.rightChar())
-                        && (pieceChar == adjacentPositions.leftChar()
-                                || pieceChar == adjacentPositions.rightMostChar());
+                && (pieceChar == adjacentPositions.leftChar()
+                        || pieceChar == adjacentPositions.rightMostChar());
         return isMill;
+    }
+
+    public boolean isAdjacentToThisPosition(Position queryPosition) {
+        return adjacentPositions.contains(queryPosition);
+    }
+
+    public boolean hasEmptyAdjacent() {
+        return Stream
+                .of(adjacentPositions.top, adjacentPositions.bottom, adjacentPositions.left, adjacentPositions.right)
+                .anyMatch(i -> (i.getPieceOccupying() == null));
     }
 
     public AdjacentPositions.AdjacentPositionsBuilder setAdjacentPositions() {
@@ -79,7 +80,7 @@ public class Position {
             if (pos == null) {
                 return ' ';
             }
-            return pos.getPieceOccupying() != null ? pos.getPieceOccupying().getDisplayChar() : ' ';
+            return pos.getPieceOccupying() != null ? pos.getCurrentPieceChar() : ' ';
         }
 
         private Character topChar() {

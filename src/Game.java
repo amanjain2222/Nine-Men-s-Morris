@@ -7,14 +7,13 @@ public class Game {
     private final Player[] PLAYERS = { new Player(FIRST_PLAYER_NAME, FIRST_PLAYER_CHAR),
             new Player(SECOND_PLAYER_NAME, SECOND_PLAYER_CHAR) };
 
-    private final Board BOARD = new Board(PLAYERS[0], PLAYERS[1]);
+    private final Board BOARD = new Board();
 
     private final int TOTAL_PLACEMENT_TURNS = Player.STARTING_PIECES * PLAYERS.length;
 
     private int gameTurn = 0;
     private GameStatus gameStatus = GameStatus.AWAITING_PLACEMENT;
     private MoveStatus moveStatus = MoveStatus.GAME_START;
-    private boolean gameOver = false;
 
     public void updateGame(InputState input) {
         // Get current player.
@@ -34,8 +33,6 @@ public class Game {
                 moveStatus = MoveStatus.GAME_OVER;
         }
 
-        updateIsGameOver();
-
         // First ensure input didn't fail to process, else we can stop processing.
         if (moveStatus.IS_INVALID) {
             return;
@@ -44,6 +41,12 @@ public class Game {
         // Check if a removal move is required from the player before game continuation.
         if (moveStatus == MoveStatus.SUCCESS_MILL_FORMED) {
             gameStatus = GameStatus.AWAITING_REMOVAL;
+            return;
+        }
+
+        // Check for game over conditions.
+        if (isGameOver()) {
+            gameStatus = GameStatus.GAME_OVER;
             return;
         }
 
@@ -80,16 +83,18 @@ public class Game {
         return moveStatus;
     }
 
-    public boolean getIsGameOver() {
-        // return (players[0].getNumOfPiecesOnBoard() < 3 ||
-        // players[1].getNumOfPiecesOnBoard() < 3);
-        return gameOver;
-    }
+    public boolean isGameOver() {
+        // Case where player can't make a mill.
+        if (getOpponentPlayer().getTotalPieces() < 3) {
+            return true;
+        }
 
-    private void updateIsGameOver() {
-        if (getOpponentPlayer().getTotalPieces() > 0) {
-            gameOver = false;
-        } else if (getOpponentPlayer().getTotalPieces() < 3)
-            gameOver = true;
+        // Case where player has no valid moves.
+        if (getOpponentPlayer().getTotalPieces() > 3
+                && BOARD.isNoValidPieceMoves(getOpponentPlayer().getDisplayChar())) {
+            return true;
+        }
+
+        return false;
     }
 }
