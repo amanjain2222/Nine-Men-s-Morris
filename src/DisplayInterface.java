@@ -16,8 +16,8 @@ public class DisplayInterface {
     final String INVALID_GAME_PHASE = "Error Invalid Game Phase";
     Scanner consoleInput = new Scanner(System.in);
 
-    GameState gameState = null;
-    GameState previousGameState = null;
+    private GameState gameState = null;
+    private GameState previousGameState = null;
 
     public void updateDisplay(GameState gameState) {
         previousGameState = this.gameState;
@@ -98,7 +98,7 @@ public class DisplayInterface {
         return alternateInput != null ? alternateInput : new InputState(InputState.InputType.GAME_TURN, inputValues);
     }
 
-    public void printStartScreen() {
+    private void printStartScreen() {
         System.out.printf("%nWelcome to %s!%n", GAME_TITLE_MESSAGE);
         System.out.printf(
                 "%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n",

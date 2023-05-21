@@ -4,32 +4,31 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-        public static final int TOTAL_POSITION = 24;
-        public static final int TOTAL_START_POSITION = 9;
-        private final Position[] boardPosition;
+        private static final int TOTAL_POSITION = 24;
+        private final Position[] positions;
 
         public Board() {
-                this.boardPosition = new Position[TOTAL_POSITION];
+                this.positions = new Position[TOTAL_POSITION];
                 initBoard();
         }
 
         public Position getPosition(int positionIndex) {
                 if (positionIndex < 0 || positionIndex >= TOTAL_POSITION)
                         return null;
-                return boardPosition[positionIndex];
+                return positions[positionIndex];
         }
 
         public char[] toCharArray() {
                 List<Character> charArray = new ArrayList<>();
-                for (int i = 0; i < boardPosition.length; i++) {
-                        charArray.add(boardPosition[i].getPieceOccupying() == null ? ' '
-                                        : boardPosition[i].getCurrentPieceChar());
+                for (int i = 0; i < positions.length; i++) {
+                        charArray.add(positions[i].getPieceOccupying() == null ? ' '
+                                        : positions[i].getCurrentPieceChar());
                 }
                 return charArray.stream().map(Object::toString).collect(Collectors.joining()).toCharArray();
         }
 
         public boolean isNoValidPieceMoves(Character pieceChar) {
-                return Stream.of(boardPosition)
+                return Stream.of(positions)
                                 .filter(i -> (i.getCurrentPieceChar() == pieceChar))
                                 .filter(Position::hasEmptyAdjacent)
                                 .count() == 0;
@@ -38,100 +37,100 @@ public class Board {
         private void initBoard() {
                 // initialise the board positions
                 for (int i = 0; i < TOTAL_POSITION; i++) {
-                        boardPosition[i] = new Position();
+                        positions[i] = new Position();
                 }
 
                 // add the adjacent indexes for each position
                 // outer square
-                boardPosition[0].setAdjacentPositions()
-                                .setRight(boardPosition[1])
-                                .setBottom(boardPosition[9]).build();
-                boardPosition[1].setAdjacentPositions()
-                                .setLeft(boardPosition[0])
-                                .setRight(boardPosition[2])
-                                .setBottom(boardPosition[4]).build();
-                boardPosition[2].setAdjacentPositions()
-                                .setLeft(boardPosition[1])
-                                .setBottom(boardPosition[14]).build();
-                boardPosition[9].setAdjacentPositions()
-                                .setTop(boardPosition[0])
-                                .setRight(boardPosition[10])
-                                .setBottom(boardPosition[21]).build();
-                boardPosition[14].setAdjacentPositions()
-                                .setTop(boardPosition[2])
-                                .setLeft(boardPosition[13])
-                                .setBottom(boardPosition[23]).build();
-                boardPosition[21].setAdjacentPositions()
-                                .setTop(boardPosition[9])
-                                .setRight(boardPosition[22]).build();
-                boardPosition[22].setAdjacentPositions()
-                                .setTop(boardPosition[19])
-                                .setLeft(boardPosition[21])
-                                .setRight(boardPosition[23]).build();
-                boardPosition[23].setAdjacentPositions()
-                                .setTop(boardPosition[14])
-                                .setLeft(boardPosition[22]).build();
+                positions[0].setAdjacentPositions()
+                                .setRight(positions[1])
+                                .setBottom(positions[9]).build();
+                positions[1].setAdjacentPositions()
+                                .setLeft(positions[0])
+                                .setRight(positions[2])
+                                .setBottom(positions[4]).build();
+                positions[2].setAdjacentPositions()
+                                .setLeft(positions[1])
+                                .setBottom(positions[14]).build();
+                positions[9].setAdjacentPositions()
+                                .setTop(positions[0])
+                                .setRight(positions[10])
+                                .setBottom(positions[21]).build();
+                positions[14].setAdjacentPositions()
+                                .setTop(positions[2])
+                                .setLeft(positions[13])
+                                .setBottom(positions[23]).build();
+                positions[21].setAdjacentPositions()
+                                .setTop(positions[9])
+                                .setRight(positions[22]).build();
+                positions[22].setAdjacentPositions()
+                                .setTop(positions[19])
+                                .setLeft(positions[21])
+                                .setRight(positions[23]).build();
+                positions[23].setAdjacentPositions()
+                                .setTop(positions[14])
+                                .setLeft(positions[22]).build();
                 // middle square
-                boardPosition[3].setAdjacentPositions()
-                                .setRight(boardPosition[4])
-                                .setBottom(boardPosition[10]).build();
-                boardPosition[4].setAdjacentPositions()
-                                .setTop(boardPosition[1])
-                                .setLeft(boardPosition[3])
-                                .setRight(boardPosition[5])
-                                .setBottom(boardPosition[7]).build();
-                boardPosition[5].setAdjacentPositions()
-                                .setLeft(boardPosition[4])
-                                .setBottom(boardPosition[13]).build();
-                boardPosition[10].setAdjacentPositions()
-                                .setTop(boardPosition[3])
-                                .setLeft(boardPosition[9])
-                                .setRight(boardPosition[11])
-                                .setBottom(boardPosition[18]).build();
-                boardPosition[13].setAdjacentPositions()
-                                .setTop(boardPosition[5])
-                                .setLeft(boardPosition[12])
-                                .setRight(boardPosition[14])
-                                .setBottom(boardPosition[20]).build();
-                boardPosition[18].setAdjacentPositions()
-                                .setTop(boardPosition[10])
-                                .setRight(boardPosition[19]).build();
-                boardPosition[19].setAdjacentPositions()
-                                .setTop(boardPosition[16])
-                                .setRight(boardPosition[20])
-                                .setLeft(boardPosition[18])
-                                .setBottom(boardPosition[22]).build();
-                boardPosition[20].setAdjacentPositions()
-                                .setTop(boardPosition[13])
-                                .setLeft(boardPosition[19]).build();
+                positions[3].setAdjacentPositions()
+                                .setRight(positions[4])
+                                .setBottom(positions[10]).build();
+                positions[4].setAdjacentPositions()
+                                .setTop(positions[1])
+                                .setLeft(positions[3])
+                                .setRight(positions[5])
+                                .setBottom(positions[7]).build();
+                positions[5].setAdjacentPositions()
+                                .setLeft(positions[4])
+                                .setBottom(positions[13]).build();
+                positions[10].setAdjacentPositions()
+                                .setTop(positions[3])
+                                .setLeft(positions[9])
+                                .setRight(positions[11])
+                                .setBottom(positions[18]).build();
+                positions[13].setAdjacentPositions()
+                                .setTop(positions[5])
+                                .setLeft(positions[12])
+                                .setRight(positions[14])
+                                .setBottom(positions[20]).build();
+                positions[18].setAdjacentPositions()
+                                .setTop(positions[10])
+                                .setRight(positions[19]).build();
+                positions[19].setAdjacentPositions()
+                                .setTop(positions[16])
+                                .setRight(positions[20])
+                                .setLeft(positions[18])
+                                .setBottom(positions[22]).build();
+                positions[20].setAdjacentPositions()
+                                .setTop(positions[13])
+                                .setLeft(positions[19]).build();
                 // inner square
-                boardPosition[6].setAdjacentPositions()
-                                .setRight(boardPosition[7])
-                                .setBottom(boardPosition[11]).build();
-                boardPosition[7].setAdjacentPositions()
-                                .setTop(boardPosition[4])
-                                .setLeft(boardPosition[6])
-                                .setRight(boardPosition[8]).build();
-                boardPosition[8].setAdjacentPositions()
-                                .setLeft(boardPosition[7])
-                                .setBottom(boardPosition[12]).build();
-                boardPosition[11].setAdjacentPositions()
-                                .setTop(boardPosition[6])
-                                .setLeft(boardPosition[10])
-                                .setBottom(boardPosition[15]).build();
-                boardPosition[12].setAdjacentPositions()
-                                .setTop(boardPosition[8])
-                                .setRight(boardPosition[13])
-                                .setBottom(boardPosition[17]).build();
-                boardPosition[15].setAdjacentPositions()
-                                .setTop(boardPosition[11])
-                                .setRight(boardPosition[16]).build();
-                boardPosition[16].setAdjacentPositions()
-                                .setLeft(boardPosition[15])
-                                .setRight(boardPosition[17])
-                                .setBottom(boardPosition[19]).build();
-                boardPosition[17].setAdjacentPositions()
-                                .setTop(boardPosition[12])
-                                .setLeft(boardPosition[16]).build();
+                positions[6].setAdjacentPositions()
+                                .setRight(positions[7])
+                                .setBottom(positions[11]).build();
+                positions[7].setAdjacentPositions()
+                                .setTop(positions[4])
+                                .setLeft(positions[6])
+                                .setRight(positions[8]).build();
+                positions[8].setAdjacentPositions()
+                                .setLeft(positions[7])
+                                .setBottom(positions[12]).build();
+                positions[11].setAdjacentPositions()
+                                .setTop(positions[6])
+                                .setLeft(positions[10])
+                                .setBottom(positions[15]).build();
+                positions[12].setAdjacentPositions()
+                                .setTop(positions[8])
+                                .setRight(positions[13])
+                                .setBottom(positions[17]).build();
+                positions[15].setAdjacentPositions()
+                                .setTop(positions[11])
+                                .setRight(positions[16]).build();
+                positions[16].setAdjacentPositions()
+                                .setLeft(positions[15])
+                                .setRight(positions[17])
+                                .setBottom(positions[19]).build();
+                positions[17].setAdjacentPositions()
+                                .setTop(positions[12])
+                                .setLeft(positions[16]).build();
         }
 }
