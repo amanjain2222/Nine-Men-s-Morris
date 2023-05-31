@@ -7,6 +7,7 @@ public class GameState {
     private PlayerData opponentPlayerData;
     private int gameTurn;
     private char[] board;
+    private GameHandlerStatus gameHandlerStatus;
 
     public GameState(Game game) {
         this.gameStatus = game.getGameStatus();
@@ -15,6 +16,10 @@ public class GameState {
         this.opponentPlayerData = new PlayerData(game.getOpponentPlayer());
         this.gameTurn = game.getGameTurn();
         this.board = game.getBoard().toCharArray();
+    }
+
+    public GameState(GameHandlerStatus gameHandlerStatus) {
+        this.gameHandlerStatus = gameHandlerStatus;
     }
 
     public static class PlayerData {
@@ -69,5 +74,13 @@ public class GameState {
 
     public char[] getBoard() {
         return board;
+    }
+
+    public void setGameHandlerStatus(GameHandlerStatus gameHandlerStatus) {
+        this.gameHandlerStatus = gameHandlerStatus;
+    }
+    
+    public GameHandlerStatus getGameHandlerStatus() {
+        return gameHandlerStatus;
     }
 }

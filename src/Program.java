@@ -7,7 +7,7 @@ public class Program {
 
     private static void runProgram() {
         DisplayInterface displayInterface = new DisplayInterface();
-        GameHandler gameHandler = new GameHandler();
+        GameHandler gameHandler = new GameHandler(new TxtFileHandler());
 
         while (true) {
             // Query GameState from Game Object.

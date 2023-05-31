@@ -31,6 +31,8 @@ public class Game {
                 moveStatus = currentPlayer.takeRemoveTurn(targetPosition);
             case GAME_OVER ->
                 moveStatus = MoveStatus.GAME_OVER;
+            default -> 
+                moveStatus = MoveStatus.INVALID_OUT_OF_BOUNDS_POSITION;
         }
 
         // First ensure input didn't fail to process, else we can stop processing.
@@ -102,5 +104,15 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void loadGameState(GameState gameState) {
+        getCurrentPlayer().loadPlayerData(gameState.getCurrentPlayerData());
+        getOpponentPlayer().loadPlayerData(gameState.getOpponentPlayerData());
+        getCurrentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
+        getOpponentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
+        gameStatus = gameState.getGameStatus();
+        moveStatus = gameState.getMoveStatus();
+        gameTurn = gameState.getGameTurn();
     }
 }

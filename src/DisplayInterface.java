@@ -23,10 +23,12 @@ public class DisplayInterface {
         previousGameState = this.gameState;
         this.gameState = gameState;
         // Game hasn't started yet.
-        if (gameState == null) {
+        if (gameState.getGameHandlerStatus() == GameHandlerStatus.INACTIVE 
+            || gameState.getGameHandlerStatus() == GameHandlerStatus.INACTIVE_LOAD_FAILED) {
             printStartScreen();
             return;
         }
+        System.out.println(gameState.getGameHandlerStatus());
         // Game is over.
         if (gameState.getGameStatus() == GameStatus.GAME_OVER) {
             printEndGameResult();
@@ -40,9 +42,27 @@ public class DisplayInterface {
     }
 
     public InputState queryInputState() {
-        // No game currently exists, get menu input.
-        if (gameState == null) {
-            return handleStartGameInputQuery();
+
+        switch(gameState.getGameHandlerStatus()) {
+            case INACTIVE:
+                return handleStartGameInputQuery();
+            case INACTIVE_LOAD_FAILED:
+                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath.");
+                return handleStartGameInputQuery();
+            case GAME_SAVE_FAILED:
+                System.out.println("\nGame FAILED to save, ensure you entered a valid filepath.");
+                break;
+            case GAME_LOAD_FAILED:
+                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath.");
+                break;
+            case GAME_SAVE_SUCCESS:
+                System.out.println("\nGame SUCCESSFULLY saved.");
+                break;
+            case GAME_LOAD_SUCCESS:
+                System.out.println("\nGame SUCCESSFULLY loaded.");
+                break;
+            default:
+                break;
         }
 
         // Game is over so handle accordingly.
@@ -62,7 +82,7 @@ public class DisplayInterface {
                 // Get Placement Input
                 System.out.print(PLACEMENT_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
-                alternateInput = checkForRestartOrExitInput(input);
+                alternateInput = checkForAlternateInput(input);
                 if (alternateInput != null)
                     return alternateInput;
                 inputValues[0] = transcriptInputValue(input);
@@ -71,21 +91,21 @@ public class DisplayInterface {
                 // Get Start Input
                 System.out.print(MOVEMENT_FIRST_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
-                alternateInput = checkForRestartOrExitInput(input);
+                alternateInput = checkForAlternateInput(input);
                 if (alternateInput != null)
                     return alternateInput;
                 inputValues[1] = transcriptInputValue(input);
                 // Get Target Input
                 System.out.print(MOVEMENT_SECOND_QUERY_MESSAGE);
                 input = consoleInput.nextLine();
-                alternateInput = checkForRestartOrExitInput(input);
+                alternateInput = checkForAlternateInput(input);
                 inputValues[0] = transcriptInputValue(input);
             }
             case AWAITING_REMOVAL -> {
                 // Get Removal Input
                 System.out.print(String.format(REMOVE_QUERY_MESSAGE, gameState.getCurrentPlayerData().getName()));
                 input = consoleInput.nextLine();
-                alternateInput = checkForRestartOrExitInput(input);
+                alternateInput = checkForAlternateInput(input);
                 if (alternateInput != null)
                     return alternateInput;
                 inputValues[0] = transcriptInputValue(input);
@@ -104,6 +124,7 @@ public class DisplayInterface {
                 "%nOnce the game starts, players will take turns until one wins.%nTo win, reduce their pieces to 2.%n",
                 GAME_TITLE_MESSAGE);
         System.out.println("\nOther Options: ");
+        System.out.println("- Load Game   : Type 'L'.");
         System.out.println("- Exit Game   : Type 'E'.");
     }
 
@@ -113,6 +134,8 @@ public class DisplayInterface {
         if (input.equalsIgnoreCase("Y")) {
             System.out.println("\nStarting Game... \n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
+        } else if (input.equalsIgnoreCase("L")) {
+            return checkForAlternateInput(input);
         } else if (input.equalsIgnoreCase("E")) {
             return exitGame();
         } else {
@@ -121,12 +144,18 @@ public class DisplayInterface {
         }
     }
 
-    private InputState checkForRestartOrExitInput(String input) {
+    private InputState checkForAlternateInput(String input) {
         if (input.equalsIgnoreCase("E")) {
             return exitGame();
         } else if (input.equalsIgnoreCase("R")) {
             System.out.println("Restarting game...\n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
+        } else if (input.equalsIgnoreCase("S")) {
+            System.out.print("Now input the destination filepath: ");
+            return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
+        } else if (input.equalsIgnoreCase("L")) {
+            System.out.print("Now input the destination filepath: ");
+            return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
         }
         return null;
     }
@@ -149,6 +178,8 @@ public class DisplayInterface {
         System.out.println("\nOther Options: ");
         System.out.println("- Exit Game   : Type 'E'");
         System.out.println("- Restart Game: Type 'R'");
+        System.out.println("- Save Game   : Type 'S'");
+        System.out.println("- Load Game   : Type 'L'");
     }
 
     private void printMoveDescription() {
