@@ -151,10 +151,10 @@ public class DisplayInterface {
             System.out.println("Restarting game...\n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
         } else if (input.equalsIgnoreCase("S")) {
-            System.out.print("Now input the destination filepath: ");
+            System.out.print("Now input the file name: ");
             return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("L")) {
-            System.out.print("Now input the destination filepath: ");
+            System.out.print("Now input the file name: ");
             return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
         }
         return null;

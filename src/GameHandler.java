@@ -1,8 +1,8 @@
 public class GameHandler {
-    GameHandlerStatus gameHandlerStatus = GameHandlerStatus.INACTIVE;
-    Game game;
-    GameHistory gameHistory;
-    FileHandler fileHandler;
+    private GameHandlerStatus gameHandlerStatus = GameHandlerStatus.INACTIVE;
+    private Game game;
+    private GameHistory gameHistory;
+    private FileHandler fileHandler;
 
     public GameHandler(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
@@ -14,12 +14,15 @@ public class GameHandler {
         }
         GameState gameState = game.queryGameState();
         gameState.setGameHandlerStatus(gameHandlerStatus);
+        if (!gameState.getMoveStatus().IS_INVALID && gameHandlerStatus == GameHandlerStatus.RUNNING) {
+            gameHistory.recordNextGameState(gameState);
+        }
         gameHandlerStatus = GameHandlerStatus.RUNNING;
         return gameState;
     }
 
     public void updateGame(InputState inputState) {
-        switch(inputState.inputType) {
+        switch (inputState.inputType) {
             case GAME_START:
                 gameHistory = new GameHistory();
                 game = new Game();
@@ -50,8 +53,9 @@ public class GameHandler {
 
     public void fileLoadGame(String filepath) {
         GameState[] loadedGameStates;
-        if ((loadedGameStates = fileHandler.getFileGameStates(filepath)) == null) { 
-            gameHandlerStatus = game == null ? GameHandlerStatus.INACTIVE_LOAD_FAILED : GameHandlerStatus.GAME_LOAD_FAILED;
+        if ((loadedGameStates = fileHandler.getFileGameStates(filepath)) == null) {
+            gameHandlerStatus = game == null ? GameHandlerStatus.INACTIVE_LOAD_FAILED
+                    : GameHandlerStatus.GAME_LOAD_FAILED;
             return;
         }
         gameHistory = new GameHistory(loadedGameStates);

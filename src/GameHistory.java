@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 public class GameHistory {
-    ArrayList<GameState> history;
+    List<GameState> history;
 
     public GameHistory() {
         history = new ArrayList<>();

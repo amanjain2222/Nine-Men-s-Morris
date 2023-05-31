@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Game {
     private static final String FIRST_PLAYER_NAME = "Ice";
     private static final Character FIRST_PLAYER_CHAR = 'I';
@@ -107,12 +109,18 @@ public class Game {
     }
 
     public void loadGameState(GameState gameState) {
-        getCurrentPlayer().loadPlayerData(gameState.getCurrentPlayerData());
-        getOpponentPlayer().loadPlayerData(gameState.getOpponentPlayerData());
-        getCurrentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
-        getOpponentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
+        // Load Game Globals
         gameStatus = gameState.getGameStatus();
         moveStatus = gameState.getMoveStatus();
         gameTurn = gameState.getGameTurn();
+
+        // Load Player Data
+        getCurrentPlayer().loadPlayerData(gameState.getCurrentPlayerData());
+        getOpponentPlayer().loadPlayerData(gameState.getOpponentPlayerData());
+
+        // Clear board before telling players to replace their pieces.
+        Arrays.stream(BOARD.getPositions()).forEach(position -> position.setEmpty());
+        getCurrentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
+        getOpponentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
     }
 }

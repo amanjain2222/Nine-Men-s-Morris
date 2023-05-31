@@ -22,11 +22,31 @@ public class GameState {
         this.gameHandlerStatus = gameHandlerStatus;
     }
 
+    public GameState(GameStatus gameStatus, MoveStatus moveStatus, int gameTurn,
+            int currentPlayerTotalPieces, int currentPlayerPiecesLeftToPlace, int currentPlayerMillsCreated,
+            int opponentPlayerTotalPieces, int opponentPlayerPiecesLeftToPlace, int opponentPlayerMillsCreated,
+            char[] board) {
+        this.gameStatus = gameStatus;
+        this.moveStatus = moveStatus;
+        this.currentPlayerData = new PlayerData(currentPlayerTotalPieces, currentPlayerPiecesLeftToPlace,
+                currentPlayerMillsCreated);
+        this.opponentPlayerData = new PlayerData(opponentPlayerTotalPieces, opponentPlayerPiecesLeftToPlace,
+                opponentPlayerMillsCreated);
+        this.gameTurn = gameTurn;
+        this.board = board;
+    }
+
     public static class PlayerData {
         private String name;
         private int totalPieces;
         private int piecesLeftToPlace;
         private int millsCreated;
+
+        private PlayerData(int totalPieces, int piecesLeftToPlace, int millsCreated) {
+            this.totalPieces = totalPieces;
+            this.piecesLeftToPlace = piecesLeftToPlace;
+            this.millsCreated = millsCreated;
+        }
 
         private PlayerData(Player player) {
             this.name = player.getName();
@@ -79,7 +99,7 @@ public class GameState {
     public void setGameHandlerStatus(GameHandlerStatus gameHandlerStatus) {
         this.gameHandlerStatus = gameHandlerStatus;
     }
-    
+
     public GameHandlerStatus getGameHandlerStatus() {
         return gameHandlerStatus;
     }
