@@ -146,15 +146,16 @@ public class DisplayInterface {
     }
 
     private boolean checkSavedGameExist(){
-        if (TxtFileHandler.getSavedFileNames().length == 0) {
+        if (FileHandler.getSavedFileNames().length == 0) {
             System.out.print("\nNo Saved Games Found. Please start a new game.");
             return false;
         }
         return true;
     }
+
     private boolean printSavedFiles(){
         if (!checkSavedGameExist()) return false;
-        String[] filenames = TxtFileHandler.getSavedFileNames();
+        String[] filenames = FileHandler.getSavedFileNames();
         System.out.println("\nAvailable saved games:");
         for (String filename : filenames) {
             System.out.println(" - " + filename);
