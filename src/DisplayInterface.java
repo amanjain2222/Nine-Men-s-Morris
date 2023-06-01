@@ -135,6 +135,7 @@ public class DisplayInterface {
             System.out.println("\nStarting Game... \n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
         } else if (input.equalsIgnoreCase("L")) {
+            if (!checkSavedGameExist()) return handleStartGameInputQuery();
             return checkForAlternateInput(input);
         } else if (input.equalsIgnoreCase("E")) {
             return exitGame();
@@ -142,6 +143,24 @@ public class DisplayInterface {
             System.out.println("Invalid input. Please try again.");
             return handleStartGameInputQuery();
         }
+    }
+
+    private boolean checkSavedGameExist(){
+        if (TxtFileHandler.getSavedFileNames().length == 0) {
+            System.out.print("\nNo Saved Games Found. Please start a new game.");
+            return false;
+        }
+        return true;
+    }
+    private boolean printSavedFiles(){
+        if (!checkSavedGameExist()) return false;
+        String[] filenames = TxtFileHandler.getSavedFileNames();
+        System.out.println("\nAvailable saved games:");
+        for (String filename : filenames) {
+            System.out.println(" - " + filename);
+        }
+        System.out.println();
+        return true;
     }
 
     private InputState checkForAlternateInput(String input) {
@@ -154,6 +173,7 @@ public class DisplayInterface {
             System.out.print("Now input the file name: ");
             return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("L")) {
+            if (!printSavedFiles()) return null;
             System.out.print("Now input the file name: ");
             return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
         }
