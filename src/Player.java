@@ -55,4 +55,18 @@ public class Player {
     public int getNumOfMillsMade() {
         return numOfMillsMade;
     }
+
+    public void loadPlayerData(GameState.PlayerData playerData) {
+        totalPieces = playerData.getTotalPieces();
+        piecesLeftToPlace = playerData.getPiecesLeftToPlace();
+        numOfMillsMade = playerData.getMillsCreated();
+    }
+
+    public void loadPieceData(Position[] positions, char[] charArray) {
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == getDisplayChar()) {
+                positions[i].setPieceOccupying(new Piece(this));
+            }
+        }
+    }
 }

@@ -18,6 +18,10 @@ public class Board {
                 return positions[positionIndex];
         }
 
+        public Position[] getPositions() {
+                return positions;
+        }
+
         public char[] toCharArray() {
                 List<Character> charArray = new ArrayList<>();
                 for (int i = 0; i < positions.length; i++) {

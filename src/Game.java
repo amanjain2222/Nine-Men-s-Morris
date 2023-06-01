@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Game {
     private static final String FIRST_PLAYER_NAME = "Ice";
     private static final Character FIRST_PLAYER_CHAR = 'I';
@@ -31,6 +33,8 @@ public class Game {
                 moveStatus = currentPlayer.takeRemoveTurn(targetPosition);
             case GAME_OVER ->
                 moveStatus = MoveStatus.GAME_OVER;
+            default -> 
+                moveStatus = MoveStatus.INVALID_OUT_OF_BOUNDS_POSITION;
         }
 
         // First ensure input didn't fail to process, else we can stop processing.
@@ -102,5 +106,21 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void loadGameState(GameState gameState) {
+        // Load Game Globals
+        gameStatus = gameState.getGameStatus();
+        moveStatus = gameState.getMoveStatus();
+        gameTurn = gameState.getGameTurn();
+
+        // Load Player Data
+        getCurrentPlayer().loadPlayerData(gameState.getCurrentPlayerData());
+        getOpponentPlayer().loadPlayerData(gameState.getOpponentPlayerData());
+
+        // Clear board before telling players to replace their pieces.
+        Arrays.stream(BOARD.getPositions()).forEach(position -> position.setEmpty());
+        getCurrentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
+        getOpponentPlayer().loadPieceData(BOARD.getPositions(), gameState.getBoard());
     }
 }
