@@ -13,6 +13,11 @@ public class GameHistory {
         history = new ArrayList<>(Arrays.asList(gameStates));
     }
 
+    public GameState popPreviousGameState() {
+        history.remove(history.size() - 1);
+        return queryPreviousGameState();
+    }
+
     public GameState[] queryAllGameStates() {
         GameState[] allGameStates = new GameState[0];
         return history.toArray(allGameStates);
