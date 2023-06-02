@@ -41,6 +41,12 @@ public class GameHandler {
             case GAME_LOAD:
                 fileLoadGame(inputState.inputFilepath);
                 break;
+            case GAME_LOAD_FAILED_EMPTY_FILE:
+                gameHandlerStatus = GameHandlerStatus.GAME_LOAD_FAILED_EMPTY_FILE;
+                break;
+            case GAME_LOAD_CANCELLED:
+                gameHandlerStatus = GameHandlerStatus.GAME_LOAD_CANCELLED;
+                break;
             case GAME_UNDO:
                 undoMove();
                 break;

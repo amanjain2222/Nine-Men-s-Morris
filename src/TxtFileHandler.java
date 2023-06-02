@@ -33,7 +33,7 @@ public class TxtFileHandler implements FileHandler {
     public GameState[] getFileGameStates(String filepath) {
         List<GameState> gameStates = new ArrayList<>();
 
-        File input = new File(filepath + ".txt");
+        File input = new File("Saved/" + filepath + ".txt");
         try {
             Scanner reader = new Scanner(input);
             while (reader.hasNextLine()) {
@@ -58,7 +58,7 @@ public class TxtFileHandler implements FileHandler {
 
     @Override
     public boolean saveFileGameStates(String filepath, GameState[] gameStates) {
-        File output = new File(filepath + ".txt");
+        File output = new File("Saved/" + filepath + ".txt");
         try {
             // Override File if it Exists
             if (output.isFile()) {
@@ -113,5 +113,4 @@ public class TxtFileHandler implements FileHandler {
         }
         return true;
     }
-
 }

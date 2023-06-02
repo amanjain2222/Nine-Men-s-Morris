@@ -47,13 +47,16 @@ public class DisplayInterface {
             case INACTIVE:
                 return handleStartGameInputQuery();
             case INACTIVE_LOAD_FAILED:
-                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath.");
+                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath. Continuing Game.");
                 return handleStartGameInputQuery();
             case GAME_SAVE_FAILED:
-                System.out.println("\nGame FAILED to save, ensure you entered a valid filepath.");
+                System.out.println("\nGame FAILED to save, ensure you entered a valid filepath. Continuing Game.");
                 break;
             case GAME_LOAD_FAILED:
-                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath.");
+                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath. Continuing Game.");
+                break;
+            case GAME_LOAD_FAILED_EMPTY_FILE:
+                System.out.println("\nGame FAILED to load, There are no saved files. Continuing Game.");
                 break;
             case GAME_SAVE_SUCCESS:
                 System.out.println("\nGame SUCCESSFULLY saved.");
@@ -61,6 +64,8 @@ public class DisplayInterface {
             case GAME_LOAD_SUCCESS:
                 System.out.println("\nGame SUCCESSFULLY loaded.");
                 break;
+            case GAME_LOAD_CANCELLED:
+                System.out.println("\nGame Load Cancelled. Continuing Game.");
             case UNDO_SUCCESS:
                 System.out.println("\nPrevious Move undone");
                 break;
@@ -140,6 +145,7 @@ public class DisplayInterface {
             System.out.println("\nStarting Game... \n.\n.\n.");
             return new InputState(InputState.InputType.GAME_START);
         } else if (input.equalsIgnoreCase("L")) {
+            if (!checkSavedGameExist()) return handleStartGameInputQuery();
             return checkForAlternateInput(input);
         } else if (input.equalsIgnoreCase("E")) {
             return exitGame();
@@ -147,6 +153,26 @@ public class DisplayInterface {
             System.out.println("Invalid input. Please try again.");
             return handleStartGameInputQuery();
         }
+    }
+
+    private boolean checkSavedGameExist(){
+        if (FileHandler.getSavedFileNames().length == 0) {
+            System.out.print("\nNo Saved Games Found.");
+
+            return false;
+        }
+        return true;
+    }
+
+    private boolean printSavedFiles(){
+        if (!checkSavedGameExist()) return false;
+        String[] filenames = FileHandler.getSavedFileNames();
+        System.out.println("\nAvailable saved games:");
+        for (String filename : filenames) {
+            System.out.println(" - " + filename);
+        }
+        System.out.println();
+        return true;
     }
 
     private InputState checkForAlternateInput(String input) {
@@ -159,13 +185,35 @@ public class DisplayInterface {
             System.out.print("Now input the file name: ");
             return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("L")) {
-            System.out.print("Now input the file name: ");
-            return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
+            return loadGame(input);
         } else if (input.equalsIgnoreCase("U")){
             return new InputState(InputState.InputType.GAME_UNDO);
         }
         return null;
     }
+
+    private InputState loadGame(String input) {
+        if (gameState.getGameTurn() > 0) {
+            System.out.println();
+            // User control: Confirm user want to overwrite current game
+            while (true) {
+                System.out.print("Warning: Loading a game will overwrite the current game. Do you want to continue? (Y/N): ");
+                String OverwriteInput = consoleInput.nextLine();
+                if (OverwriteInput.equalsIgnoreCase("Y")) break;
+                if (OverwriteInput.equalsIgnoreCase("N"))
+                    return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
+                System.out.println("\nInvalid input. Please try again.");
+            }
+        }
+        if (!printSavedFiles()) return new InputState(InputState.InputType.GAME_LOAD_FAILED_EMPTY_FILE);
+        System.out.println("Other Options: ");
+        System.out.println("- Cancel Load   : Type 'N'.");
+        System.out.print("\nPlease input the file name: ");
+        String filename = consoleInput.nextLine();
+        if (filename.equalsIgnoreCase("N")) return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
+        return new InputState(InputState.InputType.GAME_LOAD, filename);
+    }
+
 
     private int transcriptInputValue(String inputValue) {
         if (inputValue.toLowerCase(Locale.ROOT).equals("U"))
