@@ -8,7 +8,9 @@ public class InputState {
         GAME_END,
         GAME_TURN,
         GAME_SAVE,
-        GAME_LOAD;
+        GAME_LOAD,
+        GAME_LOAD_FAILED_EMPTY_FILE,
+        GAME_LOAD_CANCELLED;
     }
 
     public InputState(InputType inputType) {

@@ -5,5 +5,7 @@ public enum GameHandlerStatus {
     GAME_SAVE_SUCCESS(),
     GAME_LOAD_SUCCESS(),
     GAME_SAVE_FAILED(),
-    GAME_LOAD_FAILED();
+    GAME_LOAD_FAILED(),
+    GAME_LOAD_CANCELLED,
+    GAME_LOAD_FAILED_EMPTY_FILE()
 }
