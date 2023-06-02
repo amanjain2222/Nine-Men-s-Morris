@@ -156,7 +156,7 @@ public class DisplayInterface {
     }
 
     private boolean checkSavedGameExist(){
-        if (TxtFileHandler.getSavedFileNames().length == 0) {
+        if (FileHandler.getSavedFileNames().length == 0) {
             System.out.print("\nNo Saved Games Found.");
 
             return false;
@@ -166,7 +166,7 @@ public class DisplayInterface {
 
     private boolean printSavedFiles(){
         if (!checkSavedGameExist()) return false;
-        String[] filenames = TxtFileHandler.getSavedFileNames();
+        String[] filenames = FileHandler.getSavedFileNames();
         System.out.println("\nAvailable saved games:");
         for (String filename : filenames) {
             System.out.println(" - " + filename);
@@ -186,8 +186,6 @@ public class DisplayInterface {
             return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("L")) {
             return loadGame(input);
-            System.out.print("Now input the file name: ");
-            return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("U")){
             return new InputState(InputState.InputType.GAME_UNDO);
         }
