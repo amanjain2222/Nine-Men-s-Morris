@@ -4,6 +4,7 @@ public class GameHandler {
     private GameHistory gameHistory;
     private FileHandler fileHandler;
 
+
     public GameHandler(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
     }
@@ -46,6 +47,9 @@ public class GameHandler {
             case GAME_LOAD_CANCELLED:
                 gameHandlerStatus = GameHandlerStatus.GAME_LOAD_CANCELLED;
                 break;
+            case GAME_UNDO:
+                undoMove();
+                break;
         }
     }
 
@@ -70,5 +74,15 @@ public class GameHandler {
         }
         game.loadGameState(gameHistory.queryPreviousGameState());
         gameHandlerStatus = GameHandlerStatus.GAME_LOAD_SUCCESS;
+    }
+    public void undoMove(){
+        try{
+            game.loadGameState(gameHistory.popPreviousGameState());
+            gameHandlerStatus = GameHandlerStatus.UNDO_SUCCESS;
+        }catch (Exception e){
+            gameHandlerStatus = GameHandlerStatus.UNDO_FAILED;
+        }
+
+
     }
 }

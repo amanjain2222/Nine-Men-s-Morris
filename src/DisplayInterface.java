@@ -66,6 +66,12 @@ public class DisplayInterface {
                 break;
             case GAME_LOAD_CANCELLED:
                 System.out.println("\nGame Load Cancelled. Continuing Game.");
+            case UNDO_SUCCESS:
+                System.out.println("\nPrevious Move undone");
+                break;
+            case UNDO_FAILED:
+                System.out.println("\nNo more moves to undo");
+            default:
                 break;
         }
 
@@ -180,6 +186,10 @@ public class DisplayInterface {
             return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
         } else if (input.equalsIgnoreCase("L")) {
             return loadGame(input);
+            System.out.print("Now input the file name: ");
+            return new InputState(InputState.InputType.GAME_LOAD, consoleInput.nextLine());
+        } else if (input.equalsIgnoreCase("U")){
+            return new InputState(InputState.InputType.GAME_UNDO);
         }
         return null;
     }
@@ -225,6 +235,7 @@ public class DisplayInterface {
         System.out.println("\nOther Options: ");
         System.out.println("- Exit Game   : Type 'E'");
         System.out.println("- Restart Game: Type 'R'");
+        System.out.println("- Undo Move   : Type 'U'");
         System.out.println("- Save Game   : Type 'S'");
         System.out.println("- Load Game   : Type 'L'");
     }

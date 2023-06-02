@@ -9,6 +9,7 @@ public class InputState {
         GAME_TURN,
         GAME_SAVE,
         GAME_LOAD,
+        GAME_UNDO,
         GAME_LOAD_FAILED_EMPTY_FILE,
         GAME_LOAD_CANCELLED;
     }
