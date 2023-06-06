@@ -8,6 +8,9 @@ public interface FileHandler {
     public static String[] getSavedFileNames() {
         File folder = new File("Saved/");
         File[] listOfFiles = folder.listFiles();
+        if (listOfFiles == null) {
+            return new String[0];
+        }
         List<String> fileNames = new ArrayList<>();
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
