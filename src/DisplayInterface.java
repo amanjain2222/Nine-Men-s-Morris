@@ -28,7 +28,6 @@ public class DisplayInterface {
             printStartScreen();
             return;
         }
-        System.out.println(gameState.getGameHandlerStatus());
         // Game is over.
         if (gameState.getGameStatus() == GameStatus.GAME_OVER) {
             printEndGameResult();

@@ -58,6 +58,8 @@ public class TxtFileHandler implements FileHandler {
 
     @Override
     public boolean saveFileGameStates(String filepath, GameState[] gameStates) {
+        File saveDirectory = new File("Saved");
+        saveDirectory.mkdirs();
         File output = new File("Saved/" + filepath + ".txt");
         try {
             // Override File if it Exists
@@ -109,6 +111,7 @@ public class TxtFileHandler implements FileHandler {
             }
             writer.close();
         } catch (IOException e) {
+            System.out.println(e);
             return false;
         }
         return true;
