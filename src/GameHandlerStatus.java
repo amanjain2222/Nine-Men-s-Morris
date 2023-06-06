@@ -9,5 +9,7 @@ public enum GameHandlerStatus {
     GAME_LOAD_CANCELLED(),
     GAME_LOAD_FAILED_EMPTY_FILE(),
     UNDO_SUCCESS(),
-    UNDO_FAILED();
+    UNDO_FAILED(),
+    GAME_SAVE_CANCELLED(),
+    GAME_SAVE_FAILED_EMPTY_GAME();
 }

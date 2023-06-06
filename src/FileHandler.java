@@ -25,4 +25,8 @@ public interface FileHandler {
         }
         return fileNames.toArray(new String[0]);
     }
+    public static boolean checkFileExists(String filepath) {
+        File file = new File("Saved/" + filepath + ".txt");
+        return file.isFile();
+    }
 }

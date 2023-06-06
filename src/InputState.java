@@ -11,7 +11,9 @@ public class InputState {
         GAME_LOAD,
         GAME_UNDO,
         GAME_LOAD_FAILED_EMPTY_FILE,
-        GAME_LOAD_CANCELLED;
+        GAME_LOAD_CANCELLED,
+        GAME_SAVE_CANCELLED,
+        GAME_SAVE_FAILED_EMPTY_GAME;
     }
 
     public InputState(InputType inputType) {

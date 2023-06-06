@@ -46,30 +46,37 @@ public class DisplayInterface {
             case INACTIVE:
                 return handleStartGameInputQuery();
             case INACTIVE_LOAD_FAILED:
-                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath. Continuing Game.");
+                System.out.println("\nGame FAILED to load: Ensure you entered a valid filepath. Continuing Game.");
                 return handleStartGameInputQuery();
-            case GAME_SAVE_FAILED:
-                System.out.println("\nGame FAILED to save, ensure you entered a valid filepath. Continuing Game.");
-                break;
-            case GAME_LOAD_FAILED:
-                System.out.println("\nGame FAILED to load, ensure you entered a valid filepath. Continuing Game.");
-                break;
-            case GAME_LOAD_FAILED_EMPTY_FILE:
-                System.out.println("\nGame FAILED to load, There are no saved files. Continuing Game.");
-                break;
             case GAME_SAVE_SUCCESS:
                 System.out.println("\nGame SUCCESSFULLY saved.");
+                break;
+            case GAME_SAVE_FAILED:
+                System.out.println("\nGame FAILED to save: Ensure you entered a valid filepath. Continuing Game.");
+                break;
+            case GAME_SAVE_CANCELLED:
+                System.out.println("\nGame Save Cancelled: Continuing Game.");
+                break;
+            case GAME_SAVE_FAILED_EMPTY_GAME:
+                System.out.println("\nGame FAILED to save: There is no game to save. Continuing Game.");
+                break;
+            case GAME_LOAD_FAILED:
+                System.out.println("\nGame FAILED to load: Ensure you entered a valid filepath. Continuing Game.");
+                break;
+            case GAME_LOAD_FAILED_EMPTY_FILE:
+                System.out.println("\nGame FAILED to load: There are no saved files. Continuing Game.");
                 break;
             case GAME_LOAD_SUCCESS:
                 System.out.println("\nGame SUCCESSFULLY loaded.");
                 break;
             case GAME_LOAD_CANCELLED:
-                System.out.println("\nGame Load Cancelled. Continuing Game.");
+                System.out.println("\nGame Load Cancelled: Continuing Game.");
+                break;
             case UNDO_SUCCESS:
-                System.out.println("\nPrevious Move undone");
+                System.out.println("\nPrevious Move undone.");
                 break;
             case UNDO_FAILED:
-                System.out.println("\nNo more moves to undo");
+                System.out.println("\nNo more moves to undo.");
             default:
                 break;
         }
@@ -154,10 +161,81 @@ public class DisplayInterface {
         }
     }
 
+    private InputState checkForAlternateInput(String input) {
+        if (input.equalsIgnoreCase("E")) {
+            return exitGame();
+        } else if (input.equalsIgnoreCase("R")) {
+            System.out.println("Restarting game...\n.\n.\n.");
+            return new InputState(InputState.InputType.GAME_START);
+        } else if (input.equalsIgnoreCase("S")) {
+            return saveGame();
+        } else if (input.equalsIgnoreCase("L")) {
+            return loadGame();
+        } else if (input.equalsIgnoreCase("U")) {
+            System.out.println("\nundoing previous move... \n.\n.\n.");
+            return new InputState(InputState.InputType.GAME_UNDO);
+        }
+        return null;
+    }
+
+    private InputState loadGame() {
+        if (gameState.getGameTurn() > 0) {
+            // User control: Confirm user want to overwrite current game
+            while (true) {
+                System.out.print("Warning: Loading a game will overwrite the current game. Do you want to continue? (Y/N): ");
+                String OverwriteInput = consoleInput.nextLine();
+                if (OverwriteInput.equalsIgnoreCase("Y")) break;
+                if (OverwriteInput.equalsIgnoreCase("N")) {
+                    System.out.println("\nCancelling Loading Game... \n.\n.\n.");
+                    return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
+                }
+                System.out.println("\nInvalid input. Please try again.\n");
+            }
+        }
+        // cancel load operation if no save
+        if (!printSavedFiles()) return new InputState(InputState.InputType.GAME_LOAD_FAILED_EMPTY_FILE);
+        // User control: Get file name
+        System.out.println("Other Options: ");
+        System.out.println("- Cancel Load   : Type 'N'.");
+        System.out.print("\nPlease input the load file name: ");
+        String filename = consoleInput.nextLine();
+        if (filename.equalsIgnoreCase("N"))  {
+            System.out.println("\nCancelling Loading Game... \n.\n.\n.");
+            return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
+        }
+        System.out.println("\nLoading Game... \n.\n.\n.");
+        return new InputState(InputState.InputType.GAME_LOAD, filename);
+    }
+
+    private InputState saveGame() {
+        // User control: Get file name
+        if (gameState.getGameTurn() == 0) return new InputState(InputState.InputType.GAME_SAVE_FAILED_EMPTY_GAME);
+        printSavedFiles();
+        System.out.println("Other Options: ");
+        System.out.println("- Cancel Load   : Type 'N'.");
+        System.out.print("\nPlease input the save file name: ");
+        String saveFileName = consoleInput.nextLine();
+        // check if user want to overwrite existing file
+        if (FileHandler.checkFileExists(saveFileName)) {
+            while (true) {
+                System.out.print("There is already a file with the same name. Do you want to overwrite? (Y/N): ");
+                String OverwriteInput = consoleInput.nextLine();
+                if (OverwriteInput.equalsIgnoreCase("Y")) break;
+                if (OverwriteInput.equalsIgnoreCase("N")) {
+                    System.out.println("\nCancelling Saving Game... \n.\n.\n.");
+                    return new InputState(InputState.InputType.GAME_SAVE_CANCELLED);
+                }
+                System.out.println("\nInvalid input. Please try again.\n");
+            }
+        }
+        System.out.println("\nSaving Game... \n.\n.\n.");
+        return new InputState(InputState.InputType.GAME_SAVE, saveFileName);
+    }
+
+
     private boolean checkSavedGameExist(){
         if (FileHandler.getSavedFileNames().length == 0) {
             System.out.print("\nNo Saved Games Found.");
-
             return false;
         }
         return true;
@@ -166,51 +244,12 @@ public class DisplayInterface {
     private boolean printSavedFiles(){
         if (!checkSavedGameExist()) return false;
         String[] filenames = FileHandler.getSavedFileNames();
-        System.out.println("\nAvailable saved games:");
+        System.out.println("\nPrevious Saved Games:");
         for (String filename : filenames) {
             System.out.println(" - " + filename);
         }
         System.out.println();
         return true;
-    }
-
-    private InputState checkForAlternateInput(String input) {
-        if (input.equalsIgnoreCase("E")) {
-            return exitGame();
-        } else if (input.equalsIgnoreCase("R")) {
-            System.out.println("Restarting game...\n.\n.\n.");
-            return new InputState(InputState.InputType.GAME_START);
-        } else if (input.equalsIgnoreCase("S")) {
-            System.out.print("Now input the file name: ");
-            return new InputState(InputState.InputType.GAME_SAVE, consoleInput.nextLine());
-        } else if (input.equalsIgnoreCase("L")) {
-            return loadGame(input);
-        } else if (input.equalsIgnoreCase("U")){
-            return new InputState(InputState.InputType.GAME_UNDO);
-        }
-        return null;
-    }
-
-    private InputState loadGame(String input) {
-        if (gameState.getGameTurn() > 0) {
-            System.out.println();
-            // User control: Confirm user want to overwrite current game
-            while (true) {
-                System.out.print("Warning: Loading a game will overwrite the current game. Do you want to continue? (Y/N): ");
-                String OverwriteInput = consoleInput.nextLine();
-                if (OverwriteInput.equalsIgnoreCase("Y")) break;
-                if (OverwriteInput.equalsIgnoreCase("N"))
-                    return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
-                System.out.println("\nInvalid input. Please try again.");
-            }
-        }
-        if (!printSavedFiles()) return new InputState(InputState.InputType.GAME_LOAD_FAILED_EMPTY_FILE);
-        System.out.println("Other Options: ");
-        System.out.println("- Cancel Load   : Type 'N'.");
-        System.out.print("\nPlease input the file name: ");
-        String filename = consoleInput.nextLine();
-        if (filename.equalsIgnoreCase("N")) return new InputState(InputState.InputType.GAME_LOAD_CANCELLED);
-        return new InputState(InputState.InputType.GAME_LOAD, filename);
     }
 
 
@@ -329,7 +368,7 @@ public class DisplayInterface {
 
     private String getMoveDescription() {
         String moveDescription = "";
-        if (gameState.getGameTurn() == 0)
+        if (gameState.getGameTurn() == 0 || previousGameState.getGameStatus() == null)
             return "Game has Started.";
         if (gameState.getMoveStatus() == MoveStatus.SUCCESS_MILL_FORMED)
             return gameState.getCurrentPlayerData().getName() + " Player formed a mill!";
