@@ -24,7 +24,7 @@ public class Position {
     }
 
     public boolean isEmpty() {
-        return (pieceOccupying == null);
+        return (pieceOccupying.equals(null));
     }
 
     public void setEmpty() {
@@ -35,17 +35,17 @@ public class Position {
         Character pieceChar = getCurrentPieceChar();
         boolean isMill = false;
         // Check if part of vertical mill.
-        isMill |= (pieceChar == adjacentPositions.topMostChar()
-                && pieceChar != adjacentPositions.bottomMostChar()
-                || pieceChar == adjacentPositions.bottomChar())
-                && (pieceChar == adjacentPositions.topChar()
-                        || pieceChar == adjacentPositions.bottomMostChar());
+        isMill |= (pieceChar.equals(adjacentPositions.topMostChar())
+                && !pieceChar.equals(adjacentPositions.bottomMostChar())
+                || pieceChar.equals(adjacentPositions.bottomChar()))
+                && (pieceChar.equals(adjacentPositions.topChar())
+                        || pieceChar.equals(adjacentPositions.bottomMostChar()));
         // Check if part of horizontal mill.
-        isMill |= (pieceChar == adjacentPositions.leftMostChar()
-                && pieceChar != adjacentPositions.rightMostChar()
-                || pieceChar == adjacentPositions.rightChar())
-                && (pieceChar == adjacentPositions.leftChar()
-                        || pieceChar == adjacentPositions.rightMostChar());
+        isMill |= (pieceChar.equals(adjacentPositions.leftMostChar())
+                && !pieceChar.equals(adjacentPositions.rightMostChar())
+                || pieceChar.equals(adjacentPositions.rightChar()))
+                && (pieceChar.equals(adjacentPositions.leftChar())
+                        || pieceChar.equals(adjacentPositions.rightMostChar()));
         return isMill;
     }
 
@@ -57,7 +57,7 @@ public class Position {
         return Stream
                 .of(adjacentPositions.top, adjacentPositions.bottom, adjacentPositions.left, adjacentPositions.right)
                 .filter(i -> (i != null))
-                .anyMatch(i -> (i.getPieceOccupying() == null));
+                .anyMatch(i -> (i.getPieceOccupying().equals(null)));
     }
 
     public AdjacentPositions.AdjacentPositionsBuilder setAdjacentPositions() {
@@ -78,7 +78,7 @@ public class Position {
         }
 
         private Character getPosChar(Position pos) {
-            if (pos == null) {
+            if (pos.equals(null)) {
                 return ' ';
             }
             return pos.getPieceOccupying() != null ? pos.getCurrentPieceChar() : ' ';
