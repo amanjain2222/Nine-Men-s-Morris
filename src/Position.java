@@ -24,7 +24,7 @@ public class Position {
     }
 
     public boolean isEmpty() {
-        return (pieceOccupying.equals(null));
+        return (pieceOccupying == null);
     }
 
     public void setEmpty() {
@@ -57,7 +57,7 @@ public class Position {
         return Stream
                 .of(adjacentPositions.top, adjacentPositions.bottom, adjacentPositions.left, adjacentPositions.right)
                 .filter(i -> (i != null))
-                .anyMatch(i -> (i.getPieceOccupying().equals(null)));
+                .anyMatch(i -> (i.getPieceOccupying() == null));
     }
 
     public AdjacentPositions.AdjacentPositionsBuilder setAdjacentPositions() {
@@ -78,7 +78,7 @@ public class Position {
         }
 
         private Character getPosChar(Position pos) {
-            if (pos.equals(null)) {
+            if (pos == null) {
                 return ' ';
             }
             return pos.getPieceOccupying() != null ? pos.getCurrentPieceChar() : ' ';
