@@ -1,0 +1,7 @@
+AWAITING_PLACEMENT:0:9:9:0:9:9:0: , , , , , , , , , , , , , , , , , , , , , , , ,:
+AWAITING_PLACEMENT:1:9:9:0:9:8:0:I, , , , , , , , , , , , , , , , , , , , , , , ,:
+AWAITING_PLACEMENT:2:9:8:0:9:8:0:I, , ,F, , , , , , , , , , , , , , , , , , , , ,:
+AWAITING_PLACEMENT:3:9:8:0:9:7:0:I,I, ,F, , , , , , , , , , , , , , , , , , , , ,:
+AWAITING_PLACEMENT:4:9:7:0:9:7:0:I,I, ,F,F, , , , , , , , , , , , , , , , , , , ,:
+AWAITING_REMOVAL:4:9:6:1:9:7:0:I,I,I,F,F, , , , , , , , , , , , , , , , , , , ,:
+AWAITING_PLACEMENT:5:8:7:0:9:6:1:I,I,I,F, , , , , , , , , , , , , , , , , , , , ,:
