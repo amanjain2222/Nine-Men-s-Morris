@@ -41,6 +41,9 @@ public class GameHandler {
             case GAME_SAVE_CANCELLED:
                 gameHandlerStatus = GameHandlerStatus.GAME_SAVE_CANCELLED;
                 break;
+            case GAME_SAVE_FAILED_EMPTY_GAME:
+                gameHandlerStatus = GameHandlerStatus.GAME_SAVE_FAILED_EMPTY_GAME;
+                break;
             case GAME_LOAD:
                 fileLoadGame(inputState.inputFilepath);
                 break;

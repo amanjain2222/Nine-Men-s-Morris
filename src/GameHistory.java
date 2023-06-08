@@ -14,6 +14,9 @@ public class GameHistory {
     }
 
     public GameState popPreviousGameState() {
+        if (history.size() < 2) {
+            return null;
+        }
         history.remove(history.size() - 1);
         return queryPreviousGameState();
     }

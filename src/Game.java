@@ -64,6 +64,7 @@ public class Game {
     }
 
     public GameState queryGameState() {
+        System.out.println(gameTurn);
         return new GameState(this);
     }
 
