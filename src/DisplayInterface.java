@@ -6,7 +6,7 @@ public class DisplayInterface {
     private static final char[] PLAYER_CHARS = { 'I', 'F' };
     private static final String REMOVE_QUERY_MESSAGE = "Now is the time to strike %s Player, enter the position of the Opponent's piece you want to remove: ";
     private static final String GAME_TITLE_MESSAGE = "9 Men's Morris Game";
-    private static final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move.";
+    private static final String PLAYER_TURN_INFO_MESSAGE = " Player, make your move. Alternatively enter 'U' to undo previous move.";
     private static final String GAME_PHASE_MESSAGE = "Current Game Phase: ";
     private static final String PLACEMENT_QUERY_MESSAGE = "Please enter the position on board you want to place a piece: ";
     private static final String CURRENT_PLAYER_MESSAGE = "Current Player Turn: ";
@@ -76,7 +76,7 @@ public class DisplayInterface {
                 System.out.println("\nPrevious Move undone.");
                 break;
             case UNDO_FAILED:
-                System.out.println("\nNo more moves to undo.");
+                System.out.println("\nNo moves to undo");
             default:
                 break;
         }
@@ -271,7 +271,6 @@ public class DisplayInterface {
         System.out.println("\nOther Options: ");
         System.out.println("- Exit Game   : Type 'E'");
         System.out.println("- Restart Game: Type 'R'");
-        System.out.println("- Undo Move   : Type 'U'");
         System.out.println("- Save Game   : Type 'S'");
         System.out.println("- Load Game   : Type 'L'");
     }
