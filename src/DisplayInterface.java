@@ -211,7 +211,7 @@ public class DisplayInterface {
         // User control: Get file name
         if (gameState.getGameTurn() == 0) return new InputState(InputState.InputType.GAME_SAVE_FAILED_EMPTY_GAME);
         printSavedFiles();
-        System.out.println("Other Options: ");
+        System.out.println("\nOther Options: ");
         System.out.println("- Cancel Load   : Type 'N'.");
         System.out.print("\nPlease input the save file name: ");
         String saveFileName = consoleInput.nextLine();
