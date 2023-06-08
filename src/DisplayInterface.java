@@ -212,7 +212,7 @@ public class DisplayInterface {
         if (gameState.getGameTurn() == 0) return new InputState(InputState.InputType.GAME_SAVE_FAILED_EMPTY_GAME);
         printSavedFiles();
         System.out.println("\nOther Options: ");
-        System.out.println("- Cancel Load   : Type 'N'.");
+        System.out.println("- Cancel Save   : Type 'N'.");
         System.out.print("\nPlease input the save file name: ");
         String saveFileName = consoleInput.nextLine();
         // check if user want to overwrite existing file
